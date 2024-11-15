@@ -3,9 +3,9 @@ build-backend = "setuptools.build_meta"
 requires = [ "setuptools>=61" ]
 
 [project]
-name = "openfisca-country_template"
+name = "openfisca-nouvelle_caledonie"
 version = "7.1.8"
-description = "OpenFisca Rules as Code model for Country-Template."
+description = "OpenFisca Rules as Code model for Nouvelle Calédonie."
 readme = "README.md"
 keywords = [ "benefit", "microsimulation", "rac", "rules-as-code", "tax" ]
 maintainers = [  ]
@@ -32,11 +32,11 @@ optional-dependencies.dev = [
     "ruff-lsp>=0.0.57,<1",
     "yamllint>=1.35.1",
 ]
-urls.Changelog = "https://github.com/openfisca/country-template/blob/main/CHANGELOG.md"
+urls.Changelog = "https://github.com/openfisca/openfisca-nouvelle_caledonie/blob/main/CHANGELOG.md"
 urls.Documentation = "https://openfisca.org/doc"
-urls.Homepage = "https://github.com/openfisca/country-template"
-urls.Issues = "https://github.com/openfisca/country-template/issues"
-urls.Repository = "https://github.com/openfisca/country-template"
+urls.Homepage = "https://github.com/openfisca/openfisca-nouvelle_caledonie"
+urls.Issues = "https://github.com/openfisca/openfisca-nouvelle_caledonie/issues"
+urls.Repository = "https://github.com/openfisca/openfisca-nouvelle_caledonie"
 
 [tool.ruff]
 target-version = "py39"
@@ -68,7 +68,7 @@ force_alphabetical_sort_within_sections = false
 group_by_package = true
 honor_noqa = true
 include_trailing_comma = true
-known_first_party = [ "openfisca_country_template" ]
+known_first_party = [ "openfisca-nouvelle_caledonie" ]
 known_openfisca = [ "openfisca_core", "openfisca_extension_template" ]
 known_typing = [ "*collections.abc*", "*typing*", "*typing_extensions*" ]
 known_types = [ "*types*" ]
@@ -93,7 +93,7 @@ max_supported_python = "3.11"
 
 [tool.pytest.ini_options]
 addopts = "--exitfirst --showlocals --doctest-modules --disable-warnings --import-mode importlib"
-testpaths = [ "openfisca_country_template/tests" ]
+testpaths = [ "openfisca_nouvelle_caledonie/tests" ]
 python_files = "**/*.py"
 
 [tool.tox]
@@ -109,7 +109,7 @@ commands_pre = [
         "install",
         "--find-links",
         ".",
-        "openfisca-country_template",
+        "openfisca-nouvelle_caledonie",
     ],
 ]
 
@@ -123,7 +123,7 @@ commands_pre = [
         "install",
         "--find-links",
         ".",
-        "openfisca-country_template[dev]",
+        "openfisca-nouvelle_caledonie[dev]",
     ],
 ]
 

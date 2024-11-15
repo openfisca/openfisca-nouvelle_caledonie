@@ -9,5 +9,3 @@ values:
   # This parameter is only defined from the 1st of Jan 2010 to the 3Oth of Nov 2016.
   2010-01-01:
     value: 0.25
-  2016-12-01:
-    value: null
