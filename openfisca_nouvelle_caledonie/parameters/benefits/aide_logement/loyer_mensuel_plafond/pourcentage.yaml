@@ -1,0 +1,6 @@
+description: Loyer mensuel de référence
+metadata:
+  reference: Article 11 de la délibération n° 286 du 18 avril 2007
+values:
+  2015-12-01:
+    value: 0.20

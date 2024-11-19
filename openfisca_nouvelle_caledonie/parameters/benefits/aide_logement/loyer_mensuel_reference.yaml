@@ -1,0 +1,25 @@
+description: Loyer mensuel de référence
+metadata:
+  reference: Article 10 de la délibération n° 286 du 18 avril 2007
+  unit: currency-FCP
+chambre:
+  2015-12-01:
+    value: 27000
+f1:
+  2015-12-01:
+    value: 54000
+f2:
+  2015-12-01:
+    value: 68000
+f3:
+  2015-12-01:
+    value: 81000
+f4:
+  2015-12-01:
+    value: 90000
+f5p:
+  2015-12-01:
+    value: 99000
+maisonderetraite:
+  2015-12-01:
+    value: 54000
