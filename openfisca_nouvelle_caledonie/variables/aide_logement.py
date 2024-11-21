@@ -1,11 +1,10 @@
 """Variables pour le calcul des aides au logement."""
 
 from openfisca_core.indexed_enums import Enum
+from openfisca_core.model_api import max_, min_, select, where
 from openfisca_core.periods import MONTH
 from openfisca_core.variables import Variable
 from openfisca_nouvelle_caledonie.entities import Household
-
-from openfisca_core.model_api import max_, min_, select, where
 
 
 class TypologieLogement(Enum):
