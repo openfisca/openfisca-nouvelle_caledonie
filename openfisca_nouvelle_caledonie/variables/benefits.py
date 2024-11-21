@@ -62,6 +62,7 @@ class housing_allowance(Variable):
     reference = "https://law.gov.example/housing_allowance"
     # This allowance was removed on the 1st of Dec 2016. Calculating it before
     # this date will always return the variable default value, 0.
+    end = "2016-11-30"
     unit = "currency-EUR"
     documentation = """
     This allowance was introduced on the 1st of Jan 1980.

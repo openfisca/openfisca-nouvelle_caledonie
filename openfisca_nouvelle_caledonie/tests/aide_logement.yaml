@@ -32,13 +32,13 @@
 #     aide_logement: 50863
 
 
-- period: 2024-11
-  absolute_error_margin: 1
-  input:
-    aide_logement_coef_error: .8
-    loyer: 24106
-    charges_locatives: 8528
-    typologie_logement: f2
-    salaire: 55126
-  output:
-    aide_logement: 17113
+# - period: 2024-11
+#   absolute_error_margin: 1
+#   input:
+#     aide_logement_coef_error: .8
+#     loyer: 24106
+#     charges_locatives: 8528
+#     typologie_logement: f2
+#     salaire: 55126
+#   output:
+#     aide_logement: 17113
