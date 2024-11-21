@@ -170,7 +170,7 @@ class aide_logement_supplement_loyer_sr_negatif(Variable):
         loyer_base = household("aide_logement_loyer", period)
         loyer_reference = household("loyer_mensuel_reference", period)
         retraite = household("aide_logement_cas_particulier_retraite", period)
-        loyer  = where(retraite, loyer_reference, loyer_base)
+        loyer = where(retraite, loyer_reference, loyer_base)
 
         charges = household("charges_locatives", period)
 
@@ -197,14 +197,16 @@ class aide_logement_supplement_loyer_sr_bas_positif(Variable):
         loyer_base = household("aide_logement_loyer", period)
         loyer_reference = household("loyer_mensuel_reference", period)
         retraite = household("aide_logement_cas_particulier_retraite", period)
-        loyer  = where(retraite, loyer_reference, loyer_base)
+        loyer = where(retraite, loyer_reference, loyer_base)
 
         charges = household("charges_locatives", period)
         loyer_reference = household("loyer_mensuel_reference", period)
 
         typologie = household("typologie_logement", period)
 
-        pa = parameters(period).benefits.aide_logement.supplement_loyer.solde_revenu_positif_pourcentage_charges
+        pa = parameters(
+            period
+        ).benefits.aide_logement.supplement_loyer.solde_revenu_positif_pourcentage_charges
         a = pa * (loyer + charges - loyer_reference)
 
         pb = parameters(
@@ -403,7 +405,7 @@ class aide_logement_cas_particulier_retraite(Variable):
         nb_enfs = household("aide_logement_nb_enfants", period)
 
         c1 = (nb_adultes == 1) * (nb_enfs == 0) * (base_ressources <= 90000)
-        c2 = (base_ressources <= 110000)
+        c2 = base_ressources <= 110000
         c3 = (nb_enfs > 0) * (base_ressources <= 110000)
 
         return ret * (c1 + c2 + c3)
@@ -449,7 +451,10 @@ class aide_logement_contribution_minimale_montant_retraite(Variable):
         bourse = household("bourse", period)
         aides_sociales_et_bourses = aide_sociale + bourse
 
-        return where(aides_sociales_et_bourses > 0, minimum_aides_bourses, minimum) + max_(0, base_ressources - plafond) / 3.
+        return (
+            where(aides_sociales_et_bourses > 0, minimum_aides_bourses, minimum)
+            + max_(0, base_ressources - plafond) / 3.0
+        )
 
 
 class aide_logement_contribution_minimale(Variable):
