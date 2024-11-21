@@ -1,0 +1,35 @@
+description: Pourcentage de la base ressources pour le calcul de la contribution locataire
+metadata:
+  reference: Article 8 de la délibération n° 286 du 18 avril 2007
+  type: single_amount
+brackets:
+- threshold:
+    2015-12-01:
+      value: 0
+  amount:
+    2015-12-01:
+      value: .28
+- threshold:
+    2015-12-01:
+      value: 3
+  amount:
+    2015-12-01:
+      value: .26
+- threshold:
+    2015-12-01:
+      value: 4
+  amount:
+    2015-12-01:
+      value: .24
+- threshold:
+    2015-12-01:
+      value: 5
+  amount:
+    2015-12-01:
+      value: .22
+- threshold:
+    2015-12-01:
+      value: 6
+  amount:
+    2015-12-01:
+      value: .2

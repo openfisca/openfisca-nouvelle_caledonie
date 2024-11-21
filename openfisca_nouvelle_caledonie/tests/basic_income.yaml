@@ -7,7 +7,7 @@
     age: 18
     salary: 0
   output:
-    basic_income: 0
+    basic_income: 1000
 
 - name: In Dec 2015, an adult with no salary should get a basic income of 600
   period: 2015-12

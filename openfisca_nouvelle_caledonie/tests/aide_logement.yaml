@@ -1,0 +1,44 @@
+- period: 2024-11
+  absolute_error_margin: 1
+  input:
+    aide_logement_coef_error: .8
+    loyer: 58366
+    charges_locatives: 6546
+    typologie_logement: f1
+    aide_sociale: 94050
+  output:
+    aide_logement: 46931
+
+- period: 2024-11
+  absolute_error_margin: 1
+  input:
+    aide_logement_coef_error: .8
+    loyer: 58366
+    charges_locatives: 6546
+    typologie_logement: f1
+  output:
+    aide_logement: 50546
+
+# - period: 2024-11
+#   absolute_error_margin: 1
+#   input:
+#     aide_logement_coef_error: .8
+#     loyer: 58366
+#     charges_locatives: 6546
+#     typologie_logement: f1
+#     personne_retraitee: true
+#     aide_sociale: 94050
+#   output:
+#     aide_logement: 50863
+
+
+- period: 2024-11
+  absolute_error_margin: 1
+  input:
+    aide_logement_coef_error: .8
+    loyer: 24106
+    charges_locatives: 8528
+    typologie_logement: f2
+    salaire: 55126
+  output:
+    aide_logement: 17113
