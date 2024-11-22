@@ -51,9 +51,15 @@ class aide_logement_loyer(Variable):
         loyer_mensuel_reference = household("loyer_mensuel_reference", period)
         loyer = household("loyer", period)
 
+        typologie_logement = household("typologie_logement", period)
+
         # Clarification nécessaire
         # Prise en compte ou non de l'excédent de loyer pour charges importantes ?
-        return min_(loyer, loyer_mensuel_reference)
+        return where(
+            typologie_logement == TypologieLogement.maisonderetraite,
+            loyer_mensuel_reference,
+            min_(loyer, loyer_mensuel_reference),
+        )
 
 
 class loyer_mensuel_reference(Variable):
@@ -404,7 +410,7 @@ class aide_logement_cas_particulier_retraite(Variable):
         nb_enfs = household("aide_logement_nb_enfants", period)
 
         c1 = (nb_adultes == 1) * (nb_enfs == 0) * (base_ressources <= 90000)
-        c2 = base_ressources <= 110000
+        c2 = (nb_adultes > 1) * (base_ressources <= 110000)
         c3 = (nb_enfs > 0) * (base_ressources <= 110000)
 
         return ret * (c1 + c2 + c3)
