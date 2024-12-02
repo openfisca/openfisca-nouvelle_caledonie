@@ -485,7 +485,7 @@ class aide_logement_contribution_minimale(Variable):
         )
         retraite = household("aide_logement_cas_particulier_retraite", period)
 
-        return where(retraite, montant_retraite, montant_base)
+        return where(retraite, min_(montant_retraite, montant_base), montant_base)
 
 
 class aide_logement_contribution_locataire_sr_positif(Variable):
