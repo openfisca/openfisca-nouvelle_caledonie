@@ -541,4 +541,10 @@ class aide_logement(Variable):
         loyer = household("loyer", period)
         loyer_mensuel_plafond = household("loyer_mensuel_plafond", period)
 
-        return where(loyer <= loyer_mensuel_plafond, montant, 0)
+        typologie_logement = household("typologie_logement", period)
+
+        return where(
+            typologie_logement == TypologieLogement.maisonderetraite,
+            montant,
+            where(loyer <= loyer_mensuel_plafond, montant, 0)
+            )
