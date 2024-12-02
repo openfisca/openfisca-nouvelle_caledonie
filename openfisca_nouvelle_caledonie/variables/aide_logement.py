@@ -176,7 +176,9 @@ class aide_logement_supplement_loyer_sr_negatif(Variable):
         loyer_reference = household("loyer_mensuel_reference", period)
         retraite = household("aide_logement_cas_particulier_retraite", period)
         loyer = where(retraite, loyer_reference, loyer_base)
-        aide_logement_neutralisation_loyer = household('aide_logement_neutralisation_loyer', period)
+        aide_logement_neutralisation_loyer = household(
+            "aide_logement_neutralisation_loyer", period
+        )
 
         charges = household("charges_locatives", period)
 
@@ -187,7 +189,11 @@ class aide_logement_supplement_loyer_sr_negatif(Variable):
             typologie
         ]
 
-        a = loyer * (1 - aide_logement_neutralisation_loyer) + charges - loyer_reference * (1 - aide_logement_neutralisation_loyer)
+        a = (
+            loyer * (1 - aide_logement_neutralisation_loyer)
+            + charges
+            - loyer_reference * (1 - aide_logement_neutralisation_loyer)
+        )
         b = p * loyer_reference
         return min_(a, b)
 
@@ -207,14 +213,20 @@ class aide_logement_supplement_loyer_sr_bas_positif(Variable):
 
         charges = household("charges_locatives", period)
         loyer_reference = household("loyer_mensuel_reference", period)
-        aide_logement_neutralisation_loyer = household('aide_logement_neutralisation_loyer', period)
+        aide_logement_neutralisation_loyer = household(
+            "aide_logement_neutralisation_loyer", period
+        )
 
         typologie = household("typologie_logement", period)
 
         pa = parameters(
             period
         ).benefits.aide_logement.supplement_loyer.solde_revenu_positif_pourcentage_charges
-        a = pa * (loyer * (1 - aide_logement_neutralisation_loyer) + charges - loyer_reference * (1 - aide_logement_neutralisation_loyer))
+        a = pa * (
+            loyer * (1 - aide_logement_neutralisation_loyer)
+            + charges
+            - loyer_reference * (1 - aide_logement_neutralisation_loyer)
+        )
 
         pb = parameters(
             period
@@ -546,5 +558,5 @@ class aide_logement(Variable):
         return where(
             typologie_logement == TypologieLogement.maisonderetraite,
             montant,
-            where(loyer <= loyer_mensuel_plafond, montant, 0)
-            )
+            where(loyer <= loyer_mensuel_plafond, montant, 0),
+        )
