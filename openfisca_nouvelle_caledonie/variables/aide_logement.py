@@ -120,7 +120,7 @@ class aide_logement_nb_adultes(Variable):
 
 
 class aide_logement_nb_enfants(Variable):
-    value_type = int
+    value_type = float
     entity = Household
     definition_period = MONTH
 
