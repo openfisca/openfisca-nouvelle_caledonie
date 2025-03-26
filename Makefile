@@ -12,13 +12,13 @@ deps:
 	pip install --upgrade pip build twine
 
 install: deps
-	@# Install OpenFisca-Extension-Template for development.
-	@# `make install` installs the editable version of openfisca-country_template.
+	@# Install OpenFisca-Nouvelle-Caledonie for development.
+	@# `make install` installs the editable version of openfisca-nouvelle_caledonie.
 	@# This allows contributors to test as they code.
 	pip install --editable .[dev] --upgrade
 
 build: clean deps
-	@# Install OpenFisca-Extension-Template for deployment and publishing.
+	@# Install OpenFisca-Nouvelle-Caledonie for deployment and publishing.
 	@# `make build` allows us to be be sure tests are run against the packaged version
 	@# of OpenFisca-Extension-Template, the same we put in the hands of users and reusers.
 	python -m build

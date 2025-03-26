@@ -1,30 +1,25 @@
-Hi there!
+Hello hello !
 
-I really enjoy OpenFisca, but I recently encountered an issue.
+Je suis le fan numéro un d'OpenFisca, mais je viens de rencontrer un problème.
 
-### Here is what I did:
-
-
-### Here is what I expected to happen:
+### Qu'ai-je fait ?
 
 
-### Here is what actually happened:
+### À quoi m'attendais-je ?
 
 
-### Here is data (or links to it) that can help you reproduce this issue:
+### Que s'est-il passé en réalité ?
 
 
+### Voici des informations qui peuvent aider à reproduire le problème :
 
-## Context
 
-I identify more as a:
+### Contexte
 
-- Analyst _(I make macroscopic computations on real populations)_.
-- Business expert _(I create tests and model legislation)_.
-- Commenter _(I make data visualisations)_.
-- Developer _(I create tools that use the existing OpenFisca code)_.
-- Historian _(I accumulate data based on past legislation values)_.
-- Lobbyist _(I model reforms to make them exist)_.
-- Producer _(I make computations on individual situations)_.
+Je m'identifie plus en tant que :
 
-(remove this line as well as all items in the list that don't fit your situation)
+- [ ] Contributeur·e : je contribue à OpenFisca France.
+- [ ] Développeur·e : je crée des outils qui utilisent OpenFisca France.
+- [ ] Économiste : je réalise des simulations avec des données.
+- [ ] Mainteneur·e : j'intègre les contributions à OpenFisca France.
+- [ ] Autre : _(ajoutez une description du contexte dans lequel vous utilisez OpenFisca)_.
