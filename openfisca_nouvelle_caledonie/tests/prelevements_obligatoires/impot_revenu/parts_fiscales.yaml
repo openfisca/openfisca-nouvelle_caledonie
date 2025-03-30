@@ -1,0 +1,99 @@
+- name: Célibataire
+  period: 2024
+  absolute_error_margin: 0
+  input:
+    foyer_fiscal:
+      declarants:
+      - declarant
+    persons:
+      declarant:
+        statut_marital: celibataire
+  output:
+    parts_fiscales: 1
+
+
+- name: Couples mariés
+  period: 2024
+  absolute_error_margin: 0
+  input:
+    foyer_fiscal:
+      declarants:
+      - declarant
+      - conjoint
+    persons:
+      declarant:
+        statut_marital: marie
+      conjoint:
+        statut_marital: marie
+  output:
+    parts_fiscales: 2
+
+
+- name: Couples mariés avec 1 enfant
+  period: 2024
+  absolute_error_margin: 0
+  input:
+    foyer_fiscal:
+      declarants:
+      - declarant
+      - conjoint
+      enfants_a_charge:
+      - enfant
+    persons:
+      declarant:
+        statut_marital: marie
+      conjoint:
+        statut_marital: marie
+      enfant:
+        statut_marital: celibataire
+  output:
+    parts_fiscales: 2.5
+
+
+- name: Couples mariés avec 2 enfants
+  period: 2024
+  absolute_error_margin: 0
+  input:
+    foyer_fiscal:
+      declarants:
+      - declarant
+      - conjoint
+      enfants_a_charge:
+      - riri
+      - fifi
+    persons:
+      declarant:
+        statut_marital: marie
+      conjoint:
+        statut_marital: marie
+      riri:
+        statut_marital: celibataire
+      fifi:
+        statut_marital: celibataire
+  output:
+    parts_fiscales: 3
+
+
+- name: Couples mariés avec 2 enfants dont un invalide
+  period: 2024
+  absolute_error_margin: 0
+  input:
+    foyer_fiscal:
+      declarants:
+      - declarant
+      - conjoint
+      enfants_a_charge:
+      - riri
+      - fifi
+    persons:
+      declarant:
+        statut_marital: marie
+      conjoint:
+        statut_marital: marie
+      riri:
+        statut_marital: celibataire
+        taux_invalidite: .80
+      fifi:
+        statut_marital: celibataire
+  output:
+    parts_fiscales: 3.5
