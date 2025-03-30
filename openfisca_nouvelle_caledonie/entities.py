@@ -1,6 +1,5 @@
 from openfisca_core.entities import build_entity
 
-
 Household = build_entity(
     key="household",
     plural="households",
@@ -67,30 +66,29 @@ Person = build_entity(
 
 
 FoyerFiscal = build_entity(
-    key = 'foyer_fiscal',
-    plural = 'foyers_fiscaux',
-    label = 'Déclaration d’impôts',
-    doc = '''
+    key="foyer_fiscal",
+    plural="foyers_fiscaux",
+    label="Déclaration d’impôts",
+    doc="""
     Le foyer fiscal désigne l'ensemble des personnes inscrites sur une même déclaration de revenus.
     Il peut y avoir plusieurs foyers fiscaux dans un seul ménage : par exemple, un couple non marié où chacun remplit
     sa propre déclaration de revenus compte pour deux foyers fiscaux.
-    ''',
-    roles = [
+    """,
+    roles=[
         {
-            'key': 'declarant',
-            'plural': 'declarants',
-            'label': 'Déclarants',
-            'subroles': ['declarant_principal', 'conjoint'],
-            },
+            "key": "declarant",
+            "plural": "declarants",
+            "label": "Déclarants",
+            "subroles": ["declarant_principal", "conjoint"],
+        },
         {
-            'key': 'personne_a_charge',
-            'plural': 'personnes_a_charge',
-            'label': 'Personnes à charge',
-            'subroles': ['enfants', 'ascendnants', 'enfants_accueillis'],
-            },
-        ]
-    )
-
+            "key": "personne_a_charge",
+            "plural": "personnes_a_charge",
+            "label": "Personnes à charge",
+            "subroles": ["enfants", "ascendnants", "enfants_accueillis"],
+        },
+    ],
+)
 
 
 entities = [FoyerFiscal, Household, Person]

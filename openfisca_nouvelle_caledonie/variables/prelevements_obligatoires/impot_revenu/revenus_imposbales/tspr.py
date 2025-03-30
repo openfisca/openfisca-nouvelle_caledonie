@@ -35,30 +35,29 @@ from openfisca_nouvelle_caledonie.entities import Person as Individu
 
 class salaire_imposable(Variable):
     value_type = float
-    unit = 'currency'
+    unit = "currency"
     cerfa_field = {
-        0: 'NA',
-        1: 'NB',
-        2: 'NC',
-        }
+        0: "NA",
+        1: "NB",
+        2: "NC",
+    }
     entity = Individu
-    label = 'Salaires imposables'
+    label = "Salaires imposables"
     # set_input = set_input_divide_by_period
     definition_period = YEAR
 
 
 class frais_reels(Variable):
     cerfa_field = {
-        0: 'OA',
-        1: 'OB',
-        2: 'OC',
-        }
+        0: "OA",
+        1: "OB",
+        2: "OC",
+    }
     value_type = int
-    unit = 'currency'
+    unit = "currency"
     entity = Individu
-    label = 'Frais réels'
+    label = "Frais réels"
     definition_period = YEAR
-
 
 
 # PENSIONS, RETRAITES ET RENTES À TITRE GRATUIT
@@ -90,27 +89,27 @@ class frais_reels(Variable):
 
 
 class pension_retraite_rente_imposables(Variable):
-    unit = 'currency'
+    unit = "currency"
     value_type = float
     cerfa_field = {
-        0: 'PA',
-        1: 'PB',
-        2: 'PC',
-        }
+        0: "PA",
+        1: "PB",
+        2: "PC",
+    }
     entity = Individu
-    label = 'Pensions, retraites et rentes au sens strict imposables (rentes à titre onéreux exclues)'
+    label = "Pensions, retraites et rentes au sens strict imposables (rentes à titre onéreux exclues)"
     # set_input = set_input_divide_by_period
     definition_period = YEAR
 
 
 class gerant_sarl_selarl_sci_cotisant_ruamm(Variable):
-    unit = 'currency'
+    unit = "currency"
     value_type = bool
     cerfa_field = {
-        0: 'NJ',
-        1: 'NK',
-        2: 'NL',
-        }
+        0: "NJ",
+        1: "NK",
+        2: "NL",
+    }
     entity = Individu
     label = "Gérant de SARL, SELARL ou SCI soumise à l'IS cotisant au RUAMM"
     # set_input = set_input_divide_by_period
@@ -118,13 +117,13 @@ class gerant_sarl_selarl_sci_cotisant_ruamm(Variable):
 
 
 class cotisations_retraite_gerant_cotisant_ruamm(Variable):
-    unit = 'currency'
+    unit = "currency"
     value_type = float
     cerfa_field = {
-        0: 'OD',
-        1: 'OE',
-        2: 'OF',
-        }
+        0: "OD",
+        1: "OE",
+        2: "OF",
+    }
     entity = Individu
     label = "Cotisations retraite des gérant de SARL, SELARL ou SCI soumise à l'IS cotisant au RUAMM"
     # set_input = set_input_divide_by_period
@@ -132,13 +131,13 @@ class cotisations_retraite_gerant_cotisant_ruamm(Variable):
 
 
 class autres_cotisations_gerant_cotisant_ruamm(Variable):
-    unit = 'currency'
+    unit = "currency"
     value_type = float
     cerfa_field = {
-        0: 'OG',
-        1: 'OH',
-        2: 'OI',
-        }
+        0: "OG",
+        1: "OH",
+        2: "OI",
+    }
     entity = Individu
     label = "Cotisations retraite des gérant de SARL, SELARL ou SCI soumise à l'IS cotisant au RUAMM"
     # set_input = set_input_divide_by_period

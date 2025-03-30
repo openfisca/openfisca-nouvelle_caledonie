@@ -534,9 +534,7 @@ class aide_logement_montant(Variable):
     label = "Aide au logement"
 
     def formula(household, period, parameters):
-        seuil_paiement = parameters(
-            period
-        ).benefits.aide_logement.seuil_paiement
+        seuil_paiement = parameters(period).benefits.aide_logement.seuil_paiement
 
         loyer = household("aide_logement_loyer", period)
         supplement_loyer = household("aide_logement_supplement_loyer", period)

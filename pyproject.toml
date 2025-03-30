@@ -42,6 +42,7 @@ urls.Repository = "https://github.com/openfisca/openfisca-nouvelle_caledonie"
 target-version = "py39"
 format.docstring-code-line-length = 72
 format.docstring-code-format = true
+# format.quote-style = "single"
 lint.select = [ "ALL" ]
 lint.ignore = [
     "ANN",

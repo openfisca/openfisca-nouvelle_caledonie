@@ -13,8 +13,8 @@ from openfisca_nouvelle_caledonie.entities import FoyerFiscal
 
 class revenus_de_source_exterieur(Variable):
     value_type = float
-    unit = 'currency'
-    cerfa_field = 'VA'
+    unit = "currency"
+    cerfa_field = "VA"
     entity = FoyerFiscal
-    label = 'Revenus de source extérieure à la Nouvelle-Calédonie'
+    label = "Revenus de source extérieure à la Nouvelle-Calédonie"
     definition_period = YEAR

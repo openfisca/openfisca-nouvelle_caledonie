@@ -1,8 +1,5 @@
 from openfisca_core.model_api import *
-
-
 from openfisca_nouvelle_caledonie.entities import FoyerFiscal
-
 
 # REVENUS FONCIERS
 
@@ -19,8 +16,8 @@ from openfisca_nouvelle_caledonie.entities import FoyerFiscal
 
 class revenus_fonciers_soumis_ir(Variable):
     value_type = float
-    unit = 'currency'
-    cerfa_field = 'AA'
+    unit = "currency"
+    cerfa_field = "AA"
     entity = FoyerFiscal
     label = "Revenus fonciers soumis à l'IR"
     definition_period = YEAR
@@ -28,8 +25,8 @@ class revenus_fonciers_soumis_ir(Variable):
 
 class revenus_fonciers_soumis_ccs(Variable):
     value_type = float
-    unit = 'currency'
-    cerfa_field = 'AD'
+    unit = "currency"
+    cerfa_field = "AD"
     entity = FoyerFiscal
     label = "Revenus fonciers soumis à la CCS"
     definition_period = YEAR
@@ -37,8 +34,8 @@ class revenus_fonciers_soumis_ccs(Variable):
 
 class deficits_fonciers(Variable):
     value_type = float
-    unit = 'currency'
-    cerfa_field = 'AG'
+    unit = "currency"
+    cerfa_field = "AG"
     entity = FoyerFiscal
     label = "Déficits fonciers"
     definition_period = YEAR

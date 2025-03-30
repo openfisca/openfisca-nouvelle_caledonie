@@ -1,18 +1,17 @@
 from openfisca_core.model_api import *
-
 from openfisca_nouvelle_caledonie.entities import Person as Individu
-
 
 # BÉNÉFICES AGRICOLES (BA)
 
+
 class chiffre_d_daffaires_agricole_ht_imposable(Variable):
-    unit = 'currency'
+    unit = "currency"
     value_type = float
     cerfa_field = {
-        0: 'GA',
-        1: 'GB',
-        2: 'GC',
-        }
+        0: "GA",
+        1: "GB",
+        2: "GC",
+    }
     entity = Individu
     label = "Chiffre d’affaires hors taxes tiré des exploitations agricoles imposables"
     definition_period = YEAR
@@ -20,20 +19,20 @@ class chiffre_d_daffaires_agricole_ht_imposable(Variable):
 
 
 class chiffre_d_daffaires_agricole_ht_exonere(Variable):
-    unit = 'currency'
+    unit = "currency"
     value_type = float
     cerfa_field = {
-        0: 'GD',
-        1: 'GE',
-        2: 'GF',
-        }
+        0: "GD",
+        1: "GE",
+        2: "GF",
+    }
     entity = Individu
     label = "Chiffre d’affaires hors taxes tiré des exploitations agricoles exonérées en vertu d’un bail rural"
     definition_period = YEAR
 
 
 class ba(Variable):
-    unit = 'currency'
+    unit = "currency"
     value_type = float
     entity = Individu
     label = "Bénéfices agricoles"
@@ -41,27 +40,29 @@ class ba(Variable):
 
     def formula(foyer_fiscal, period, parameters):
         # Le bénéfice, égal à 1/6 e de ce chiffre d’affaires sera déterminé automatiquement.
-        diviseur = parameters(period).prelevements_obligatoires.impot_revenus.imposables.travailleurs_independants.ba.diviseur_ca
+        diviseur = parameters(
+            period
+        ).prelevements_obligatoires.impot_revenus.imposables.travailleurs_independants.ba.diviseur_ca
         return (
             foyer_fiscal("chiffre_d_daffaires_agricole_ht_imposable", period)
             + foyer_fiscal("chiffre_d_daffaires_agricole_ht_exonere", period)
-            ) / diviseur
+        ) / diviseur
 
 
 # BÉNÉFICES INDUSTRIELS ET COMMERCIAUX (BIC)
 
 
-
 # BÉNÉFICES NON COMMERCIAUX (BNC)
 
+
 class bnc_recettes_ht(Variable):
-    unit = 'currency'
+    unit = "currency"
     value_type = float
     cerfa_field = {
-        0: 'HA',
-        1: 'HB',
-        2: 'HC',
-        }
+        0: "HA",
+        1: "HB",
+        2: "HC",
+    }
     entity = Individu
     label = "Recettes annuelles des bénéfices non-commerciaux"
     definition_period = YEAR
@@ -77,27 +78,28 @@ class bnc_recettes_ht(Variable):
 # Pour davantage de précisions, un dépliant d’information est à votre disposition dans
 # nos locaux ou sur notre site dsf.gouv.nc.
 
+
 class cotisations_retraite_exploitant(Variable):
-    unit = 'currency'
+    unit = "currency"
     value_type = float
     cerfa_field = {
-        0: 'QA',
-        1: 'QB',
-        2: 'QC',
-        }
+        0: "QA",
+        1: "QB",
+        2: "QC",
+    }
     entity = Individu
     label = "Cotisations retraite personnelles de l'exploitant"
     definition_period = YEAR
 
 
 class cotisations_ruamm_mutuelle_ccs_exploitant(Variable):
-    unit = 'currency'
+    unit = "currency"
     value_type = float
     cerfa_field = {
-        0: 'QD',
-        1: 'QE',
-        2: 'QF',
-        }
+        0: "QD",
+        1: "QE",
+        2: "QF",
+    }
     entity = Individu
     label = "Cotisations RUAMM, mutuelle et CSS personnelles de l'exploitant"
     definition_period = YEAR
