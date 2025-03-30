@@ -1,6 +1,9 @@
 from openfisca_core.model_api import *
 
 
+from openfisca_nouvelle_caledonie.entities import FoyerFiscal
+
+
 # REVENUS FONCIERS
 
 # Si vous avez disposé de revenus locatifs en 2024, vous devez renseigner obliga-
