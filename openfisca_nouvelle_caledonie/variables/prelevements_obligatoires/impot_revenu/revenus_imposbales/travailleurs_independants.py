@@ -1,4 +1,5 @@
 from openfisca_core.model_api import *
+
 from openfisca_nouvelle_caledonie.entities import Person as Individu
 
 
@@ -43,7 +44,7 @@ class ba(Variable):
         return (
             foyer_fiscal("chiffre_d_daffaires_agricole_ht_imposable", period)
             + foyer_fiscal("chiffre_d_daffaires_agricole_ht_exonere", period)
-            ) / 6
+            ) / 6  # TODO mettre dans les paramètres
 
 
 # BÉNÉFICES INDUSTRIELS ET COMMERCIAUX (BIC)
