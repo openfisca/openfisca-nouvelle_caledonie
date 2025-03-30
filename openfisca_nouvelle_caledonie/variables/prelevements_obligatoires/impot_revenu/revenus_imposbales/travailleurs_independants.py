@@ -41,10 +41,11 @@ class ba(Variable):
 
     def formula(foyer_fiscal, period, parameters):
         # Le bénéfice, égal à 1/6 e de ce chiffre d’affaires sera déterminé automatiquement.
+        diviseur = parameters(period).prelevements_obligatoires.impot_revenus.imposables.travailleurs_independants.ba.diviseur_ca
         return (
             foyer_fiscal("chiffre_d_daffaires_agricole_ht_imposable", period)
             + foyer_fiscal("chiffre_d_daffaires_agricole_ht_exonere", period)
-            ) / 6  # TODO mettre dans les paramètres
+            ) / diviseur
 
 
 # BÉNÉFICES INDUSTRIELS ET COMMERCIAUX (BIC)
