@@ -4,13 +4,11 @@
   input:
     foyer_fiscal:
       declarants:
-      - ind0
+      - individu_0
     persons:
-      ind0:
-        # date_naissance: '1970-01-01'
+      individu_0:
         chiffre_d_daffaires_agricole_ht_imposable: 100_000
-        # statut_marital: celibataire
     menage:
-      personne_de_reference: ind0
+      personne_de_reference: individu_0
   output:
-    ba: 100000 /6
+    ba: 100000 / 6

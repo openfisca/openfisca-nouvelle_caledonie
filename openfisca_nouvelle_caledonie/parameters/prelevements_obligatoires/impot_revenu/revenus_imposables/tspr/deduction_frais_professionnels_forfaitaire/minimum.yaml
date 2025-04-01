@@ -1,0 +1,11 @@
+description: Montant minimum de la déduction pour frais professionnels forfaitaire
+values:
+  2024-01-01:
+    value: 50_000
+metadata:
+  short_label: Minimum
+  label_en: Minimum amount of the flat-rate deduction for professional expenses
+  unit: currency
+  reference:
+    2024-01-01:
+      title: TODO (et corriger date)

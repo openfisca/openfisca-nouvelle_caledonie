@@ -1,0 +1,8 @@
+description: Déduction pour frais professionnels forfaitaire
+metadata:
+  short_label: Déduction pour frais professionnels forfaitaire
+  label_en: Flat-rate deduction for professional expenses
+  order:
+  - taux
+  - minimum
+  - plafond

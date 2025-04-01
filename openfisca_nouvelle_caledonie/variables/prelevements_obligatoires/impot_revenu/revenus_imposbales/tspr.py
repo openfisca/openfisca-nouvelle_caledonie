@@ -1,5 +1,5 @@
 from openfisca_core.model_api import *
-from openfisca_nouvelle_caledonie.entities import Person as Individu
+from openfisca_nouvelle_caledonie.entities import FoyerFiscal, Person as Individu
 
 # TRAITEMENT, SALAIRES
 
@@ -142,3 +142,44 @@ class autres_cotisations_gerant_cotisant_ruamm(Variable):
     label = "Cotisations retraite des gérant de SARL, SELARL ou SCI soumise à l'IS cotisant au RUAMM"
     # set_input = set_input_divide_by_period
     definition_period = YEAR
+
+
+
+class revenus_categoriels_tspr(Variable):
+    value_type = float
+    entity = FoyerFiscal
+    label = 'Revenus catégoriels des traitements, salaires, pensions et rentes'
+    definition_period = YEAR
+
+    def formula(foyer_fiscal, period, parameters):
+        '''
+        Revenus Categoriels des traitements, salaires, pensions et rentes
+        '''
+
+        # TODO: les abbatement se fontt-ils salaire par salaire ou sur l'enemble du foyer fiscal ?
+        salaire_imposable = foyer_fiscal.sum(foyer_fiscal.members('salaire_imposable', period))
+        frais_professionnels_forfaitaire = parameters(period).prelevements_obligatoires.impot_revenu.revenus_imposables.tspr.deduction_frais_professionnels_forfaitaire
+        deduction_forfaitaire = min_(
+            max_(
+                salaire_imposable * frais_professionnels_forfaitaire.taux,
+                frais_professionnels_forfaitaire.minimum
+                ),
+            frais_professionnels_forfaitaire.plafond
+            )
+        salaire_apres_deduction = max_(salaire_imposable - deduction_forfaitaire, 0)
+
+        pension_imposable = foyer_fiscal.sum(foyer_fiscal.members('pension_retraite_rente_imposables', period))
+        abattement_pension = parameters(period).prelevements_obligatoires.impot_revenu.revenus_imposables.tspr.abattement_pension
+        montant_abattement_pension = min_(
+            max_(
+                pension_imposable * abattement_pension.taux,
+                abattement_pension.minimum
+                ),
+            abattement_pension.plafond
+            )
+        pension_apres_abattement = max_(pension_imposable - montant_abattement_pension, 0)
+
+
+        # TODO revenus gérant et cotisations
+
+        return salaire_apres_deduction + pension_apres_abattement

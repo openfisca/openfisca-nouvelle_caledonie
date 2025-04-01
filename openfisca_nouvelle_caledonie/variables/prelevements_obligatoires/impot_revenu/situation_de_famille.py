@@ -126,7 +126,7 @@ class parts_fiscales(Variable):
                 ),
             role = FoyerFiscal.ENFANT_A_CHARGE,
             )
-        # TODO; mettre ces parts dans les paramètres
+        # TODO: mettre ces parts dans les paramètres
         parts_ascendants = foyer_fiscal.nb_persons(role = FoyerFiscal.ASCENDANT_A_CHARGE) * .5
 
         return parts_de_base + parts_enfants + parts_ascendants
