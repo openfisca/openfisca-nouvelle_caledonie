@@ -1,0 +1,11 @@
+description: Plafond de la déduction pour travaux immobiliers ou travaux et achats d'équipelets verts
+values:
+  2024-01-01:
+    value: 2_000_000
+metadata:
+  short_label: Plafond déduction travaux
+  label_en: Ceiling of the deduction for real estate work or work and purchase of green teamlets
+  unit: currency
+  reference:
+    2024-01-01:
+      title: TODO (et corriger date)
