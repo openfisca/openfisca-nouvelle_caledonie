@@ -2,7 +2,7 @@
 
 # 8.0.0 [#159](https://github.com/openfisca/openfisca-nouvelle_caledonie/pull/2)
 
-* Technical improvement.
+* Amélioration technique.
 * Details:
   - Commence le grand nettoyage pour aller vers un dépôt fonctionnel dédié à la Nouvelle Calédonie
 
