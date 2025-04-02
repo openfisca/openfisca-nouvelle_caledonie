@@ -1,5 +1,11 @@
 # Changelog
 
+# 8.0.0 [#159](https://github.com/openfisca/openfisca-nouvelle_caledonie/pull/2)
+
+* Amélioration technique.
+* Details:
+  - Commence le grand nettoyage pour aller vers un dépôt fonctionnel dédié à la Nouvelle Calédonie
+
 ### 7.1.8 [#159](https://github.com/openfisca/country-template/pull/159)
 
 * Crash fix
@@ -30,14 +36,14 @@
 
 ### 7.1.4 [#153](https://github.com/openfisca/country-template/pull/153)
 
-* Technical improvement. 
+* Technical improvement.
 * Details:
   - Update README.md references to latest supported python (3.11)
   - Reorder pyproject.toml content to match official example
 
 ### 7.1.3 [#152](https://github.com/openfisca/country-template/pull/147)
 
-* Technical improvement. 
+* Technical improvement.
 * Details:
   - Update classifiers in pyproject.toml to include all supported versions of python
 
