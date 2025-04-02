@@ -30,7 +30,8 @@ brackets:
   rate:
     2020-01-01:
       value: 0.40
+metadata:
   rate_unit: /1
-  threshold_unit: currency_next_year
+  threshold_unit: currency-FCP
 documentation: |-
   TODO: étendre
