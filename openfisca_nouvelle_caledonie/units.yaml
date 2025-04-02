@@ -1,0 +1,6 @@
+- name: /1
+  label:
+    one: pourcent
+    other: pourcents
+  ratio: true
+  short_label: "%"
