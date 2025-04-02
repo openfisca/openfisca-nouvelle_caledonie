@@ -4,3 +4,43 @@
     other: pourcents
   ratio: true
   short_label: "%"
+- name: currency-FCP
+  label:
+    one: Franc Caraïbes et Pacifique
+    other: Francs Caraïbes et Pacifique
+  units:
+    2002-01-01:
+      label:
+        one: FCP
+        other: FCP
+      name: currency-FCP
+      short_label: FCP
+- name: currency-EUR
+  label:
+    one: Euro
+    other: Euros
+  units:
+    2002-01-01:
+      label:
+        one: Euro
+        other: Euros
+      name: currency-EUR
+      short_label: €
+- name: currency-EUR/m2
+  label:
+    one: Euro/m2
+    other: Euros/m2
+  units:
+    2002-01-01:
+      label:
+        one: Euro/m2
+        other: Euros/m2
+      name: currency-EUR/m2
+      short_label: €/m2
+- name: year
+  label:
+    one: année
+    other: années
+  short_label:
+    one: an
+    other: ans
