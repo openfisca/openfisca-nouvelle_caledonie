@@ -10,6 +10,7 @@
     other: Francs  des collectivités françaises du Pacifique
   short_label: F.FCP
 - name: currency-XFP
+  label:
     one: Franc des collectivités françaises du Pacifique
     other: Francs  des collectivités françaises du Pacifique
   short_label: F.FCFP
