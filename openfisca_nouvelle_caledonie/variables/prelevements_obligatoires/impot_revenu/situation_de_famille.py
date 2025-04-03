@@ -20,10 +20,8 @@ class statut_marital(Variable):
     entity = Individu
     label = 'Statut marital'
     definition_period = YEAR
-    # definition_period = MONTH
-    # set_input = set_input_dispatch_by_period
 
-    def formula(individu, period, parameters):
+    def formula(individu):
         # Par défault, on considère que deux adultes dans un foyer fiscal sont PACSÉS
         deux_adultes = individu.foyer_fiscal.nb_persons(FoyerFiscal.DECLARANT) >= 2
         return where(deux_adultes, TypesStatutMarital.pacse, TypesStatutMarital.celibataire)
@@ -35,8 +33,6 @@ class enfant_en_garde_alternee(Variable):
     entity = Individu
     label = 'Enfant en garde alternée'
     definition_period = YEAR
-    # definition_period = MONTH
-    # set_input = set_input_dispatch_by_period
 
 
 class etudiant_hors_nc(Variable):
@@ -45,8 +41,6 @@ class etudiant_hors_nc(Variable):
     entity = Individu
     label = "Etudiant hors de la Nouvelle Calédonie l'année considérée"
     definition_period = YEAR
-    # definition_period = MONTH
-    # set_input = set_input_dispatch_by_period
 
 
 class handicape_cejh(Variable):
@@ -55,8 +49,6 @@ class handicape_cejh(Variable):
     entity = Individu
     label = 'Handicapé titualaire de la carte CEJH'
     definition_period = YEAR
-    # definition_period = MONTH
-    # set_input = set_input_dispatch_by_period
 
 
 class taux_invalidite(Variable):
@@ -65,8 +57,6 @@ class taux_invalidite(Variable):
     entity = Individu
     label = "Taux d'invalidité"
     definition_period = YEAR
-    # definition_period = MONTH
-    # set_input = set_input_dispatch_by_period
 
 
 class parts_fiscales(Variable):
@@ -75,7 +65,7 @@ class parts_fiscales(Variable):
     label = 'Nombre de parts'
     definition_period = YEAR
 
-    def formula(foyer_fiscal, period, parameters):
+    def formula(foyer_fiscal, period):
 
         statut_marital = foyer_fiscal.declarant_principal('statut_marital', period)
         celibataire_ou_divorce = (

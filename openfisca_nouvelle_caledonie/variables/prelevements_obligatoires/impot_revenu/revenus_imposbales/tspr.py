@@ -43,7 +43,6 @@ class salaire_imposable(Variable):
     }
     entity = Individu
     label = "Salaires imposables"
-    # set_input = set_input_divide_by_period
     definition_period = YEAR
 
 
@@ -52,7 +51,7 @@ class frais_reels(Variable):
         0: "OA",
         1: "OB",
         2: "OC",
-    }
+        }
     value_type = int
     unit = "currency"
     entity = Individu
@@ -95,10 +94,9 @@ class pension_retraite_rente_imposables(Variable):
         0: "PA",
         1: "PB",
         2: "PC",
-    }
+        }
     entity = Individu
     label = "Pensions, retraites et rentes au sens strict imposables (rentes à titre onéreux exclues)"
-    # set_input = set_input_divide_by_period
     definition_period = YEAR
 
 
@@ -109,10 +107,9 @@ class gerant_sarl_selarl_sci_cotisant_ruamm(Variable):
         0: "NJ",
         1: "NK",
         2: "NL",
-    }
+        }
     entity = Individu
     label = "Gérant de SARL, SELARL ou SCI soumise à l'IS cotisant au RUAMM"
-    # set_input = set_input_divide_by_period
     definition_period = YEAR
 
 
@@ -126,7 +123,6 @@ class cotisations_retraite_gerant_cotisant_ruamm(Variable):
     }
     entity = Individu
     label = "Cotisations retraite des gérant de SARL, SELARL ou SCI soumise à l'IS cotisant au RUAMM"
-    # set_input = set_input_divide_by_period
     definition_period = YEAR
 
 
@@ -140,7 +136,6 @@ class autres_cotisations_gerant_cotisant_ruamm(Variable):
     }
     entity = Individu
     label = "Cotisations retraite des gérant de SARL, SELARL ou SCI soumise à l'IS cotisant au RUAMM"
-    # set_input = set_input_divide_by_period
     definition_period = YEAR
 
 
@@ -180,6 +175,6 @@ class revenus_categoriels_tspr(Variable):
         pension_apres_abattement = max_(pension_imposable - montant_abattement_pension, 0)
 
 
-        # TODO revenus gérant et cotisations
+        # TODO: revenus gérant et cotisations
 
         return salaire_apres_deduction + pension_apres_abattement

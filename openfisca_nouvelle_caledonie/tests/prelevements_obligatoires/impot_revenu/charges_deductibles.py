@@ -138,7 +138,7 @@ class deduction_interets_emprunt(Variable):
             min_(
                 travaux_immobiliers + equipements_verts,
                 plafond
-                )
+                ),
             0
             )
 
