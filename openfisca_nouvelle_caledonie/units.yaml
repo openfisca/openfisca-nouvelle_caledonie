@@ -13,7 +13,7 @@
   label:
     one: Franc Caraïbes et Pacifique
     other: Francs Caraïbes et Pacifique
-    short_label: FCP
+  short_label: FCP
 - name: currency-EUR
   label:
     one: Euro
