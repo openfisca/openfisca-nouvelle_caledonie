@@ -4,17 +4,16 @@
     other: pourcents
   ratio: true
   short_label: "%"
+- name: currency
+  label:
+    one: Franc Caraïbes et Pacifique
+    other: Francs Caraïbes et Pacifique
+    short_label: FCP
 - name: currency-FCP
   label:
     one: Franc Caraïbes et Pacifique
     other: Francs Caraïbes et Pacifique
-  units:
-    2002-01-01:
-      label:
-        one: FCP
-        other: FCP
-      name: currency-FCP
-      short_label: FCP
+    short_label: FCP
 - name: currency-EUR
   label:
     one: Euro
