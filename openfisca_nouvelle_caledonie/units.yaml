@@ -8,12 +8,12 @@
   label:
     one: Franc des collectivités françaises du Pacifique
     other: Francs  des collectivités françaises du Pacifique
-  short_label: F.FCP
-- name: currency-XFP
+  short_label: F.CFP
+- name: currency-XPF
   label:
     one: Franc des collectivités françaises du Pacifique
     other: Francs  des collectivités françaises du Pacifique
-  short_label: F.FCFP
+  short_label: F.CFP
 - name: currency-EUR
   label:
     one: Euro
