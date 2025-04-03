@@ -1,7 +1,10 @@
 description: Participation minimale
-metadata:
-  reference: Article 8 de la délibération n° 286 du 18 avril 2007
-  unit: currency-FCP
 values:
   2015-12-01:
     value: 40000
+metadata:
+  label_en: Minimum participation
+  unit: currency-FCP
+  reference:
+    2015-12-01:
+      title: Article 8 de la délibération n° 286 du 18 avril 2007
