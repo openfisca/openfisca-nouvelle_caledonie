@@ -1,7 +1,7 @@
 description: Loyer mensuel de référence
 metadata:
   reference: Article 10 de la délibération n° 286 du 18 avril 2007
-  unit: currency-FCP
+  unit: currency-XCP
 chambre:
   2015-12-01:
     value: 27000

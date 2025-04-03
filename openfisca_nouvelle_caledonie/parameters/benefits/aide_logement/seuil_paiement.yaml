@@ -1,6 +1,6 @@
 description: Seuil de paiement
 metadata:
-  unit: currency-FCP
+  unit: currency-XCP
 values:
   2015-12-01:
     value: 2000

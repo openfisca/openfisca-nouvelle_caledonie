@@ -32,6 +32,6 @@ brackets:
       value: 0.40
 metadata:
   rate_unit: /1
-  threshold_unit: currency-FCP
+  threshold_unit: currency-XCP
 documentation: |-
   TODO: étendre
