@@ -51,7 +51,9 @@ lint.ignore = [
     "D102",
     "D104",
     "E501",
+    "F403",
     "F405",
+    "FIX002",
     "I001",
     "ISC001",
     "N801",
@@ -62,6 +64,9 @@ lint.ignore = [
     "PTH118",
     "PTH120",
     "PTH123",
+    "TD002",
+    "TD003",
+
 ]
 lint.pydocstyle.convention = "google"
 
