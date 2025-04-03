@@ -80,24 +80,24 @@ FoyerFiscal = build_entity(
             "plural": "declarants",
             "label": "Déclarants",
             "subroles": ["declarant_principal", "conjoint"],
-            },
+        },
         {
             "key": "enfant_a_charge",
             "plural": "enfants_a_charge",
             "label": "Enfants à charge",
-            },
+        },
         {
             "key": "ascendant_a_charge",
             "plural": "ascendants_a_charge",
             "label": "Ascendants à charge",
-            },
+        },
         {
             "key": "enfant_accueilli",
             "plural": "enfants_accueillis",
             "label": "Enfnts accueillis",
-            }
-        ],
-    )
+        },
+    ],
+)
 
 
 entities = [FoyerFiscal, Household, Person]

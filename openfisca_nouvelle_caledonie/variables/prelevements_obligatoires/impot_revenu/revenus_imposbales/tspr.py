@@ -51,7 +51,7 @@ class frais_reels(Variable):
         0: "OA",
         1: "OB",
         2: "OC",
-        }
+    }
     value_type = int
     unit = "currency"
     entity = Individu
@@ -94,7 +94,7 @@ class pension_retraite_rente_imposables(Variable):
         0: "PA",
         1: "PB",
         2: "PC",
-        }
+    }
     entity = Individu
     label = "Pensions, retraites et rentes au sens strict imposables (rentes à titre onéreux exclues)"
     definition_period = YEAR
@@ -107,7 +107,7 @@ class gerant_sarl_selarl_sci_cotisant_ruamm(Variable):
         0: "NJ",
         1: "NK",
         2: "NL",
-        }
+    }
     entity = Individu
     label = "Gérant de SARL, SELARL ou SCI soumise à l'IS cotisant au RUAMM"
     definition_period = YEAR
@@ -139,41 +139,48 @@ class autres_cotisations_gerant_cotisant_ruamm(Variable):
     definition_period = YEAR
 
 
-
 class revenus_categoriels_tspr(Variable):
     value_type = float
     entity = FoyerFiscal
-    label = 'Revenus catégoriels des traitements, salaires, pensions et rentes'
+    label = "Revenus catégoriels des traitements, salaires, pensions et rentes"
     definition_period = YEAR
 
     def formula(foyer_fiscal, period, parameters):
-        '''
+        """
         Revenus Categoriels des traitements, salaires, pensions et rentes
-        '''
+        """
 
         # TODO: les abbatement se fontt-ils salaire par salaire ou sur l'enemble du foyer fiscal ?
-        salaire_imposable = foyer_fiscal.sum(foyer_fiscal.members('salaire_imposable', period))
-        frais_professionnels_forfaitaire = parameters(period).prelevements_obligatoires.impot_revenu.revenus_imposables.tspr.deduction_frais_professionnels_forfaitaire
+        salaire_imposable = foyer_fiscal.sum(
+            foyer_fiscal.members("salaire_imposable", period)
+        )
+        frais_professionnels_forfaitaire = parameters(
+            period
+        ).prelevements_obligatoires.impot_revenu.revenus_imposables.tspr.deduction_frais_professionnels_forfaitaire
         deduction_forfaitaire = min_(
             max_(
                 salaire_imposable * frais_professionnels_forfaitaire.taux,
-                frais_professionnels_forfaitaire.minimum
-                ),
-            frais_professionnels_forfaitaire.plafond
-            )
+                frais_professionnels_forfaitaire.minimum,
+            ),
+            frais_professionnels_forfaitaire.plafond,
+        )
         salaire_apres_deduction = max_(salaire_imposable - deduction_forfaitaire, 0)
 
-        pension_imposable = foyer_fiscal.sum(foyer_fiscal.members('pension_retraite_rente_imposables', period))
-        abattement_pension = parameters(period).prelevements_obligatoires.impot_revenu.revenus_imposables.tspr.abattement_pension
+        pension_imposable = foyer_fiscal.sum(
+            foyer_fiscal.members("pension_retraite_rente_imposables", period)
+        )
+        abattement_pension = parameters(
+            period
+        ).prelevements_obligatoires.impot_revenu.revenus_imposables.tspr.abattement_pension
         montant_abattement_pension = min_(
             max_(
-                pension_imposable * abattement_pension.taux,
-                abattement_pension.minimum
-                ),
-            abattement_pension.plafond
-            )
-        pension_apres_abattement = max_(pension_imposable - montant_abattement_pension, 0)
-
+                pension_imposable * abattement_pension.taux, abattement_pension.minimum
+            ),
+            abattement_pension.plafond,
+        )
+        pension_apres_abattement = max_(
+            pension_imposable - montant_abattement_pension, 0
+        )
 
         # TODO: revenus gérant et cotisations
 

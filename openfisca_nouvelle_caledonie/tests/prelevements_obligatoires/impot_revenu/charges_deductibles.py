@@ -1,5 +1,4 @@
-'''Charges déductibles du revenu global'''
-
+"""Charges déductibles du revenu global"""
 
 from openfisca_core.model_api import *
 from openfisca_nouvelle_caledonie.entities import FoyerFiscal
@@ -13,7 +12,6 @@ from openfisca_nouvelle_caledonie.entities import FoyerFiscal
 # celle de votre acceptation de l’offre de prêt. Inscrivez dans la case correspondant à
 # la situation du bien et à la date du prêt le total intérêts + assurance décès versés
 # en 2024.
-
 
 
 class interets_emprunt_noumea_etc_recents(Variable):
@@ -79,7 +77,6 @@ class deduction_interets_emprunt(Variable):
     label = "Charges déductibles du revenu global au titre des intérêts d’emprunt pour votre résidence principale"
     definition_period = YEAR
 
-
     def formula(foyer_fiscal, period, parameters):
         """
         Calcul des charges déductibles du revenu global au titre des intérêts d’emprunt
@@ -88,18 +85,21 @@ class deduction_interets_emprunt(Variable):
 
         # Récupération des variables d'intérêts d'emprunt
         interets_emprunt_noumea_etc_recents = foyer_fiscal(
-            interets_emprunt_noumea_etc_recents, period)
+            interets_emprunt_noumea_etc_recents, period
+        )
         interets_emprunt_noumea_etc_moins_recents = foyer_fiscal(
-            interets_emprunt_noumea_etc_moins_recents, period)
+            interets_emprunt_noumea_etc_moins_recents, period
+        )
         interets_emprunt_hors_noumea_etc_et_anciens = foyer_fiscal(
-            interets_emprunt_hors_noumea_etc_et_anciens, period)
+            interets_emprunt_hors_noumea_etc_et_anciens, period
+        )
 
         # Calcul de la déduction
         # TODO appliquer les palfonds et dates de prêt
         return (
-            interets_emprunt_noumea_etc_recents +
-            interets_emprunt_noumea_etc_moins_recents +
-            interets_emprunt_hors_noumea_etc_et_anciens
+            interets_emprunt_noumea_etc_recents
+            + interets_emprunt_noumea_etc_moins_recents
+            + interets_emprunt_hors_noumea_etc_et_anciens
         )
 
 
@@ -134,13 +134,7 @@ class deduction_interets_emprunt(Variable):
 
         plafond = parameters(period).impot_revenu.charges_deductibles.travaux.plafond
         plafond_travaux_immobiliers
-        return max(
-            min_(
-                travaux_immobiliers + equipements_verts,
-                plafond
-                ),
-            0
-            )
+        return max(min_(travaux_immobiliers + equipements_verts, plafond), 0)
 
 
 class pensions_alimentaires(Variable):
