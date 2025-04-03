@@ -6,14 +6,14 @@
   short_label: "%"
 - name: currency
   label:
-    one: Franc Caraïbes et Pacifique
-    other: Francs Caraïbes et Pacifique
-  short_label: FCP
-- name: currency-FCP
+    one: Franc des collectivités françaises du Pacifique
+    other: Francs  des collectivités françaises du Pacifique
+  short_label: F.CFP
+- name: currency-XPF
   label:
-    one: Franc Caraïbes et Pacifique
-    other: Francs Caraïbes et Pacifique
-  short_label: FCP
+    one: Franc des collectivités françaises du Pacifique
+    other: Francs  des collectivités françaises du Pacifique
+  short_label: F.CFP
 - name: currency-EUR
   label:
     one: Euro
@@ -25,17 +25,6 @@
         other: Euros
       name: currency-EUR
       short_label: €
-- name: currency-EUR/m2
-  label:
-    one: Euro/m2
-    other: Euros/m2
-  units:
-    2002-01-01:
-      label:
-        one: Euro/m2
-        other: Euros/m2
-      name: currency-EUR/m2
-      short_label: €/m2
 - name: year
   label:
     one: année

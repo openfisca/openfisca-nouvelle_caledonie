@@ -1,7 +1,7 @@
 description: Participation minimale
 metadata:
   reference: Article 8 de la délibération n° 286 du 18 avril 2007
-  unit: currency-FCP
+  unit: currency-XPF
 values:
   2015-12-01:
     value: 10000

@@ -1,5 +1,13 @@
 # Changelog
 
+# 9.0.1 [#4](https://github.com/openfisca/openfisca-nouvelle_caledonie/pull/6)
+
+* Correction d'un crash.
+* Périodes concernées : toutes.
+* Zones impactées : `parameters/units.yaml`.
+* Détails :
+  - Corrige les unités
+
 # 9.0.0 [#4](https://github.com/openfisca/openfisca-nouvelle_caledonie/pull/4)
 
 * Évolution du système socio-fiscal.
