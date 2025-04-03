@@ -45,7 +45,8 @@ class interets_emprunt_hors_noumea_etc_et_anciens(Variable):
 
 class interets_emprunt_date_du_pret(Variable):
     unit = "currency"
-    value_type = date(1970, 1, 1)
+    value_type = date
+    default_value = date(2200, 1, 1)
     entity = FoyerFiscal
     label = "Date du prêt souscrit pour votre résidence principale"
     definition_period = YEAR
