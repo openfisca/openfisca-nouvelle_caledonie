@@ -42,7 +42,7 @@ urls.Repository = "https://github.com/openfisca/openfisca-nouvelle_caledonie"
 target-version = "py39"
 format.docstring-code-line-length = 72
 format.docstring-code-format = true
-# format.quote-style = "single"
+format.quote-style = "single"
 lint.select = [ "ALL" ]
 lint.ignore = [
     "ANN",
@@ -51,6 +51,7 @@ lint.ignore = [
     "D102",
     "D104",
     "E501",
+    "F405",
     "I001",
     "ISC001",
     "N801",
