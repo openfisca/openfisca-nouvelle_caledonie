@@ -1,4 +1,4 @@
-"""Charges déductibles du revenu global"""
+"""Charges déductibles du revenu global."""
 
 from openfisca_core.model_api import *
 from openfisca_nouvelle_caledonie.entities import FoyerFiscal
@@ -77,12 +77,7 @@ class deduction_interets_emprunt(Variable):
     label = "Charges déductibles du revenu global au titre des intérêts d’emprunt pour votre résidence principale"
     definition_period = YEAR
 
-    def formula(foyer_fiscal, period, parameters):
-        """
-        Calcul des charges déductibles du revenu global au titre des intérêts d’emprunt
-        pour votre résidence principale
-        """
-
+    def formula(foyer_fiscal, period):
         # Récupération des variables d'intérêts d'emprunt
         interets_emprunt_noumea_etc_recents = foyer_fiscal(
             interets_emprunt_noumea_etc_recents, period

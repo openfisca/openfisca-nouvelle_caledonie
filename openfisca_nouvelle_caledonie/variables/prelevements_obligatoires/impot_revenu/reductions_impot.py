@@ -1,1 +1,1 @@
-from openfisca_nouvelle_caledonie.entities import FoyerFiscal
+"""Réductions d'impots."""

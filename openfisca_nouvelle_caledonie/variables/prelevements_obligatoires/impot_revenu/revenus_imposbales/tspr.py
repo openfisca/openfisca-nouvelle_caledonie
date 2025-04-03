@@ -1,3 +1,5 @@
+"""Traitements, alaires, pensions et rentes."""
+
 from openfisca_core.model_api import *
 from openfisca_nouvelle_caledonie.entities import FoyerFiscal, Person as Individu
 
@@ -146,10 +148,6 @@ class revenus_categoriels_tspr(Variable):
     definition_period = YEAR
 
     def formula(foyer_fiscal, period, parameters):
-        """
-        Revenus Categoriels des traitements, salaires, pensions et rentes
-        """
-
         # TODO: les abbatement se fontt-ils salaire par salaire ou sur l'enemble du foyer fiscal ?
         salaire_imposable = foyer_fiscal.sum(
             foyer_fiscal.members("salaire_imposable", period)
