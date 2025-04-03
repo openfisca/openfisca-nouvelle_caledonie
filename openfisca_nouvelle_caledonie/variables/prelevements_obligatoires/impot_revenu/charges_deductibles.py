@@ -80,17 +80,17 @@ class deduction_interets_emprunt(Variable):
     def formula(foyer_fiscal, period):
         # Récupération des variables d'intérêts d'emprunt
         interets_emprunt_noumea_etc_recents = foyer_fiscal(
-            interets_emprunt_noumea_etc_recents, period
+            "interets_emprunt_noumea_etc_recents", period
         )
         interets_emprunt_noumea_etc_moins_recents = foyer_fiscal(
-            interets_emprunt_noumea_etc_moins_recents, period
+            "interets_emprunt_noumea_etc_moins_recents", period
         )
         interets_emprunt_hors_noumea_etc_et_anciens = foyer_fiscal(
-            interets_emprunt_hors_noumea_etc_et_anciens, period
+            "interets_emprunt_hors_noumea_etc_et_anciens", period
         )
 
         # Calcul de la déduction
-        # TODO appliquer les palfonds et dates de prêt
+        # TODO: appliquer les plafonds et dates de prêt
         return (
             interets_emprunt_noumea_etc_recents
             + interets_emprunt_noumea_etc_moins_recents
@@ -116,7 +116,7 @@ class equipements_verts(Variable):
     cerfa_field = "XG"
 
 
-class deduction_interets_emprunt(Variable):
+class deduction_travaux_immobiliers_equipements_verts(Variable):
     unit = "currency"
     value_type = float
     entity = FoyerFiscal
@@ -124,11 +124,10 @@ class deduction_interets_emprunt(Variable):
     definition_period = YEAR
 
     def formula(foyer_fiscal, period, parameters):
-        travaux_immobiliers = foyer_fiscal(travaux_immobiliers, period)
-        equipements_verts = foyer_fiscal(equipements_verts, period)
+        travaux_immobiliers = foyer_fiscal("travaux_immobiliers", period)
+        equipements_verts = foyer_fiscal("equipements_verts", period)
 
         plafond = parameters(period).impot_revenu.charges_deductibles.travaux.plafond
-        plafond_travaux_immobiliers
         return max(min_(travaux_immobiliers + equipements_verts, plafond), 0)
 
 

@@ -1,5 +1,8 @@
+"""Calcul de l'impôt sur le revenu."""
+
+
 from openfisca_core.model_api import *
-from openfisca_nouvelle_caledonie.entities import FoyerFiscal, Person as Individu
+from openfisca_nouvelle_caledonie.entities import FoyerFiscal
 
 
 class revenus_categoriels(Variable):
@@ -8,10 +11,7 @@ class revenus_categoriels(Variable):
     label = "Revenus catégoriels"
     definition_period = YEAR
 
-    def formula(foyer_fiscal, period, parameters):
-        """
-        Revenus Categoriels
-        """
+    def formula(foyer_fiscal, period):
         rev_cat_tspr = foyer_fiscal("revenu_categoriel_tspr", period)
         rev_cat_rvcm = foyer_fiscal("revenu_categoriel_capital", period)
         rev_cat_rfon = foyer_fiscal("revenu_categoriel_foncier", period)
