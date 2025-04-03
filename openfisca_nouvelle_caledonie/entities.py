@@ -1,10 +1,4 @@
-"""This file defines the entities needed by our legislation.
-
-Taxes and benefits can be calculated for different entities: persons, household,
-companies, etc.
-
-See https://openfisca.org/doc/key-concepts/person,_entities,_role.html
-"""
+"""Entités du système socio-fiscal de Nouvelle Calédonie."""
 
 from openfisca_core.entities import build_entity
 
@@ -72,4 +66,40 @@ Person = build_entity(
     is_person=True,
 )
 
-entities = [Household, Person]
+
+FoyerFiscal = build_entity(
+    key="foyer_fiscal",
+    plural="foyers_fiscaux",
+    label="Déclaration d’impôts",
+    doc="""
+    Le foyer fiscal désigne l'ensemble des personnes inscrites sur une même déclaration de revenus.
+    Il peut y avoir plusieurs foyers fiscaux dans un seul ménage : par exemple, un couple non marié où chacun remplit
+    sa propre déclaration de revenus compte pour deux foyers fiscaux.
+    """,
+    roles=[
+        {
+            "key": "declarant",
+            "plural": "declarants",
+            "label": "Déclarants",
+            "subroles": ["declarant_principal", "conjoint"],
+        },
+        {
+            "key": "enfant_a_charge",
+            "plural": "enfants_a_charge",
+            "label": "Enfants à charge",
+        },
+        {
+            "key": "ascendant_a_charge",
+            "plural": "ascendants_a_charge",
+            "label": "Ascendants à charge",
+        },
+        {
+            "key": "enfant_accueilli",
+            "plural": "enfants_accueillis",
+            "label": "Enfnts accueillis",
+        },
+    ],
+)
+
+
+entities = [FoyerFiscal, Household, Person]

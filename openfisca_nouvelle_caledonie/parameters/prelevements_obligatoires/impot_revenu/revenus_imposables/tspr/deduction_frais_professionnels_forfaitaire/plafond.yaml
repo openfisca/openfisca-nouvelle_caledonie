@@ -1,0 +1,11 @@
+description: Plafond de la déduction pour frais professionnels forfaitaire
+values:
+  2024-01-01:
+    value: 800_000
+metadata:
+  short_label: Plafond
+  label_en: Ceiling of the flat-rate deduction for professional expenses
+  unit: currency
+  reference:
+    2024-01-01:
+      title: TODO (et corriger date)
