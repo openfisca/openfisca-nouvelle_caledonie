@@ -1,0 +1,6 @@
+description: Abattement sur les bénéfices industriels et commerciaux
+metadata:
+  short_label: Abattemlent BIC
+  label_en: Deduction on industrial and commercial profits
+  order:
+  - abattement
