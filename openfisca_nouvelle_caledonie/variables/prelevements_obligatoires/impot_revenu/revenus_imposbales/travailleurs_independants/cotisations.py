@@ -4,7 +4,6 @@
 from openfisca_core.model_api import *
 from openfisca_nouvelle_caledonie.entities import Person as Individu
 
-
 # • Indiquez lignes QA, QB, QC vos cotisations de retraite (en tant que chef d’entre-
 # prise) dans la limite du plafond, soit 3 776 500 F.
 # • Indiquez lignes QD, QE, QF le montant total de vos cotisations sociales person-
