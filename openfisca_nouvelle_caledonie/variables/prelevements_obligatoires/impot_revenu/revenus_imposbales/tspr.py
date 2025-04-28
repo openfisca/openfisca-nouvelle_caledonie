@@ -115,7 +115,9 @@ class gerant_sarl_selarl_sci_cotisant_ruamm(Variable):
     definition_period = YEAR
 
 
-class cotisations_retraite_gerant_cotisant_ruamm(Variable):  # TODO remove me cotisation1
+class cotisations_retraite_gerant_cotisant_ruamm(
+    Variable
+):  # TODO: remove me cotisation1
     unit = "currency"
     value_type = float
     cerfa_field = {
@@ -128,7 +130,7 @@ class cotisations_retraite_gerant_cotisant_ruamm(Variable):  # TODO remove me co
     definition_period = YEAR
 
 
-class autres_cotisations_gerant_cotisant_ruamm(Variable):  # TODO remove me cotisation2
+class autres_cotisations_gerant_cotisant_ruamm(Variable):  # TODO: remove me cotisation2
     unit = "currency"
     value_type = float
     cerfa_field = {

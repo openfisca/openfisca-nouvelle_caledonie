@@ -1,9 +1,7 @@
 """Bénéfices agricoles (BA)."""
 
-
 from openfisca_core.model_api import *
 from openfisca_nouvelle_caledonie.entities import Person as Individu
-
 
 
 class chiffre_d_daffaires_agricole_ht_imposable(Variable):
@@ -46,17 +44,21 @@ class ba(Variable):
         diviseur = parameters(
             period
         ).prelevements_obligatoires.impot_revenu.revenus_imposables.travailleurs_independants.ba.diviseur_ca
-        return max_(
-            0,
-            foyer_fiscal("chiffre_d_daffaires_agricole_ht_imposable", period),
-            # TODO déduire mes cotisations dans la limite d'un plafond
-            # è min_(
-            # foyer_fiscal("cotisations_retraite_exploitant", period),
-            #  plafonf
-            # )
-            # - foyer_fiscal("cotisations_ruamm_mutuelle_ccs_exploitant", period)
-            # )
-            ) / diviseur
+        return (
+            max_(
+                0,
+                foyer_fiscal("chiffre_d_daffaires_agricole_ht_imposable", period),
+                # TODO: déduire mes cotisations dans la limite d'un plafond
+                # min_(
+                # foyer_fiscal("cotisations_retraite_exploitant", period),
+                #  plafonf
+                # )
+                # - foyer_fiscal("cotisations_ruamm_mutuelle_ccs_exploitant", period)
+                # )
+            )
+            / diviseur
+        )
+
 
 # TODO
 # class reliquat_cotisation_apres_ba(Variable):
