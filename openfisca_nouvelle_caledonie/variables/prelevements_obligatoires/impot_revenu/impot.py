@@ -1,6 +1,5 @@
 """Calcul de l'impôt sur le revenu."""
 
-
 from openfisca_core.model_api import *
 from openfisca_nouvelle_caledonie.entities import FoyerFiscal
 

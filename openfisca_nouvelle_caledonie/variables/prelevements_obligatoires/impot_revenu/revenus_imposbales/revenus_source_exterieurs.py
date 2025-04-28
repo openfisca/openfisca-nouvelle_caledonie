@@ -1,6 +1,5 @@
 """Revenus de surces extérieures à la Nouvelle Calédonie."""
 
-
 from openfisca_core.model_api import *
 from openfisca_nouvelle_caledonie.entities import FoyerFiscal
 

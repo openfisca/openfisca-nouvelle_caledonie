@@ -1,6 +1,5 @@
 """Bénéfices industriels et commerciaux (BIC)."""
 
-
 from openfisca_core.model_api import *
 from openfisca_nouvelle_caledonie.entities import Person as Individu
 
@@ -83,7 +82,6 @@ class bic_services_salaires_et_sous_traitance(Variable):
     definition_period = YEAR
 
 
-
 class bic_forfait(Variable):
     unit = "currency"
     value_type = float
@@ -91,19 +89,24 @@ class bic_forfait(Variable):
     label = "Bénéfices indutriels et commerciaux au forfait"
     definition_period = YEAR
 
-
     def formula(foyer_fiscal, period, parameters):
         # Au forfait
         abattement = parameters(
             period
         ).prelevements_obligatoires.impot_revenu.revenus_imposables.travailleurs_independants.bic.abattement
-        return max_(
-            0,
-            foyer_fiscal("bic_vente_fabrication_transformation_ca_ht", period)
-            - foyer_fiscal("bic_vente_fabrication_transformation_achats", period)
-            - foyer_fiscal("bic_vente_fabrication_transformation_salaires_et_sous_traitance", period)
-            + foyer_fiscal("bic_services_ca_ht", period)
-            - foyer_fiscal("bic_services_achats", period)
-            - foyer_fiscal("bic_services_salaires_et_sous_traitance", period)
-            ) * abattement
-            # TODO déduire reliquat de cotisations
+        return (
+            max_(
+                0,
+                foyer_fiscal("bic_vente_fabrication_transformation_ca_ht", period)
+                - foyer_fiscal("bic_vente_fabrication_transformation_achats", period)
+                - foyer_fiscal(
+                    "bic_vente_fabrication_transformation_salaires_et_sous_traitance",
+                    period,
+                )
+                + foyer_fiscal("bic_services_ca_ht", period)
+                - foyer_fiscal("bic_services_achats", period)
+                - foyer_fiscal("bic_services_salaires_et_sous_traitance", period),
+            )
+            * abattement
+        )
+        # TODO: déduire reliquat de cotisations

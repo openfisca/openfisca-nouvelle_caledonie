@@ -1,6 +1,5 @@
 """Bénéfices non commerciaux (BNC)."""
 
-
 from openfisca_core.model_api import *
 from openfisca_nouvelle_caledonie.entities import Person as Individu
 
