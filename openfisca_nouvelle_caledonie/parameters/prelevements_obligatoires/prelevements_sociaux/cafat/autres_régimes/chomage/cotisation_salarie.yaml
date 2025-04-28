@@ -1,0 +1,17 @@
+description: Cotisation chômage payée par le salarié
+brackets:
+- threshold:
+    2024-01-01:
+      value: 0
+  rate:
+    2024-01-01:
+      value: 0.0034
+metadata:
+  short_label: Cotisation chômage salarié
+  label_en: Unemployment contribution paid by the employee
+  unit: /1
+  reference:
+    2024-01-01:
+      title: TODO (et corriger date)
+  rate_unit: /1
+  threshold_unit: plafond_annuel_CAFAT_autres_regimes

@@ -1,0 +1,4 @@
+description: Cotisations pour l’assurance chômage
+order:
+- cotisation_employeur
+- cotisation_salarie
