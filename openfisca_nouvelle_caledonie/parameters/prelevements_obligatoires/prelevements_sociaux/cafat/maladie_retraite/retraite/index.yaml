@@ -1,4 +1,8 @@
 description: Cotisations pour la retraite vieillesse de base
-order:
-- cotisation_employeur
-- cotisation_salarie
+metadata:
+  short_label: Retraite
+  short_label_en: Retirement
+  description_en: Contributions for basic old-age pension
+  order:
+  - cotisation_employeur
+  - cotisation_salarie

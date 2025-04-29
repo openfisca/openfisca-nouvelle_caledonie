@@ -20,4 +20,4 @@ metadata:
     2023-01-01:
       title: TODO (et corriger date)
   rate_unit: /1
-  threshold_unit: plafond_annuel_CAFAT_retraite
+  threshold_unit: plafond_CAFAT_retraite
