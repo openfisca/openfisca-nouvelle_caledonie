@@ -29,6 +29,8 @@
   label:
     one: Plafond de la CAFAT relatif à la retraite
     other: Plafonds de la CAFAT relatif à la retraite
+  parameter: prelevements_obligatoires.prelevements_sociaux.cafat.maladie_retraite.plafond
+  ratio: false
   short_label:
     one: Plafond CAFAT retraite
     other: Plafonds CAFAT retraite
@@ -36,6 +38,8 @@
   label:
     one: Plafond de la CAFAT aux régimes hors retraite et Ruamm
     other: Plafonds de la CAFAT aux régimes hors retraite et Ruamm
+  parameter: prelevements_obligatoires.prelevements_sociaux.cafat.autres_regimes.plafond
+  ratio: false
   short_label:
     one: Plafond CAFAT autres régimes
     other: Plafonds CAFAT autres régimes
@@ -43,9 +47,18 @@
   label:
     one: Plafond des cotisations du fonds social pour l'habitat (FSH)
     other: Plafonds des cotisations du fonds social pour l'habitat (FSH)
+  parameter: prelevements_obligatoires.prelevements_sociaux.cafat.fsh.plafond
+  ratio: false
   short_label:
     one: Plafond FSH
     other: Plafonds FSH
+- name: PSS
+  label:
+    one: Plafond de la sécurité sociale
+    other: Plafonds de la sécurité sociale
+  # parameter: prelevements_sociaux.pss.plafond_securite_sociale_mensuel
+  ratio: false
+  short_label: PSS
 - name: year
   label:
     one: année
