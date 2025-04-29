@@ -51,5 +51,6 @@ values:
   2001-01-01:
     value: 239882
 metadata:
-  reference: https://www.cafat.nc/employeurs-changement-debut-annee/
   unit: currency
+documentation: |
+    Source https://www.cafat.nc/employeurs-changement-debut-annee/
