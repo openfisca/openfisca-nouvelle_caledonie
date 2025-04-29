@@ -1,0 +1,9 @@
+description: Cotisation pour le fonds interprofessionnel d’assurance formation (FIAF)
+metadata:
+  short_label: Cotisation FIAF
+  short_label_en: FIAF contribution
+  label_en: Contribution to the interprofessional training insurance fund (FIAF)
+  order:
+  - cotisation_employeur
+documentation: |
+  Le fonds interprofessionnel d’assurance formation (FIAF) a été lancé en 2015 pour répondre au besoin de formation du secteur privé.

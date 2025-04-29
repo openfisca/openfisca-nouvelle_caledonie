@@ -7,5 +7,9 @@ metadata:
     - maladie_retraite
     - autres_regimes
     - fsh
+    - formation_professionnelle
+    - formation_professionnelle_continue
+    - fiaf
+    - fds
 documentation: |
   La Caisse de compensation des prestations familiales et des accidents du travail (CAFAT) est crée le 26 décembre 1958. Elle regroupe la Caisse d’allocations familiales crée le 31 juillet 1943 et le régime accidents du travail et maladies professionnelles crée le 24 février 1957.

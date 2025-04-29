@@ -6,6 +6,12 @@ brackets:
   rate:
     2023-01-01:
       value: 0.02
+- threshold:
+    2023-01-01:
+      value: 1
+  rate:
+    2023-01-01:
+      value: 0
 metadata:
   short_label: Cotisation FSH employeur
   label_en: Employer's FSH contribution
