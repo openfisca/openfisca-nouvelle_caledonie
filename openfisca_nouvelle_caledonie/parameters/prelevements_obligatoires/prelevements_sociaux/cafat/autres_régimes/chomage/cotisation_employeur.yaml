@@ -12,7 +12,7 @@ brackets:
   rate:
     2023-01-01:
       value: 0
-cmetadata:
+metadata:
   short_label: Cotisation chômage employeur
   label_en: Employer's unemployment contribution
   reference:

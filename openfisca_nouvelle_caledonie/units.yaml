@@ -25,13 +25,13 @@
         other: Euros
       name: currency-EUR
       short_label: €
-- name: plafond_annuel_CAFAT_retraite
+- name: plafond_CAFAT_retraite
   label:
-    one: Plafond annuel de la CAFAT relatif à la retraite
-    other: Plafonds annuels de la CAFAT relatif à la retraite
+    one: Plafond de la CAFAT relatif à la retraite
+    other: Plafonds de la CAFAT relatif à la retraite
   short_label:
-    one: Plafond annuel CAFAT retraite
-    other: Plafonds annuels CAFAT retraite
+    one: Plafond CAFAT retraite
+    other: Plafonds CAFAT retraite
 - name: year
   label:
     one: année

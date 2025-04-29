@@ -1,4 +1,8 @@
 description: Cotisations pour la maladie, maternité, invalidité et décès
-order:
-- cotisation_employeur
-- cotisation_salarie
+metadata:
+  short_label: Maladie-maternité-invalidité-décès
+  short_label_en: Health-maternity-disability-death
+  description_en: Contributions for health-maternity, disability and death
+  order:
+  - cotisation_employeur
+  - cotisation_salarie
