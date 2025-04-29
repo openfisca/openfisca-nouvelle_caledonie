@@ -4,8 +4,7 @@ metadata:
   short_label: CAFAT
   label_en: Contributions to the CAFAT
   order:
-    - ruamm
-    - retraite
+    - maladie_retraite
     - autres_regimes
     - fsh
 documentation: |
