@@ -1,0 +1,6 @@
+description: Impôt sur le revenu
+metadata:
+  short_label: Impôt sur le revenu
+  label_en: Income tax
+  order:
+  - revenus_imposables

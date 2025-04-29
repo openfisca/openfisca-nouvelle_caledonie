@@ -1,0 +1,7 @@
+description: Revenus des travailleurs indépendants
+metadata:
+  short_label: Travailleurs indépendants
+  label_en: Self-employed workers
+  order:
+  - ba
+  - bic

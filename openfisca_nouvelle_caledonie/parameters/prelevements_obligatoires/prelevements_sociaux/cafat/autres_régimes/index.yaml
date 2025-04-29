@@ -1,0 +1,10 @@
+description: Cotisations pour les accidents du travail, les allocations familiales et le chomâge
+metadata:
+  short_label: Autres régimes
+  short_label_en: Other schemes
+  label_en: Contributions for work accidents, family allowances and unemployment
+  order:
+  - accident_travail
+  - chomage
+  - prestations_familiales
+  - plafond

@@ -1,0 +1,23 @@
+description: Cotisation prestations familiales payée par l'employeur
+brackets:
+- threshold:
+    2023-01-01:
+      value: 0
+  rate:
+    2023-01-01:
+      value: 0.0563
+- threshold:
+    2023-01-01:
+      value: 1
+  rate:
+    2023-01-01:
+      value: 0
+metadata:
+  short_label: Cotisation prestations familiales employeur
+  label_en: Employer's family benefits contribution
+  unit: /1
+  reference:
+    2023-01-01:
+      title: TODO (et corriger date)
+  rate_unit: /1
+  threshold_unit: plafond_annuel_CAFAT_autres_regimes

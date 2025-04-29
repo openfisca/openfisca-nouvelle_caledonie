@@ -1,0 +1,7 @@
+description: Cotisations pour la couverture des accidents du travail
+metadata:
+  short_label: Accident du travail
+  short_label_en: Work accident
+  label_en: Contributions for work accidents
+  order:
+  - cotisation_employeur

@@ -1,0 +1,7 @@
+description: Revenus imposables
+metadata:
+  short_label: Revenus imposables
+  label_en: Taxable income
+  order:
+  - tspr
+  - travailleurs_independants

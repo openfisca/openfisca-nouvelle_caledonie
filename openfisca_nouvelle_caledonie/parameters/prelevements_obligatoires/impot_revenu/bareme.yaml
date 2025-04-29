@@ -1,0 +1,37 @@
+description: Barème progressif (marginal) de l'impôt sur le revenu applicable aux revenus des années indiquées
+brackets:
+- threshold:
+    1945-01-01:
+      value: 0
+  rate:
+    1945-01-01:
+      value: 0
+- threshold:
+    2020-01-01:
+      value: 1_000_000
+  rate:
+    2020-01-01:
+      value: 0.04
+- threshold:
+    2000-01-01:
+      value: 1_800_000
+  rate:
+    2020-01-01:
+      value: 0.12
+- threshold:
+    2020-01-01:
+      value: 3_000_000
+  rate:
+    2020-01-01:
+      value: 0.25
+- threshold:
+    2020-01-01:
+      value: 4_500_000
+  rate:
+    2020-01-01:
+      value: 0.40
+metadata:
+  rate_unit: /1
+  threshold_unit: currency-XPF
+documentation: |-
+  TODO: étendre

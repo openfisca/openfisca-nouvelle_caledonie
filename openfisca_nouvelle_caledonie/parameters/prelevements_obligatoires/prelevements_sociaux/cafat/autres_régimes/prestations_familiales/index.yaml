@@ -1,0 +1,7 @@
+description: Cotisations pour les allocations familiales
+metadata:
+  short_label: Prestations familiales
+  short_label_en: Family benefits
+  label_en: Contributions for family allowances
+  order:
+  - cotisation_employeur

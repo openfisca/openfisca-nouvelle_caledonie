@@ -1,0 +1,9 @@
+description: Cotisations maladie-maternité et pour la retraite vieillesse de base
+metadata:
+  short_label: Maladie-maternité et retraite
+  short_label_en: Health-maternity and retirement
+  description_en: Contributions for health-maternity and basic old-age pension
+  order:
+  - ruamm
+  - retraite
+  - plafond

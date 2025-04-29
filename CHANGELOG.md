@@ -1,6 +1,22 @@
 # Changelog
 
-# 8.0.0 [#159](https://github.com/openfisca/openfisca-nouvelle_caledonie/pull/2)
+# 9.0.1 [#4](https://github.com/openfisca/openfisca-nouvelle_caledonie/pull/6)
+
+* Correction d'un crash.
+* Périodes concernées : toutes.
+* Zones impactées : `parameters/units.yaml`.
+* Détails :
+  - Corrige les unités
+
+# 9.0.0 [#4](https://github.com/openfisca/openfisca-nouvelle_caledonie/pull/4)
+
+* Évolution du système socio-fiscal.
+* Périodes concernées : toutes. | jusqu'au JJ/MM/AAAA. | à partir du JJ/MM/AAAA.
+* Zones impactées : `prelevements_obligatoires/impot_revenu`.
+* Détails :
+  - Début de l'IR de la Nouvelle Calédonie
+
+# 8.0.0 [#2](https://github.com/openfisca/openfisca-nouvelle_caledonie/pull/2)
 
 * Amélioration technique.
 * Details:

@@ -4,16 +4,17 @@ requires = [ "setuptools>=61" ]
 
 [project]
 name = "openfisca-nouvelle_caledonie"
-version = "8.0.0"
+
+version = "9.0.1"
 description = "OpenFisca Rules as Code model for Nouvelle Calédonie."
 readme = "README.md"
 keywords = [ "benefit", "microsimulation", "rac", "rules-as-code", "tax" ]
 maintainers = [  ]
 authors = [  ]
 requires-python = ">=3.9"
+license = "GPL-3.0-or-later"
 classifiers = [
     "Development Status :: 5 - Production/Stable",
-    "License :: OSI Approved :: GNU Affero General Public License v3",
     "Operating System :: POSIX",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3 :: Only",
@@ -38,10 +39,14 @@ urls.Homepage = "https://github.com/openfisca/openfisca-nouvelle_caledonie"
 urls.Issues = "https://github.com/openfisca/openfisca-nouvelle_caledonie/issues"
 urls.Repository = "https://github.com/openfisca/openfisca-nouvelle_caledonie"
 
+[tool.setuptools.packages.find]
+include = ["openfisca_nouvelle_caledonie", "openfisca_nouvelle_caledonie.*"]
+
 [tool.ruff]
 target-version = "py39"
 format.docstring-code-line-length = 72
 format.docstring-code-format = true
+# format.quote-style = "single"
 lint.select = [ "ALL" ]
 lint.ignore = [
     "ANN",
@@ -50,6 +55,9 @@ lint.ignore = [
     "D102",
     "D104",
     "E501",
+    "F403",
+    "F405",
+    "FIX002",
     "I001",
     "ISC001",
     "N801",
@@ -60,6 +68,11 @@ lint.ignore = [
     "PTH118",
     "PTH120",
     "PTH123",
+    "RUF001",
+    "RUF003",
+    "RUF012",
+    "TD002",
+    "TD003",
 ]
 lint.pydocstyle.convention = "google"
 

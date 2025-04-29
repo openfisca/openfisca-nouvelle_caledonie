@@ -1,0 +1,11 @@
+description: Plafond des cotisations sociales déductibles pour les travailleurs indépendants (en multiples du PASS).
+values:
+  2013-01-01:
+    value: 7
+metadata:
+  short_label: Plafond cotisations déductibles
+  label_en: Ceiling of deductible contributions for self-employed workers
+  unit: plafond_CAFAT_retraite
+  reference:
+    2023-01-01:
+      title: TODO (et corriger date)

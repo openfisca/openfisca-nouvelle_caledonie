@@ -1,0 +1,12 @@
+description: |
+  Cotisations CAFAT
+metadata:
+  short_label: CAFAT
+  label_en: Contributions to the CAFAT
+  order:
+    - ruamm
+    - retraite
+    - autres_regimes
+    - fsh
+documentation: |
+  La Caisse de compensation des prestations familiales et des accidents du travail (CAFAT) est crée le 26 décembre 1958. Elle regroupe la Caisse d’allocations familiales crée le 31 juillet 1943 et le régime accidents du travail et maladies professionnelles crée le 24 février 1957.

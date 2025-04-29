@@ -1,0 +1,8 @@
+description: Abattement sur les pensions
+metadata:
+  short_label: Abattement sur les pensions
+  label_en: Pension allowance
+  order:
+  - taux
+  - minimum
+  - plafond

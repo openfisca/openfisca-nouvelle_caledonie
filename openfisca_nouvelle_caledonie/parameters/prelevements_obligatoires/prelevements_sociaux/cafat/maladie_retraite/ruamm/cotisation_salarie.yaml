@@ -1,0 +1,23 @@
+description: Cotisation salarié au régime unifié de l'assurance maladie et de la maternoté (RUAMM)
+brackets:
+- threshold:
+    2023-01-01:
+      value: 0
+  rate:
+    2023-01-01:
+      value: 0.0385
+- threshold:
+    2023-01-01:
+      value: 1
+  rate:
+    2023-01-01:
+      value: 0.0125
+metadata:
+  short_label: Cotisation RUAMM salarié
+  label_en: Employee's RUAMM contribution
+  unit: /1
+  reference:
+    2023-01-01:
+      title: TODO (et corriger date)
+  rate_unit: /1
+  threshold_unit: plafond_CAFAT_retraite

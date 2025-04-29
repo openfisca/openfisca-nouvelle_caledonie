@@ -1,0 +1,8 @@
+description: Cotisations pour l’assurance chômage
+metadata:
+  short_label: Chômage
+  short_label_en: Unemployment
+  label_en: Contributions for unemployment insurance
+  order:
+  - cotisation_employeur
+  - cotisation_salarie

@@ -1,0 +1,11 @@
+description: Montant forfaitaire de la déduction de l'avantage en nature reçus par les enfants majeurs ou ascendants non-comptés à charge
+values:
+  2024-01-01:
+    value: 541_575
+metadata:
+  short_label: Montant forfaitaire avantage en nature personne hébergées non comptées à charge
+  label_en: Flat-rate amount of the deduction of the benefit in kind received by adult children or ascendants not counted as dependents
+  unit: currency
+  reference:
+    2024-01-01:
+      title: TODO (et corriger date)

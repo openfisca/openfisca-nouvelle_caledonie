@@ -1,0 +1,6 @@
+description: Charges déductibles du revenu net global
+metadata:
+  short_label: Charges déductibles
+  label_en: Deductible charges from the global net income²
+  order:
+  - travaux
