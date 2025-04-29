@@ -15,7 +15,6 @@ brackets:
 metadata:
   short_label: Cotisation chômage salarié
   label_en: Unemployment contribution paid by the employee
-  unit: /1
   reference:
     2023-01-01:
       title: TODO (et corriger date)

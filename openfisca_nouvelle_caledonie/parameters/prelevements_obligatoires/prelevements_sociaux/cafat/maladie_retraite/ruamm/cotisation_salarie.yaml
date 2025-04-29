@@ -15,7 +15,6 @@ brackets:
 metadata:
   short_label: Cotisation RUAMM salarié
   label_en: Employee's RUAMM contribution
-  unit: /1
   reference:
     2023-01-01:
       title: TODO (et corriger date)
