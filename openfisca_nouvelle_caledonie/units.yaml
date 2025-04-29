@@ -32,6 +32,13 @@
   short_label:
     one: Plafond CAFAT retraite
     other: Plafonds CAFAT retraite
+- name: plafond_fsh
+  label:
+    one: Plafond des cotisations du fonds social pour l'habitat (FSH)
+    other: Plafonds des cotisations du fonds social pour l'habitat (FSH)
+  short_label:
+    one: Plafond FSH
+    other: Plafonds FSH
 - name: year
   label:
     one: année
