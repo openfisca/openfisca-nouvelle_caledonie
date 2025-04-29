@@ -3,7 +3,7 @@ metadata:
   short_label: Prélèvements obligatoires
   label_en: compulsory levies
   order:
-  - prelemevements_sociaux
+  - prelevements_sociaux
   - impot_revenu
 documentation: |
   Les prélèvements obligatoires correspondent à l’ensemble des « versements effectifs opérés par tous les agents économiques au secteur des administrations publiques […] dès lors que ces versements résultent, non d’une décision de l’agent économique qui les acquitte, mais d’un processus collectif […] et que ces versements sont sans contrepartie directe », selon l'Organisation de coopération et de développement économiques (OCDE), à l'origine de cette notion
