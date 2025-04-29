@@ -1,0 +1,7 @@
+description: Prélèvements sociaux
+metadata:
+  short_label: Prélèvements sociaux
+  label_en: Social contributions
+  order:
+  - cafat
+  - contribution_solidarite
