@@ -32,6 +32,13 @@
   short_label:
     one: Plafond CAFAT retraite
     other: Plafonds CAFAT retraite
+- name: plafond_CAFAT_autres_regimes
+  label:
+    one: Plafond de la CAFAT aux régimes hors retraite et Ruamm
+    other: Plafonds de la CAFAT aux régimes hors retraite et Ruamm
+  short_label:
+    one: Plafond CAFAT autres régimes
+    other: Plafonds CAFAT autres régimes
 - name: plafond_fsh
   label:
     one: Plafond des cotisations du fonds social pour l'habitat (FSH)
