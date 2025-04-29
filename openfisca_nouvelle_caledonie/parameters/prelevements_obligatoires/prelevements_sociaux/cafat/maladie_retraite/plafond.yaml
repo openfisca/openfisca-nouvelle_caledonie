@@ -42,3 +42,11 @@ values:
     value: 539500
   2025-01-01:
     value: 548600
+metadata:
+  short_label: Plafond retraite et tranche 1 RUAMM
+  label_en: Ceiling for retirement and first tranche of RUAMM
+  unit: currency
+  reference:
+    2025-01-01:
+      title: TODO (et corriger date)
+      url: https://www.cafat.nc/employeurs-changement-debut-annee/
