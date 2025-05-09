@@ -110,3 +110,56 @@ class bic_forfait(Variable):
             * abattement
         )
         # TODO: déduire reliquat de cotisations
+
+
+# Régime réel simplifié (Cadre 10 de la déclaration complémentaire)
+
+
+class benefices_industriels_et_commerciaux_reel_simplifie(Variable):
+    unit = "currency"
+    cerfa_field = {
+        0: "IA",
+        1: "IB",
+    }
+    value_type = float
+    entity = Individu
+    label = "Bénéfices indutriels et commerciaux au régime réel simplifié"
+    definition_period = YEAR
+
+
+class deficits_industriels_et_commerciaux_reel_simplifie(Variable):
+    unit = "currency"
+    cerfa_field = {
+        0: "ID",
+        1: "IE",
+    }
+    value_type = float
+    entity = Individu
+    label = "Déficits indutriels et commerciaux au régime réel simplifié"
+    definition_period = YEAR
+
+
+# Régime réel normal (Cadre 10 de la déclaration complémentaire)
+
+class benefices_industriels_et_commerciaux_reel_normal(Variable):
+    unit = "currency"
+    cerfa_field = {
+        0: "LA",
+        1: "LB",
+    }
+    value_type = float
+    entity = Individu
+    label = "Bénéfices indutriels et commerciaux au régime réel normal"
+    definition_period = YEAR
+
+
+class deficits_industriels_et_commerciaux_reel_normal(Variable):
+    unit = "currency"
+    cerfa_field = {
+        0: "LJ",
+        1: "LK",
+    }
+    value_type = float
+    entity = Individu
+    label = "Déficits indutriels et commerciaux au régime réel normal"
+    definition_period = YEAR
