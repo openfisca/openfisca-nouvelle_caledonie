@@ -60,6 +60,34 @@ class ba(Variable):
         )
 
 
+# Régime réel simplifié (Cadre 10 de la déclaration complémentaire)
+
+class benefices_agricoles_regime_reel(Variable):
+    unit = "currency"
+    cerfa_field = {
+        0: "JA",
+        1: "JB",
+    }
+    value_type = float
+    entity = Individu
+    label = "Bénéfices agricoles du régime réel simplifié"
+    definition_period = YEAR
+
+
+class deficits_agricoles_regime_reel(Variable):
+    unit = "currency"
+    cerfa_field = {
+        0: "JD",
+        1: "JE",
+    }
+    value_type = float
+    entity = Individu
+    label = "Déficits agricoles du régime réel simplifié"
+    definition_period = YEAR
+
+
+
+
 # TODO
 # class reliquat_cotisation_apres_ba(Variable):
 #     unit = "currency"

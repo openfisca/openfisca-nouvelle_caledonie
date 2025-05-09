@@ -185,3 +185,116 @@ class revenus_categoriels_tspr(Variable):
         # TODO: revenus gérant et cotisations
 
         return salaire_apres_deduction + pension_apres_abattement
+
+
+# Revenus TSPR de la déclaration complémentaire
+
+
+# Rentes viagères à titre onéreux
+
+class rentes_viageres_a_titre_onereux_moins_de_50_ans(Variable):
+    unit = "currency"
+    value_type = float
+    cerfa_field = {
+        0: "RA",
+        1: "RB",
+    }
+    entity = Individu
+    label = "Rentes viagères à titre onéreux ; âge d'entrée en jouissance : moins de 50 ans"
+    definition_period = YEAR
+
+
+class rentes_viageres_a_titre_onereux_50_59_ans(Variable):
+    unit = "currency"
+    value_type = float
+    cerfa_field = {
+        0: "SA",
+        1: "SB",
+    }
+    entity = Individu
+    label = "Rentes viagères à titre onéreux ; âge d'entrée en jouissance : 50 à 59 ans"
+    definition_period = YEAR
+
+
+class rentes_viageres_a_titre_onereux_60_69_ans(Variable):
+    unit = "currency"
+    value_type = float
+    cerfa_field = {
+        0: "TA",
+        1: "TB",
+    }
+    entity = Individu
+    label = "Rentes viagères à titre onéreux ; âge d'entrée en jouissance : 60 à 69 ans"
+    definition_period = YEAR
+
+
+class rentes_viageres_a_titre_onereux_plus_de_69_ans(Variable):
+    unit = "currency"
+    value_type = float
+    cerfa_field = {
+        0: "UA",
+        1: "UB",
+    }
+    entity = Individu
+    label = "Rentes viagères à titre onéreux ; âge d'entrée en jouissance : plus de 69 ans"
+    definition_period = YEAR
+
+
+# Revenus différés salaires et pensions (Cadre 9)
+
+class salaires_imposés_selon_le_quotient(Variable):
+    unit = "currency"
+    value_type = float
+    cerfa_field = {
+        0: "ND",
+        1: "NE",
+    }
+    entity = Individu
+    label = "Salaires imposés selon le quotient"
+    definition_period = YEAR
+
+
+class années_de_rappel_salaires(Variable):
+    value_type = int
+    cerfa_field = {
+        0: "NG",
+        1: "NH",
+    }
+    entity = Individu
+    label = "Années de rappel pour les salaires imposés selon le quotient"
+    definition_period = YEAR
+
+
+class pensions_imposées_selon_le_quotient(Variable):
+    unit = "currency"
+    value_type = float
+    cerfa_field = {
+        0: "PD",
+        1: "PE",
+    }
+    entity = Individu
+    label = "Pensions imposées selon le quotient"
+    definition_period = YEAR
+
+
+class années_de_rappel_pensions(Variable):
+    value_type = int
+    cerfa_field = {
+        0: "PG",
+        1: "PH",
+    }
+    entity = Individu
+    label = "Années de rappel pour les salaires pensions selon le quotient"
+    definition_period = YEAR
+
+
+class indemnites_elus_municipaux(Variable):
+    unit = "currency"
+    value_type = float
+    cerfa_field = {
+        0: "NP",
+        1: "NQ",
+    }
+    entity = Individu
+    label = "Indemnités des élus municipaux"
+    definition_period = YEAR
