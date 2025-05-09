@@ -322,7 +322,9 @@ class aide_sociale_et_bourse(Variable):
         franchise_aides_et_bourses = parameters(
             period
         ).benefits.aide_logement.base_ressources.franchise_aides_et_bourses
-        return max_(0, aide_sociale + bourse - franchise_aides_et_bourses)
+        return max_(0, aide_sociale - franchise_aides_et_bourses) + max_(
+            0, bourse - franchise_aides_et_bourses
+        )
 
 
 class aide_logement_base_ressources(Variable):
