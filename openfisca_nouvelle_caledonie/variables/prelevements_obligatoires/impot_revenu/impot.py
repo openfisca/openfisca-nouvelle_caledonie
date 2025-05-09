@@ -11,13 +11,19 @@ class revenus_categoriels(Variable):
     definition_period = YEAR
 
     def formula(foyer_fiscal, period):
-        rev_cat_tspr = foyer_fiscal("revenu_categoriel_tspr", period)
-        rev_cat_rvcm = foyer_fiscal("revenu_categoriel_capital", period)
-        rev_cat_rfon = foyer_fiscal("revenu_categoriel_foncier", period)
-        rev_cat_rpns = foyer_fiscal("revenu_categoriel_non_salarial", period)
-        rev_cat_pv = foyer_fiscal("revenu_categoriel_plus_values", period)
+        revenu_categoriel_tspr = foyer_fiscal("revenu_categoriel_tspr", period)
+        revenu_categoriel_capital = foyer_fiscal("revenu_categoriel_capital", period)
+        revenu_categoriel_foncier = foyer_fiscal("revenu_categoriel_foncier", period)
+        revenu_categoriel_non_salarial = foyer_fiscal("revenu_categoriel_non_salarial", period)
+        revenu_categoriel_plus_values = foyer_fiscal("revenu_categoriel_plus_values", period)
 
-        return rev_cat_tspr + rev_cat_rvcm + rev_cat_rfon + rev_cat_rpns + rev_cat_pv
+        return (
+            revenu_categoriel_tspr
+            + revenu_categoriel_capital
+            + revenu_categoriel_foncier
+            + revenu_categoriel_non_salarial
+            + revenu_categoriel_plus_values
+            )
 
 
 class revenu_non_imposable(Variable):
@@ -96,8 +102,7 @@ class impot_brut(Variable):
         #     outs.setTauxImpot(impotBrut / rngi);
         # }
 
-        // Calcul de l'impôt brut Non résident
-        isRBG = getRevenuBrutGlobal() == 0
+        # Calcul de l'impôt brut Non résident
         revenu_brut_global = foyer_fiscal("revenu_brut_global", period)
         den = where(
             revenu_brut_global == 0,
@@ -117,9 +122,7 @@ class impot_brut(Variable):
             )
 
 		# // 8% x RNGI x pourcentage
-		part1 = tauxPart1 * revenu_net_global_imposable * pourcentage;
-
-		# // txNI x rngi x (1 - pourcentage)
+		part1 = tauxPart1 * revenu_net_global_imposable * pourcentage;		# // txNI x rngi x (1 - pourcentage)
 		part2 = txNI * revenu_net_global_imposable * (1 - pourcentage);
 
 		# Résultat pour les non résidents
