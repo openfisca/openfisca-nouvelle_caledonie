@@ -242,7 +242,7 @@ class rentes_viageres_a_titre_onereux_plus_de_69_ans(Variable):
 
 # Revenus différés salaires et pensions (Cadre 9)
 
-class salaires_imposés_selon_le_quotient(Variable):
+class salaires_imposes_selon_le_quotient(Variable):
     unit = "currency"
     value_type = float
     cerfa_field = {
@@ -254,7 +254,7 @@ class salaires_imposés_selon_le_quotient(Variable):
     definition_period = YEAR
 
 
-class années_de_rappel_salaires(Variable):
+class annees_de_rappel_salaires(Variable):
     value_type = int
     cerfa_field = {
         0: "NG",
@@ -265,7 +265,7 @@ class années_de_rappel_salaires(Variable):
     definition_period = YEAR
 
 
-class pensions_imposées_selon_le_quotient(Variable):
+class pensions_imposees_selon_le_quotient(Variable):
     unit = "currency"
     value_type = float
     cerfa_field = {
@@ -277,7 +277,7 @@ class pensions_imposées_selon_le_quotient(Variable):
     definition_period = YEAR
 
 
-class années_de_rappel_pensions(Variable):
+class annees_de_rappel_pensions(Variable):
     value_type = int
     cerfa_field = {
         0: "PG",

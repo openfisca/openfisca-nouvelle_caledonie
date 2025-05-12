@@ -1,4 +1,4 @@
-'''Revenus des capitaux mobiliers.'''
+"""Revenus des capitaux mobiliers."""
 
 from openfisca_core.model_api import *
 from openfisca_nouvelle_caledonie.entities import FoyerFiscal
