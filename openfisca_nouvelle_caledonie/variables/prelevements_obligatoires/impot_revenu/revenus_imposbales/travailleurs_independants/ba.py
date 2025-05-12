@@ -3,7 +3,6 @@
 from openfisca_core.model_api import *
 from openfisca_nouvelle_caledonie.entities import Person as Individu
 
-
 class chiffre_d_daffaires_agricole_ht_imposable(Variable):
     unit = "currency"
     value_type = float

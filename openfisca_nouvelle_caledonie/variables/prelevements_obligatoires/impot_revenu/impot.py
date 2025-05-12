@@ -107,32 +107,33 @@ class impot_brut(Variable):
         den = where(
             revenu_brut_global == 0,
             1,
-            revenu_brut_global
+            revenu_brut_global,
             )
+        interets_de_depots = foyer_fiscal("interets_de_depots", period)
         pourcentage = where(
             revenu_brut_global == 0,
-            zeroIfNull(ins.getBB()  # TODO case BB
+            0,
+            interets_de_depots,  # case BB
             ) / den
-
         # //  TxNI= 25 % si case 46 = 1 et case 47 =vide
-		txNI = where(
+        txNI = where(
             taux_moyen_imposition_non_resident > 0,
             taux_moyen_imposition_non_resident,
             0.25
             )
 
-		# // 8% x RNGI x pourcentage
-		part1 = tauxPart1 * revenu_net_global_imposable * pourcentage;		# // txNI x rngi x (1 - pourcentage)
-		part2 = txNI * revenu_net_global_imposable * (1 - pourcentage);
+        # // 8% x RNGI x pourcentage
+        part1 = tauxPart1 * revenu_net_global_imposable * pourcentage;		# // txNI x rngi x (1 - pourcentage)
+        part2 = txNI * revenu_net_global_imposable * (1 - pourcentage);
 
-		# Résultat pour les non résidents
-		impot_brut_non_resident = part1 + part2;
+        # Résultat pour les non résidents
+        impot_brut_non_resident = part1 + part2;
 
         # if (zeroIfNull(rngi) != 0) {
-		# 	outs.setTauxImpot(impotBrut / rngi);
-		# } TODO: à inclure ailleurs
+        # 	outs.setTauxImpot(impotBrut / rngi);
+        # } TODO: à inclure ailleurs
 
-		return where(
+        return where(
             foyer_fiscal("non_resident", period),
             impot_brut_non_resident,
             impot_brut_resident
