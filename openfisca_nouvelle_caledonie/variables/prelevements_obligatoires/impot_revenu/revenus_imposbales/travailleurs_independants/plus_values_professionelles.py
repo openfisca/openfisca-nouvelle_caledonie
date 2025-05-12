@@ -11,7 +11,7 @@ class plus_values_professionnelles_a_taux_reduit(Variable):
         1: "LE",
     }
     value_type = float
-    entity = Person
+    entity = Individu
     label = "Plus-values professionnelles imposées à taux réduit"
     definition_period = YEAR
 
@@ -23,6 +23,6 @@ class plus_values_professionnelles_a_taux_normal(Variable):
         1: "LH",
     }
     value_type = float
-    entity = Person
+    entity = Individu
     label = "Plus-values professionnelles imposées à taux normal"
     definition_period = YEAR
