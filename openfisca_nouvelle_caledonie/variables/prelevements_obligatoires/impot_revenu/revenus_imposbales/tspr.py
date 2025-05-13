@@ -48,6 +48,17 @@ class salaire_imposable(Variable):
     definition_period = YEAR
 
 
+class salaires_percus(Variable):
+    value_type = float
+    unit = "currency"
+    entity = Individu
+    label = "Salaires percus"
+    definition_period = YEAR
+
+    def formula(foyer_fiscal, period):
+        return
+
+
 class frais_reels(Variable):
     cerfa_field = {
         0: "OA",
@@ -151,6 +162,8 @@ class revenus_categoriels_tspr(Variable):
 
     def formula(foyer_fiscal, period, parameters):
         # TODO: les abbatement se fontt-ils salaire par salaire ou sur l'enemble du foyer fiscal ?
+        # salaires_percus - retenue_cotisations - deduction_salaires - abattement_salaires
+
         salaire_imposable = foyer_fiscal.sum(
             foyer_fiscal.members("salaire_imposable", period)
         )

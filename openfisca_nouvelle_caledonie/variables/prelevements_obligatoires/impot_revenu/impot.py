@@ -4,25 +4,54 @@ from openfisca_core.model_api import *
 from openfisca_nouvelle_caledonie.entities import FoyerFiscal
 
 
-class revenus_categoriels(Variable):
+class revenu_brut_global(Variable):
     value_type = float
     entity = FoyerFiscal
-    label = "Revenus catégoriels"
+    label = "Revenu brut global"
     definition_period = YEAR
 
     def formula(foyer_fiscal, period):
-        revenu_categoriel_tspr = foyer_fiscal("revenu_categoriel_tspr", period)
-        revenu_categoriel_capital = foyer_fiscal("revenu_categoriel_capital", period)
-        revenu_categoriel_foncier = foyer_fiscal("revenu_categoriel_foncier", period)
-        revenu_categoriel_non_salarial = foyer_fiscal("revenu_categoriel_non_salarial", period)
-        revenu_categoriel_plus_values = foyer_fiscal("revenu_categoriel_plus_values", period)
+
+        revenus_categoriels_tspr = foyer_fiscal("revenus_categoriels_tspr", period)
+
+
+    #     // benefice
+    #     rbg += zeroIfNegative(outs.getBeneficeBicP());
+    #     rbg += zeroIfNegative(outs.getBeneficeBicC());
+    #     rbg += zeroIfNegative(outs.getBeneficeBicPC());
+    #     rbg += zeroIfNegative(outs.getBeneficeBaP());
+    #     rbg += zeroIfNegative(outs.getBeneficeBaC());
+    #     rbg += zeroIfNegative(outs.getBeneficeBaPC());
+    #     rbg += zeroIfNegative(outs.getBeneficeBncP());
+    #     rbg += zeroIfNegative(outs.getBeneficeBncC());
+    #     rbg += zeroIfNegative(outs.getBeneficeBncPC());
+
+    #     // pension
+    #     rbg += zeroIfNull(outs.getPensionP());
+    #     rbg += zeroIfNull(outs.getPensionC());
+    #     rbg += zeroIfNull(outs.getPensionPC());
+
+    #     // "REVENUS_FONCIERS" est egal a "AA"
+    #     // "REVENU_BRUT_GLOBAL" est egal a "REVENU_BRUT_GLOBAL + REVENUS_FONCIERS"
+    #     rbg += zeroIfNull(ins.getAA());
+
+    #     rbg += zeroIfNull(outs.getCapitauxMobiliers());
+
+    #     outs.setRevenuBrutGlobal(rbg);
+    # }
+
+
+        # revenus_categoriels_capital = foyer_fiscal("revenu_categoriel_capital", period)
+        # revenus_categoriels_foncier = foyer_fiscal("revenu_categoriel_foncier", period)
+        # revenus_categoriels_non_salarie = foyer_fiscal("revenu_categoriel_non_salarie", period)
+        # revenus_categoriels_plus_values = foyer_fiscal("revenu_categoriel_plus_values", period)
 
         return (
-            revenu_categoriel_tspr
-            + revenu_categoriel_capital
-            + revenu_categoriel_foncier
-            + revenu_categoriel_non_salarial
-            + revenu_categoriel_plus_values
+            revenus_categoriels_tspr
+            # + revenu_categoriel_capital
+            # + revenu_categoriel_foncier
+            # + revenu_categoriel_non_salarial
+            # + revenu_categoriel_plus_values
             )
 
 
@@ -55,7 +84,7 @@ class impot_brut(Variable):
 
         # Calcul de l'impôt brut pour les résidents
 
-        nombre_de_parts = foyer_fiscal("nombre_de_parts", period)
+        nombre_de_parts = foyer_fiscal("parts_fiscales", period)
         # double rni = zeroIfNull(outs.getRevenuNonImposable());
         revenu_non_imposable = foyer_fiscal("revenu_non_imposable", period)
         revenu_net_global_imposable = foyer_fiscal("revenu_net_global_imposable", period)
@@ -67,7 +96,7 @@ class impot_brut(Variable):
 
         bareme = parameters(period).prelevements_obligatoires.impot_revenu.bareme
 
-        impot_brut = bareme.cacl(revenu_par_part)
+        impot_brut = bareme.calc(revenu_par_part)
 
         # Au final, l'impôt brut est une fraction du résultat précédent
         numerateur = revenu_net_global_imposable
@@ -159,8 +188,14 @@ class impot_brut(Variable):
 # }
 
 
+class non_resident(Variable):
+    value_type = bool
+    entity = FoyerFiscal
+    label = "Non résident"
+    definition_period = YEAR
 
-def taux_moyen_imposition_non_resident(Variable):
+
+class taux_moyen_imposition_non_resident(Variable):
     value_type = float
     entity = FoyerFiscal
     label = "Taux moyen d'imposiition du non résident"
