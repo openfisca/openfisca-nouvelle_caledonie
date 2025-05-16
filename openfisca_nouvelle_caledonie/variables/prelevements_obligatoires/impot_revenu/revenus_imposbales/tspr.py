@@ -228,14 +228,12 @@ class revenus_categoriels_tspr(Variable):
         montant_deduction_pension = min_(
             max_(
                 pension_imposable * deduction_pension.taux, deduction_pension.minimum
-            ),
+                ),
             deduction_pension.plafond,
-        )
-        pension_apres_deduction = foyer_fiscal.sum(
-            max_(
-                pension_imposable - montant_deduction_pension,
-                0
-                )
+            )
+        pension_apres_deduction = max_(
+            pension_imposable - montant_deduction_pension,
+            0
             )
 
         pension_apres_abattement = foyer_fiscal.sum(
