@@ -4,4 +4,6 @@ metadata:
   label_en: Taxable salaries, pensions and annuities
   order:
   - deduction_frais_professionnels_forfaitaire
-  - abattement_pension
+  - deduction_pension
+  - abattement
+  - rto

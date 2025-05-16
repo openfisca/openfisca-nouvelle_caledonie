@@ -1,0 +1,11 @@
+description: Taux de la déduction sur les salaires
+values:
+  2008-01-01:
+    value: .2
+metadata:
+  short_label: Taux
+  label_en: Rate of the salary allowance
+  unit: /1
+  reference:
+    2008-01-01:
+      title: TODO (et corriger date)

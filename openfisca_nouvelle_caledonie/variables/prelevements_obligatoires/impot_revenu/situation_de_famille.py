@@ -23,7 +23,7 @@ class statut_marital(Variable):
     label = "Statut marital"
     definition_period = YEAR
 
-    def formula(individu):
+    def formula(individu, period):
         # Par défault, on considère que deux adultes dans un foyer fiscal sont PACSÉS
         deux_adultes = individu.foyer_fiscal.nb_persons(FoyerFiscal.DECLARANT) >= 2
         return where(
