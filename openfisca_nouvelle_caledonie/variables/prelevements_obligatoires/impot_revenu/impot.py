@@ -163,9 +163,9 @@ class impot_brut(Variable):
         # } TODO: à inclure ailleurs
 
         return where(
-            foyer_fiscal("non_resident", period),
+            foyer_fiscal("resident", period),
+            impot_brut_resident,
             impot_brut_non_resident,
-            impot_brut_resident
             )
 
 #     /**
@@ -188,7 +188,7 @@ class impot_brut(Variable):
 # }
 
 
-class non_resident(Variable):
+class resident(Variable):
     value_type = bool
     entity = FoyerFiscal
     label = "Non résident"
