@@ -1,11 +1,11 @@
 description: Plafond de l'abattement sur les pensions
 values:
-  2024-01-01:
+  2008-01-01:
     value: 550_000
 metadata:
   short_label: Plafond
   label_en: Ceiling of the pension allowance
   unit: currency
   reference:
-    2024-01-01:
+    2008-01-01:
       title: TODO (et corriger date)

@@ -39,6 +39,21 @@ class ircdc(Variable):
 # - des revenus de sociétés civiles de portefeuille ou de parts de sociétés dont le
 # prélèvement d’IRVM n’est pas libératoire.
 
+# Doit être inférieur à .08 * produits_pret_contrat_de_capitalisation
+
+
+class ircdc_impute(Variable):
+    unit = "currency"
+    value_type = float
+    entity = FoyerFiscal
+    label = "Impôt sur le revenu des créances, dépôts et cautionnements (IRCDC) prélevé sur les revenus déclarés imputé"
+    definition_period = YEAR
+
+    def formula(foyer_fiscal, period):
+        return min_(
+            foyer_fiscal("ircdc", period),
+            .08 * foyer_fiscal("produits_pret_contrat_de_capitalisation", period),
+            )
 
 class revenus_obligations_actions_jetons_de_presence(Variable):
     unit = "currency"
@@ -61,8 +76,25 @@ class irvm(Variable):
     definition_period = YEAR
 
 
+class irvm_impute(Variable):
+    unit = "currency"
+    value_type = float
+    entity = FoyerFiscal
+    label = "Impôt sur le revenu des valeurs mobilières (IRVM) prélevé sur les revenus déclarés"
+    definition_period = YEAR
+
+    def formula(foyer_fiscal, period):
+        return min_(
+            foyer_fiscal("irvm", period),
+            .16 * foyer_fiscal("revenus_obligations_actions_jetons_de_presence", period)
+            )
+
 # • Vous devez inscrire ligne DA le montant brut des revenus d’actions et de parts de
 # sociétés métropolitaines.
+# TODO ajouter les paramètres
+# Doit être inférieur à .16 * revenus_obligations_actions_jetons_de_presence à partir des revenus 2014 / IR 2015
+# Mais inférieur à .125 * produits_pret_contrat_de_capitalisation à partir des revenus 2007 / IR 2008
+
 
 class revenus_actions_metropolitaines(Variable):
     unit = "currency"
@@ -73,8 +105,6 @@ class revenus_actions_metropolitaines(Variable):
     definition_period = YEAR
 
 
-#  La retenue à la source pratiquée en métropole doit être inscrite ligne YC, celle-ci sera automatiquement plafonnée à 15 % de la somme ligne DA.
-
 class retenue_a_la_source_metropole(Variable):
     unit = "currency"
     value_type = float
@@ -84,10 +114,22 @@ class retenue_a_la_source_metropole(Variable):
     definition_period = YEAR
 
 
+#  La retenue à la source pratiquée en métropole doit être inscrite ligne YC, celle-ci sera automatiquement plafonnée à 15 % de la somme ligne DA.
+class retenue_a_la_source_metropole_imputee(Variable):
+    unit = "currency"
+    value_type = float
+    entity = FoyerFiscal
+    label = "Retenue à la source pratiquée en métropole sur les revenus d'actions et de parts de sociétés métropolitaines imputée"
+    definition_period = YEAR
+
+    def formula(foyer_fiscal, period):
+        return min_(foyer_fiscal("retenue_a_la_source_metropole", period), .15 * foyer_fiscal("revenus_actions_metropolitaines", period))
+
+
+
 # • Droits de garde ligne DD : Il s’agit des frais prélevés par l’intermédiaire financier
 # pour la tenue des comptes titres. Ils sont déductibles de vos revenus d’actions.
 # Contribuables fiscalement domiciliés hors de la Nouvelle-Calédonie :
-
 
 class droits_de_garde(Variable):
     unit = "currency"

@@ -1,5 +1,7 @@
 """Traitements, alaires, pensions et rentes."""
 
+from openfisca_core.periods import Period
+
 from openfisca_core.model_api import *
 from openfisca_nouvelle_caledonie.entities import FoyerFiscal, Person as Individu
 
@@ -48,15 +50,15 @@ class salaire_imposable(Variable):
     definition_period = YEAR
 
 
-class salaires_percus(Variable):
+class salaire_percu(Variable):
     value_type = float
     unit = "currency"
     entity = Individu
-    label = "Salaires percus"
+    label = "Salaire perçu"
     definition_period = YEAR
 
-    def formula(foyer_fiscal, period):
-        return
+    def formula(individu, period):
+        return max_(individu('salaire_imposable', period), 0) # TODO add NM, NN, NO
 
 
 class frais_reels(Variable):
@@ -126,9 +128,7 @@ class gerant_sarl_selarl_sci_cotisant_ruamm(Variable):
     definition_period = YEAR
 
 
-class cotisations_retraite_gerant_cotisant_ruamm(
-    Variable
-):  # TODO: remove me cotisation1
+class cotisations_retraite_gerant_cotisant_ruamm(Variable):  # TODO: remove me cotisation1
     unit = "currency"
     value_type = float
     cerfa_field = {
@@ -154,6 +154,33 @@ class autres_cotisations_gerant_cotisant_ruamm(Variable):  # TODO: remove me cot
     definition_period = YEAR
 
 
+class cotisations(Variable):
+    unit = "currency"
+    value_type = float
+    entity = Individu
+    definition_period = YEAR
+    label = "Cotisations"
+
+    def formula_2022(individu, period, parameters):
+        # TODO voir https://github.com/openfisca/openfisca-nouvelle_caledonie/issues/7
+        # Lp.123 du code des impôts de la NC :
+
+        # II - Le total des versements aux organismes de retraites au titre des cotisations d’assurance vieillesse
+        # souscrites à titre obligatoire ou volontaire, sont déductibles dans la limite de sept fois le montant du salaire
+        # plafond de la caisse de compensation des prestations familiales, des accidents du travail et de prévoyance des
+        # travailleurs (C.A.F.A.T.), relatif à la retraitel du mois de novembre de l'année de réalisation des revenus ,
+        # l’excédent est réintégré au bénéfice imposable. Cette limite s'apprécie par personne, quel que soit le nombre
+        # de revenus catégoriels dont elle est titulaire.
+        cotisations_retraite_gerant_cotisant_ruamm = individu("cotisations_retraite_gerant_cotisant_ruamm", period)
+        autres_cotisations_gerant_cotisant_ruamm = individu("autres_cotisations_gerant_cotisant_ruamm", period)
+        period_plafond = period.start.offset('first-of', 'month').offset(11, 'month')
+        plafond_cafat_retraite = parameters(period_plafond).prelevements_obligatoires.prelevements_sociaux.cafat.maladie_retraite.plafond
+        return (
+            min_(cotisations_retraite_gerant_cotisant_ruamm, 7 * plafond_cafat_retraite)
+            + autres_cotisations_gerant_cotisant_ruamm
+            )
+
+
 class revenus_categoriels_tspr(Variable):
     value_type = float
     entity = FoyerFiscal
@@ -164,40 +191,69 @@ class revenus_categoriels_tspr(Variable):
         # TODO: les abbatement se fontt-ils salaire par salaire ou sur l'enemble du foyer fiscal ?
         # salaires_percus - retenue_cotisations - deduction_salaires - abattement_salaires
 
-        salaire_imposable = foyer_fiscal.sum(
-            foyer_fiscal.members("salaire_imposable", period)
-        )
-        frais_professionnels_forfaitaire = parameters(
+        tspr = parameters(
             period
-        ).prelevements_obligatoires.impot_revenu.revenus_imposables.tspr.deduction_frais_professionnels_forfaitaire
+        ).prelevements_obligatoires.impot_revenu.revenus_imposables.tspr
+
+        salaire_percu_net_de_cotisation = max_(
+            foyer_fiscal.members("salaire_percu", period) - foyer_fiscal.members("cotisations", period),
+            0,
+            )
+
+        frais_professionnels_forfaitaire = tspr.deduction_frais_professionnels_forfaitaire  # 10%
         deduction_forfaitaire = min_(
             max_(
-                salaire_imposable * frais_professionnels_forfaitaire.taux,
+                salaire_percu_net_de_cotisation * frais_professionnels_forfaitaire.taux,
                 frais_professionnels_forfaitaire.minimum,
-            ),
+                ),
             frais_professionnels_forfaitaire.plafond,
-        )
-        salaire_apres_deduction = max_(salaire_imposable - deduction_forfaitaire, 0)
+            )
+        salaire_apres_deduction = max_(salaire_percu_net_de_cotisation - deduction_forfaitaire, 0)
 
-        pension_imposable = foyer_fiscal.sum(
-            foyer_fiscal.members("pension_retraite_rente_imposables", period)
-        )
-        abattement_pension = parameters(
-            period
-        ).prelevements_obligatoires.impot_revenu.revenus_imposables.tspr.abattement_pension
-        montant_abattement_pension = min_(
+        salaire_apres_abattement = foyer_fiscal.sum(
             max_(
-                pension_imposable * abattement_pension.taux, abattement_pension.minimum
+                (
+                    salaire_apres_deduction
+                    - min_(
+                        salaire_apres_deduction * tspr.abattement.taux,
+                        tspr.abattement.plafond,
+                        )
+                    ),
+                0,
+                )
+            )
+
+        pension_imposable = foyer_fiscal.members("pension_retraite_rente_imposables", period)
+        deduction_pension = tspr.deduction_pension
+        montant_deduction_pension = min_(
+            max_(
+                pension_imposable * deduction_pension.taux, deduction_pension.minimum
             ),
-            abattement_pension.plafond,
+            deduction_pension.plafond,
         )
-        pension_apres_abattement = max_(
-            pension_imposable - montant_abattement_pension, 0
-        )
+        pension_apres_deduction = foyer_fiscal.sum(
+            max_(
+                pension_imposable - montant_deduction_pension,
+                0
+                )
+            )
+
+        pension_apres_abattement = foyer_fiscal.sum(
+            max_(
+                (
+                    pension_apres_deduction
+                    - min_(
+                        pension_apres_deduction * tspr.abattement.taux,
+                        tspr.abattement.plafond,
+                        )
+                    ),
+                0,
+                )
+            )
 
         # TODO: revenus gérant et cotisations
 
-        return salaire_apres_deduction + pension_apres_abattement
+        return salaire_apres_abattement + pension_apres_abattement
 
 
 # Revenus TSPR de la déclaration complémentaire

@@ -166,3 +166,57 @@ class services_a_la_personne(Variable):
     label = "Service à la personne"
     definition_period = YEAR
     cerfa_field = "XK"
+
+
+class cotisations_sociales_hors_gerant_societes_retraite_avant_1992(Variable):
+    unit = "currency"
+    value_type = float
+    entity = FoyerFiscal
+    label = "Cotisations sociales hors gérant de sociétés pour les contrats de retraite volontaires souscrits avant 1992"
+    definition_period = YEAR
+    cerfa_field = "XE"
+
+
+class cotisations_sociales_hors_gerant_societes_retraite_apres_1992(Variable):
+    unit = "currency"
+    value_type = float
+    entity = FoyerFiscal
+    label = "Cotisations sociales hors gérant de sociétés pour les contrats de retraite volontaires souscrits après 1992"
+    definition_period = YEAR
+    cerfa_field = "XT"
+
+
+class cotisations_sociales_hors_gerant_societes_autres(Variable):
+    unit = "currency"
+    value_type = float
+    entity = FoyerFiscal
+    label = "Cotisations sociales hors gérant de sociétés : autres cotisations volontaires"
+    definition_period = YEAR
+    cerfa_field = "XY"
+
+
+class retenue_cotisations_sociales(Variable):
+    unit = "currency"
+    value_type = float
+    entity = FoyerFiscal
+    label = "Retenue pour cotisations sociales"
+    definition_period = YEAR
+
+    def formula_2022(foyer_fiscal, period, parameters):
+        resident = foyer_fiscal("resident", period)
+        period_plafond = period.start.offset('first-of', 'month').offset(11, 'month')
+        plafond_cafat_retraite = parameters(period_plafond).prelevements_obligatoires.prelevements_sociaux.cafat.maladie_retraite.plafond
+        return where(
+            resident,
+            (
+                min_(
+                    (
+                        foyer_fiscal("cotisations_sociales_hors_gerant_societes_retraite_avant_1992", period)
+                        + foyer_fiscal("cotisations_sociales_hors_gerant_societes_retraite_apres_1992", period)
+                        ),
+                    7 * plafond_cafat_retraite
+                    )
+                + foyer_fiscal("cotisations_sociales_hors_gerant_societes_autres", period)
+                ),
+            0,
+            )
