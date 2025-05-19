@@ -12,46 +12,17 @@ class revenu_brut_global(Variable):
 
     def formula(foyer_fiscal, period):
 
-        revenus_categoriels_tspr = foyer_fiscal("revenus_categoriels_tspr", period)
-
-
-    #     // benefice
-    #     rbg += zeroIfNegative(outs.getBeneficeBicP());
-    #     rbg += zeroIfNegative(outs.getBeneficeBicC());
-    #     rbg += zeroIfNegative(outs.getBeneficeBicPC());
-    #     rbg += zeroIfNegative(outs.getBeneficeBaP());
-    #     rbg += zeroIfNegative(outs.getBeneficeBaC());
-    #     rbg += zeroIfNegative(outs.getBeneficeBaPC());
-    #     rbg += zeroIfNegative(outs.getBeneficeBncP());
-    #     rbg += zeroIfNegative(outs.getBeneficeBncC());
-    #     rbg += zeroIfNegative(outs.getBeneficeBncPC());
-
-    #     // pension
-    #     rbg += zeroIfNull(outs.getPensionP());
-    #     rbg += zeroIfNull(outs.getPensionC());
-    #     rbg += zeroIfNull(outs.getPensionPC());
-
-    #     // "REVENUS_FONCIERS" est egal a "AA"
-    #     // "REVENU_BRUT_GLOBAL" est egal a "REVENU_BRUT_GLOBAL + REVENUS_FONCIERS"
-    #     rbg += zeroIfNull(ins.getAA());
-
-    #     rbg += zeroIfNull(outs.getCapitauxMobiliers());
-
-    #     outs.setRevenuBrutGlobal(rbg);
-    # }
-
-
-        # revenus_categoriels_capital = foyer_fiscal("revenu_categoriel_capital", period)
-        # revenus_categoriels_foncier = foyer_fiscal("revenu_categoriel_foncier", period)
-        # revenus_categoriels_non_salarie = foyer_fiscal("revenu_categoriel_non_salarie", period)
-        # revenus_categoriels_plus_values = foyer_fiscal("revenu_categoriel_plus_values", period)
+        revenus_categoriels_tspr = foyer_fiscal("revenus_categoriels_tspr", period)    #     // pension    #     // "REVENUS_FONCIERS" est egal a "AA"
+        revenu_categoriel_foncier = foyer_fiscal("revenus_fonciers_soumis_ir", period)
+        revenu_categoriel_capital = foyer_fiscal("revenu_categoriel_capital", period)
+        revenus_categoriels_non_salarie = foyer_fiscal("revenu_categoriel_non_salarie", period)
 
         return (
             revenus_categoriels_tspr
-            # + revenu_categoriel_capital
-            # + revenu_categoriel_foncier
-            # + revenu_categoriel_non_salarial
-            # + revenu_categoriel_plus_values
+            + revenu_categoriel_capital
+            + revenu_categoriel_foncier
+            + revenus_categoriels_non_salarie
+            # TODO: revenu_categoriel_plus_values
             )
 
 
@@ -94,7 +65,6 @@ class impot_brut(Variable):
         # Calcul de l'impôt brut pour les résidents
 
         nombre_de_parts = foyer_fiscal("parts_fiscales", period)
-        # double rni = zeroIfNull(outs.getRevenuNonImposable());
         revenu_non_imposable = foyer_fiscal("revenu_non_imposable", period)
         revenu_net_global_imposable = foyer_fiscal("revenu_net_global_imposable", period)
 
@@ -135,11 +105,6 @@ class impot_brut(Variable):
         taux_plafond = parameters(period).prelevements_obligatoires.impot_revenu.taux_plafond
         impot_brut_resident = min_(taux_plafond * revenu_net_global_imposable, impot_brut)
 
-        # TODO: à inclure ailleurs
-        # if (zeroIfNull(rngi) != 0) {
-        #     outs.setTauxImpot(impotBrut / rngi);
-        # }
-
         # Calcul de l'impôt brut Non résident
         revenu_brut_global = foyer_fiscal("revenu_brut_global", period)
         den = where(
@@ -166,10 +131,6 @@ class impot_brut(Variable):
 
         # Résultat pour les non résidents
         impot_brut_non_resident = part1 + part2
-
-        # if (zeroIfNull(rngi) != 0) {
-        # 	outs.setTauxImpot(impotBrut / rngi);
-        # } TODO: à inclure ailleurs
 
         return where(
             foyer_fiscal("resident", period),

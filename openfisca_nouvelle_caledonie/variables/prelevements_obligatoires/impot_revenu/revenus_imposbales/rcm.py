@@ -171,3 +171,32 @@ class interets_de_depots(Variable):
 # siège en Nouvelle-Calédonie et soumis à l’IRVM ;
 # - les produits ou contrats de capitalisation au moment de leur dénouement
 # lorsque la durée de détention du produit excède 8 ans.
+
+
+class revenu_categoriel_capital(Variable):
+    unit = "currency"
+    value_type = float
+    entity = FoyerFiscal
+    label = "Revenus catégoriels de capitaux mobiliers"
+    definition_period = YEAR
+
+    def formula(foyer_fiscal, period):
+        resident = foyer_fiscal("resident", period)
+        rcm_resident = max_(
+            (
+                foyer_fiscal("revenus_obligations_actions_jetons_de_presence", period)
+                + foyer_fiscal("revenus_actions_metropolitaines", period)
+                - foyer_fiscal("droits_de_garde", period)
+                ),
+            0
+            ) + foyer_fiscal("produits_pret_contrat_de_capitalisation", period)
+
+        rcm_non_resident = max_(
+            (
+                foyer_fiscal("revenus_obligations_actions_jetons_de_presence", period)
+                - foyer_fiscal("droits_de_garde", period)
+                ),
+            0
+            ) + foyer_fiscal("produits_pret_contrat_de_capitalisation", period)
+
+        return where(resident, rcm_resident, rcm_non_resident)
