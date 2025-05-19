@@ -1,6 +1,5 @@
 """Bénéfices agricoles (BA)."""
 
-
 from openfisca_core.model_api import *
 from openfisca_nouvelle_caledonie.entities import Person as Individu
 
@@ -63,6 +62,7 @@ class ba(Variable):
 
 # Régime réel simplifié (Cadre 10 de la déclaration complémentaire)
 
+
 class benefices_agricoles_regime_reel(Variable):
     unit = "currency"
     cerfa_field = {
@@ -85,8 +85,6 @@ class deficits_agricoles_regime_reel(Variable):
     entity = Individu
     label = "Déficits agricoles du régime réel simplifié"
     definition_period = YEAR
-
-
 
 
 # TODO

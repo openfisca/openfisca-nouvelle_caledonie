@@ -141,6 +141,7 @@ class deficits_industriels_et_commerciaux_reel_simplifie(Variable):
 
 # Régime réel normal (Cadre 10 de la déclaration complémentaire)
 
+
 class benefices_industriels_et_commerciaux_reel_normal(Variable):
     unit = "currency"
     cerfa_field = {
