@@ -57,29 +57,29 @@ class rentes_viageres_a_titre_onereux_plus_de_69_ans(Variable):
 class rentes_viageres_a_titre_onereux(Variable):
     unit = "currency"
     value_type = float
-    entity = Individu
+    entity = FoyerFiscal
     label = "Rentes viagères à titre onéreux"
     definition_period = YEAR
 
-    def formula(individu, period, parameters):
-        rentes_viageres_a_titre_onereux_moins_de_50_ans = individu(
+    def formula(foyer_fiscal, period, parameters):
+        rentes_viageres_a_titre_onereux_moins_de_50_ans = foyer_fiscal.members(
             "rentes_viageres_a_titre_onereux_moins_de_50_ans", period
             )
-        rentes_viageres_a_titre_onereux_50_59_ans = individu(
+        rentes_viageres_a_titre_onereux_50_59_ans = foyer_fiscal.members(
             "rentes_viageres_a_titre_onereux_50_59_ans", period
             )
-        rentes_viageres_a_titre_onereux_60_69_ans = individu(
+        rentes_viageres_a_titre_onereux_60_69_ans = foyer_fiscal.members(
             "rentes_viageres_a_titre_onereux_60_69_ans", period
             )
-        rentes_viageres_a_titre_onereux_plus_de_69_ans = individu(
+        rentes_viageres_a_titre_onereux_plus_de_69_ans = foyer_fiscal.members(
             "rentes_viageres_a_titre_onereux_plus_de_69_ans", period
             )
 
-        rto = parameters(period).prelevements_obligatoires.impot_revenu.revenus_imposables.rto
+        rto = parameters(period).prelevements_obligatoires.impot_revenu.revenus_imposables.tspr.rto
 
-        return (
-            rentes_viageres_a_titre_onereux_moins_de_50_ans * rto.taux_moins_de_50_ans
-            + rentes_viageres_a_titre_onereux_50_59_ans * rto.taux_50_59_ans
-            + rentes_viageres_a_titre_onereux_60_69_ans * rto.taux_60_69_ans
-            + rentes_viageres_a_titre_onereux_plus_de_69_ans * rto.taux_plus_de_69_ans
-        )
+        return foyer_fiscal.sum(
+            rentes_viageres_a_titre_onereux_moins_de_50_ans * rto.taux_moins_de_50
+            + rentes_viageres_a_titre_onereux_50_59_ans * rto.taux_50_59
+            + rentes_viageres_a_titre_onereux_60_69_ans * rto.taux_60_69
+            + rentes_viageres_a_titre_onereux_plus_de_69_ans * rto.taux_plus_de_69
+            )

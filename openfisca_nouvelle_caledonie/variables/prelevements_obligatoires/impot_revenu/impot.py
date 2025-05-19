@@ -61,12 +61,22 @@ class revenu_non_imposable(Variable):
     label = "Revenu non imposable"
     definition_period = YEAR
 
+    def formula(foyer_fiscal, period):
+        return where(
+            foyer_fiscal("resident", period),
+            foyer_fiscal("revenus_de_source_exterieur", period),
+            0
+            )
+
 
 class revenu_net_global_imposable(Variable):
     value_type = float
     entity = FoyerFiscal
     label = "Revenu net global imposable"
     definition_period = YEAR
+
+    def formula(foyer_fiscal, period):
+        return foyer_fiscal("revenu_brut_global", period) - foyer_fiscal("charges_deductibles", period)
 
 
 class impot_brut(Variable):
