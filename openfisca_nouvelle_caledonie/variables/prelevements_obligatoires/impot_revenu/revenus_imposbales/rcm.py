@@ -10,6 +10,7 @@ from openfisca_nouvelle_caledonie.entities import FoyerFiscal
 # - de contrats de capitalisation (principalement assurance-vie) lorsque la durée de
 # détention est inférieure à 8 ans.
 
+
 class produits_pret_contrat_de_capitalisation(Variable):
     unit = "currency"
     value_type = float
@@ -22,6 +23,7 @@ class produits_pret_contrat_de_capitalisation(Variable):
 # Lorsque l’impôt sur le revenu des créances, dépôts et cautionnements (IRCDC), a
 # été prélevé sur des revenus déclarés, reportez son montant ligne YA.
 
+
 class ircdc(Variable):
     unit = "currency"
     value_type = float
@@ -29,6 +31,7 @@ class ircdc(Variable):
     entity = FoyerFiscal
     label = "Impôt sur le revenu des créances, dépôts et cautionnements (IRCDC) prélevé sur les revenus déclarés"
     definition_period = YEAR
+
 
 # • Vous devez inscrire ligne CA le montant brut :
 # - des jetons de présence (à l’exception de ceux versés par une société métropo-
@@ -52,8 +55,9 @@ class ircdc_impute(Variable):
     def formula(foyer_fiscal, period):
         return min_(
             foyer_fiscal("ircdc", period),
-            .08 * foyer_fiscal("produits_pret_contrat_de_capitalisation", period),
-            )
+            0.08 * foyer_fiscal("produits_pret_contrat_de_capitalisation", period),
+        )
+
 
 class revenus_obligations_actions_jetons_de_presence(Variable):
     unit = "currency"
@@ -66,6 +70,7 @@ class revenus_obligations_actions_jetons_de_presence(Variable):
 
 # Lorsque l’impôt sur le revenu des valeurs mobilières (IRVM) a été prélevé sur les
 # revenus déclarés, reportez son montant ligne YB.
+
 
 class irvm(Variable):
     unit = "currency"
@@ -86,8 +91,10 @@ class irvm_impute(Variable):
     def formula(foyer_fiscal, period):
         return min_(
             foyer_fiscal("irvm", period),
-            .16 * foyer_fiscal("revenus_obligations_actions_jetons_de_presence", period)
-            )
+            0.16
+            * foyer_fiscal("revenus_obligations_actions_jetons_de_presence", period),
+        )
+
 
 # • Vous devez inscrire ligne DA le montant brut des revenus d’actions et de parts de
 # sociétés métropolitaines.
@@ -123,13 +130,16 @@ class retenue_a_la_source_metropole_imputee(Variable):
     definition_period = YEAR
 
     def formula(foyer_fiscal, period):
-        return min_(foyer_fiscal("retenue_a_la_source_metropole", period), .15 * foyer_fiscal("revenus_actions_metropolitaines", period))
-
+        return min_(
+            foyer_fiscal("retenue_a_la_source_metropole", period),
+            0.15 * foyer_fiscal("revenus_actions_metropolitaines", period),
+        )
 
 
 # • Droits de garde ligne DD : Il s’agit des frais prélevés par l’intermédiaire financier
 # pour la tenue des comptes titres. Ils sont déductibles de vos revenus d’actions.
 # Contribuables fiscalement domiciliés hors de la Nouvelle-Calédonie :
+
 
 class droits_de_garde(Variable):
     unit = "currency"
@@ -153,6 +163,7 @@ class interets_de_depots(Variable):
     entity = FoyerFiscal
     label = "Intérêts de dépôts de sommes d'argent servis par les établissements bancaires ou financiers exerçant en Nouvelle-Calédonie et de comptes courants d'associés dans les sociétés passibles de l'IS"
     definition_period = YEAR
+
 
 # • Indiquez ligne BA, le montant des autres revenus de créances, dépôts et cau-
 # tionnements et comptes courants de source calédonienne (le taux d’imposition
@@ -187,16 +198,16 @@ class revenu_categoriel_capital(Variable):
                 foyer_fiscal("revenus_obligations_actions_jetons_de_presence", period)
                 + foyer_fiscal("revenus_actions_metropolitaines", period)
                 - foyer_fiscal("droits_de_garde", period)
-                ),
-            0
-            ) + foyer_fiscal("produits_pret_contrat_de_capitalisation", period)
+            ),
+            0,
+        ) + foyer_fiscal("produits_pret_contrat_de_capitalisation", period)
 
         rcm_non_resident = max_(
             (
                 foyer_fiscal("revenus_obligations_actions_jetons_de_presence", period)
                 - foyer_fiscal("droits_de_garde", period)
-                ),
-            0
-            ) + foyer_fiscal("produits_pret_contrat_de_capitalisation", period)
+            ),
+            0,
+        ) + foyer_fiscal("produits_pret_contrat_de_capitalisation", period)
 
         return where(resident, rcm_resident, rcm_non_resident)

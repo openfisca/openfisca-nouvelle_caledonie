@@ -21,7 +21,7 @@ class charges_deductibles(Variable):
             # + foyer_fiscal("depenses_internat_transport_interurbain", period)
             # + foyer_fiscal("services_a_la_personne", period)
             # + foyer_fiscal("retenue_cotisations_sociales", period)
-            )
+        )
 
 
 # INTÉRÊTS D’EMPRUNT POUR VOTRE RÉSIDENCE PRINCIPALE
@@ -211,7 +211,9 @@ class cotisations_sociales_hors_gerant_societes_autres(Variable):
     unit = "currency"
     value_type = float
     entity = FoyerFiscal
-    label = "Cotisations sociales hors gérant de sociétés : autres cotisations volontaires"
+    label = (
+        "Cotisations sociales hors gérant de sociétés : autres cotisations volontaires"
+    )
     definition_period = YEAR
     cerfa_field = "XY"
 
@@ -225,19 +227,29 @@ class retenue_cotisations_sociales(Variable):
 
     def formula_2022(foyer_fiscal, period, parameters):
         resident = foyer_fiscal("resident", period)
-        period_plafond = period.start.offset('first-of', 'month').offset(11, 'month')
-        plafond_cafat_retraite = parameters(period_plafond).prelevements_obligatoires.prelevements_sociaux.cafat.maladie_retraite.plafond
+        period_plafond = period.start.offset("first-of", "month").offset(11, "month")
+        plafond_cafat_retraite = parameters(
+            period_plafond
+        ).prelevements_obligatoires.prelevements_sociaux.cafat.maladie_retraite.plafond
         return where(
             resident,
             (
                 min_(
                     (
-                        foyer_fiscal("cotisations_sociales_hors_gerant_societes_retraite_avant_1992", period)
-                        + foyer_fiscal("cotisations_sociales_hors_gerant_societes_retraite_apres_1992", period)
-                        ),
-                    7 * plafond_cafat_retraite
-                    )
-                + foyer_fiscal("cotisations_sociales_hors_gerant_societes_autres", period)
-                ),
+                        foyer_fiscal(
+                            "cotisations_sociales_hors_gerant_societes_retraite_avant_1992",
+                            period,
+                        )
+                        + foyer_fiscal(
+                            "cotisations_sociales_hors_gerant_societes_retraite_apres_1992",
+                            period,
+                        )
+                    ),
+                    7 * plafond_cafat_retraite,
+                )
+                + foyer_fiscal(
+                    "cotisations_sociales_hors_gerant_societes_autres", period
+                )
+            ),
             0,
-            )
+        )

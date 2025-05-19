@@ -125,8 +125,6 @@ class parts_fiscales(Variable):
         return parts_de_base + parts_enfants + parts_ascendants
 
 
-
-
 class parts_fiscales_reduites(Variable):
     value_type = float
     entity = FoyerFiscal
@@ -139,15 +137,15 @@ class parts_fiscales_reduites(Variable):
         celibataire_ou_divorce = (
             (statut_marital == TypesStatutMarital.celibataire)
             | (statut_marital == TypesStatutMarital.divorce)
-            ) | (statut_marital == TypesStatutMarital.separe)
+        ) | (statut_marital == TypesStatutMarital.separe)
         veuf = statut_marital == TypesStatutMarital.veuf
         marie_ou_pacse = (statut_marital == TypesStatutMarital.marie) | (
             statut_marital == TypesStatutMarital.pacse
-            )
+        )
         return select(
             [
                 celibataire_ou_divorce | veuf,
                 marie_ou_pacse,
-                ],
+            ],
             [1, 2],
-            )
+        )

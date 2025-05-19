@@ -17,7 +17,6 @@ class bnc_recettes_ht(Variable):
     definition_period = YEAR
 
 
-
 # Régime réel simplifié (Cadre 10 de la déclaration complémentaire)
 
 
