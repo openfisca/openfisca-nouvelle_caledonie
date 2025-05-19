@@ -15,12 +15,12 @@ class charges_deductibles(Variable):
         # TODO: vérifier si la formule est correcte
         return (
             foyer_fiscal("deduction_interets_emprunt", period)
-            + foyer_fiscal("deduction_travaux_immobiliers_equipements_verts", period)
-            + foyer_fiscal("pensions_alimentaires", period)
-            + foyer_fiscal("frais_garde_enfants", period)
-            + foyer_fiscal("depenses_internat_transport_interurbain", period)
-            + foyer_fiscal("services_a_la_personne", period)
-            + foyer_fiscal("retenue_cotisations_sociales", period)
+            # + foyer_fiscal("deduction_travaux_immobiliers_equipements_verts", period)
+            # + foyer_fiscal("pensions_alimentaires", period)
+            # + foyer_fiscal("frais_garde_enfants", period)
+            # + foyer_fiscal("depenses_internat_transport_interurbain", period)
+            # + foyer_fiscal("services_a_la_personne", period)
+            # + foyer_fiscal("retenue_cotisations_sociales", period)
             )
 
 

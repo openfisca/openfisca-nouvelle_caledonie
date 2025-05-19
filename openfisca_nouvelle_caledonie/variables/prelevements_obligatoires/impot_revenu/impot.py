@@ -85,7 +85,6 @@ class impot_brut(Variable):
     label = "Impot brut"
     definition_period = YEAR
 
-
     def formula(foyer_fiscal, period, parameters):
         # from tmp/engine/rules/_2008/impots/ImpotBrutUtil2008.java
         tauxPart1 = 8 / 100
@@ -106,7 +105,7 @@ class impot_brut(Variable):
 
         bareme = parameters(period).prelevements_obligatoires.impot_revenu.bareme
 
-        impot_brut = bareme.calc(revenu_par_part)
+        impot_brut = bareme.calc(revenu_par_part) * nombre_de_parts
 
         # Au final, l'impôt brut est une fraction du résultat précédent
         numerateur = revenu_net_global_imposable
@@ -166,7 +165,7 @@ class impot_brut(Variable):
         part2 = txNI * revenu_net_global_imposable * (1 - pourcentage);
 
         # Résultat pour les non résidents
-        impot_brut_non_resident = part1 + part2;
+        impot_brut_non_resident = part1 + part2
 
         # if (zeroIfNull(rngi) != 0) {
         # 	outs.setTauxImpot(impotBrut / rngi);
@@ -196,6 +195,37 @@ class impot_brut(Variable):
 #         return null;
 #     }
 # }
+
+
+class imputations(Variable):
+    value_type = float
+    entity = FoyerFiscal
+    label = "Imputations"
+    definition_period = YEAR
+
+    def formula(foyer_fiscal, period):
+        return (
+            foyer_fiscal("ircdc_impute", period)
+            + foyer_fiscal("irvm_impute", period)
+            + foyer_fiscal("retenue_a_la_source_metropole_imputee", period)
+            )
+
+
+class impot_net(Variable):
+    value_type = float
+    entity = FoyerFiscal
+    label = "Impot net"
+    definition_period = YEAR
+
+    def formula(foyer_fiscal, period):
+        return max_(
+            (
+                foyer_fiscal("impot_brut", period)
+                - foyer_fiscal("imputations", period)
+                - foyer_fiscal("reductions_impot", period)
+                ),
+            0
+            )
 
 
 class resident(Variable):

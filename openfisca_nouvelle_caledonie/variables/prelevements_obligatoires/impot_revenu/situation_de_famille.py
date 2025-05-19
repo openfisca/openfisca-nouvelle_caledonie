@@ -123,3 +123,31 @@ class parts_fiscales(Variable):
         )
 
         return parts_de_base + parts_enfants + parts_ascendants
+
+
+
+
+class parts_fiscales_reduites(Variable):
+    value_type = float
+    entity = FoyerFiscal
+    label = "Nombre de parts"
+    definition_period = YEAR
+
+    def formula_2015(foyer_fiscal, period):
+        # Réforme de l'impôt 2016 sur les revenus 2015
+        statut_marital = foyer_fiscal.declarant_principal("statut_marital", period)
+        celibataire_ou_divorce = (
+            (statut_marital == TypesStatutMarital.celibataire)
+            | (statut_marital == TypesStatutMarital.divorce)
+            ) | (statut_marital == TypesStatutMarital.separe)
+        veuf = statut_marital == TypesStatutMarital.veuf
+        marie_ou_pacse = (statut_marital == TypesStatutMarital.marie) | (
+            statut_marital == TypesStatutMarital.pacse
+            )
+        return select(
+            [
+                celibataire_ou_divorce | veuf,
+                marie_ou_pacse,
+                ],
+            [1, 2],
+            )
