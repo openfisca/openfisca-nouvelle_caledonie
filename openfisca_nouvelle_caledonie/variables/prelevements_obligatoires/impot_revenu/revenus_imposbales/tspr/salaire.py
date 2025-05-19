@@ -216,7 +216,22 @@ class indemnites_elus_municipaux(Variable):
     cerfa_field = {
         0: "NP",
         1: "NQ",
-    }
+        2: "NR",
+        }
     entity = Individu
     label = "Indemnités des élus municipaux"
     definition_period = YEAR
+
+
+
+class indemnites(Variable):
+    unit = "currency"
+    value_type = float
+    entity = FoyerFiscal
+    label = "Indemnités"
+    definition_period = YEAR
+
+    def formula(foyer_fiscal, period):
+        # TODO: Calculer l'abattement sur les indemnités des élus municipaux
+        # 20 % de l'indemnité brute dans la limote du reste de l'abattement sur salaire
+        return foyer_fiscal.sum(foyer_fiscal.members("indemnites_elus_municipaux", period))

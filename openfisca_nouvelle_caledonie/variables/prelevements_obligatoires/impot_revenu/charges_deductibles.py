@@ -3,6 +3,27 @@
 from openfisca_core.model_api import *
 from openfisca_nouvelle_caledonie.entities import FoyerFiscal
 
+
+class charges_deductibles(Variable):
+    unit = "currency"
+    value_type = float
+    entity = FoyerFiscal
+    label = "Charges déductibles du revenu global"
+    definition_period = YEAR
+
+    def formula(foyer_fiscal, period):
+        # TODO: vérifier si la formule est correcte
+        return (
+            foyer_fiscal("deduction_interets_emprunt", period)
+            + foyer_fiscal("deduction_travaux_immobiliers_equipements_verts", period)
+            + foyer_fiscal("pensions_alimentaires", period)
+            + foyer_fiscal("frais_garde_enfants", period)
+            + foyer_fiscal("depenses_internat_transport_interurbain", period)
+            + foyer_fiscal("services_a_la_personne", period)
+            + foyer_fiscal("retenue_cotisations_sociales", period)
+            )
+
+
 # INTÉRÊTS D’EMPRUNT POUR VOTRE RÉSIDENCE PRINCIPALE
 # EN NOUVELLE-CALÉDONIE (lignes XI, XO, XP)
 # Vous pouvez bénéficier d’une déduction au titre des intérêts d’emprunts contractés
