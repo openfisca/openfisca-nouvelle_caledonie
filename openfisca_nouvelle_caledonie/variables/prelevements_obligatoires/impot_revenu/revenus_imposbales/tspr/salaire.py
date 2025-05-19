@@ -59,7 +59,7 @@ class salaire_percu(Variable):
     definition_period = YEAR
 
     def formula(individu, period):
-        return max_(individu('salaire_imposable', period), 0) # TODO add NM, NN, NO
+        return max_(individu("salaire_imposable", period), 0)  # TODO add NM, NN, NO
 
 
 class frais_reels(Variable):
@@ -88,7 +88,9 @@ class gerant_sarl_selarl_sci_cotisant_ruamm(Variable):
     definition_period = YEAR
 
 
-class cotisations_retraite_gerant_cotisant_ruamm(Variable):  # TODO: remove me cotisation1
+class cotisations_retraite_gerant_cotisant_ruamm(
+    Variable
+):  # TODO: remove me cotisation1
     unit = "currency"
     value_type = float
     cerfa_field = {
@@ -131,14 +133,20 @@ class cotisations(Variable):
         # travailleurs (C.A.F.A.T.), relatif à la retraitel du mois de novembre de l'année de réalisation des revenus ,
         # l’excédent est réintégré au bénéfice imposable. Cette limite s'apprécie par personne, quel que soit le nombre
         # de revenus catégoriels dont elle est titulaire.
-        cotisations_retraite_gerant_cotisant_ruamm = individu("cotisations_retraite_gerant_cotisant_ruamm", period)
-        autres_cotisations_gerant_cotisant_ruamm = individu("autres_cotisations_gerant_cotisant_ruamm", period)
-        period_plafond = period.start.offset('first-of', 'month').offset(11, 'month')
-        plafond_cafat_retraite = parameters(period_plafond).prelevements_obligatoires.prelevements_sociaux.cafat.maladie_retraite.plafond
+        cotisations_retraite_gerant_cotisant_ruamm = individu(
+            "cotisations_retraite_gerant_cotisant_ruamm", period
+        )
+        autres_cotisations_gerant_cotisant_ruamm = individu(
+            "autres_cotisations_gerant_cotisant_ruamm", period
+        )
+        period_plafond = period.start.offset("first-of", "month").offset(11, "month")
+        plafond_cafat_retraite = parameters(
+            period_plafond
+        ).prelevements_obligatoires.prelevements_sociaux.cafat.maladie_retraite.plafond
         return (
             min_(cotisations_retraite_gerant_cotisant_ruamm, 7 * plafond_cafat_retraite)
             + autres_cotisations_gerant_cotisant_ruamm
-            )
+        )
 
 
 class salaire_imposable_apres_deduction_et_abattement(Variable):
@@ -155,19 +163,24 @@ class salaire_imposable_apres_deduction_et_abattement(Variable):
         ).prelevements_obligatoires.impot_revenu.revenus_imposables.tspr
 
         salaire_percu_net_de_cotisation = max_(
-            foyer_fiscal.members("salaire_percu", period) - foyer_fiscal.members("cotisations", period),
+            foyer_fiscal.members("salaire_percu", period)
+            - foyer_fiscal.members("cotisations", period),
             0,
-            )
+        )
 
-        frais_professionnels_forfaitaire = tspr.deduction_frais_professionnels_forfaitaire  # 10%
+        frais_professionnels_forfaitaire = (
+            tspr.deduction_frais_professionnels_forfaitaire
+        )  # 10%
         deduction_forfaitaire = min_(
             max_(
                 salaire_percu_net_de_cotisation * frais_professionnels_forfaitaire.taux,
                 frais_professionnels_forfaitaire.minimum,
-                ),
+            ),
             frais_professionnels_forfaitaire.plafond,
-            )
-        salaire_apres_deduction = max_(salaire_percu_net_de_cotisation - deduction_forfaitaire, 0)
+        )
+        salaire_apres_deduction = max_(
+            salaire_percu_net_de_cotisation - deduction_forfaitaire, 0
+        )
 
         return foyer_fiscal.sum(
             max_(
@@ -176,16 +189,17 @@ class salaire_imposable_apres_deduction_et_abattement(Variable):
                     - min_(
                         salaire_apres_deduction * tspr.abattement.taux,
                         tspr.abattement.plafond,
-                        )
-                    ),
+                    )
+                ),
                 0,
-                )
             )
+        )
 
 
 # Revenus de la déclaration complémentaire
 
 # Revenus différés salaires et pensions (Cadre 9)
+
 
 class salaires_imposes_selon_le_quotient(Variable):
     unit = "currency"
@@ -217,11 +231,10 @@ class indemnites_elus_municipaux(Variable):
         0: "NP",
         1: "NQ",
         2: "NR",
-        }
+    }
     entity = Individu
     label = "Indemnités des élus municipaux"
     definition_period = YEAR
-
 
 
 class indemnites(Variable):
@@ -234,4 +247,6 @@ class indemnites(Variable):
     def formula(foyer_fiscal, period):
         # TODO: Calculer l'abattement sur les indemnités des élus municipaux
         # 20 % de l'indemnité brute dans la limote du reste de l'abattement sur salaire
-        return foyer_fiscal.sum(foyer_fiscal.members("indemnites_elus_municipaux", period))
+        return foyer_fiscal.sum(
+            foyer_fiscal.members("indemnites_elus_municipaux", period)
+        )

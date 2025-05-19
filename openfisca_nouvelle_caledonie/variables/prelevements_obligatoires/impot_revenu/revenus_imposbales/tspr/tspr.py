@@ -13,16 +13,22 @@ class revenus_categoriels_tspr(Variable):
     definition_period = YEAR
 
     def formula(foyer_fiscal, period, parameters):
-        salaire_imposable_apres_deduction_et_abattement = foyer_fiscal('salaire_imposable_apres_deduction_et_abattement', period)
-        indemnites = foyer_fiscal('indemnites', period)
-        pension_imposable_apres_deduction_et_abattement = foyer_fiscal('pension_imposable_apres_deduction_et_abattement', period)
-        rentes_viageres_a_titre_onereux = foyer_fiscal('rentes_viageres_a_titre_onereux', period)
+        salaire_imposable_apres_deduction_et_abattement = foyer_fiscal(
+            "salaire_imposable_apres_deduction_et_abattement", period
+        )
+        indemnites = foyer_fiscal("indemnites", period)
+        pension_imposable_apres_deduction_et_abattement = foyer_fiscal(
+            "pension_imposable_apres_deduction_et_abattement", period
+        )
+        rentes_viageres_a_titre_onereux = foyer_fiscal(
+            "rentes_viageres_a_titre_onereux", period
+        )
         return (
             salaire_imposable_apres_deduction_et_abattement
             + indemnites
             + pension_imposable_apres_deduction_et_abattement
             + rentes_viageres_a_titre_onereux
-            )
+        )
 
 
 class revenus_bruts_salaires_epnsions(Variable):
@@ -36,10 +42,13 @@ class revenus_bruts_salaires_epnsions(Variable):
             foyer_fiscal.members("salaire_percu", period)
             + foyer_fiscal.members("pension_retraite_rente_imposables", period)
             + foyer_fiscal.members("indemnites", period)
-            + foyer_fiscal.members("rentes_viageres_a_titre_onereux_moins_de_50_ans", period)
+            + foyer_fiscal.members(
+                "rentes_viageres_a_titre_onereux_moins_de_50_ans", period
+            )
             + foyer_fiscal.members("rentes_viageres_a_titre_onereux_50_59_ans", period)
             + foyer_fiscal.members("rentes_viageres_a_titre_onereux_60_69_ans", period)
-            + foyer_fiscal.members("rentes_viageres_a_titre_onereux_plus_de_69_ans", period)
-            + foyer_fiscal.members("indemnites_elus_municipaux", period)
-            
+            + foyer_fiscal.members(
+                "rentes_viageres_a_titre_onereux_plus_de_69_ans", period
             )
+            + foyer_fiscal.members("indemnites_elus_municipaux", period)
+        )
