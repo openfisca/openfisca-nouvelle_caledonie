@@ -12,4 +12,24 @@
       personne_de_reference: individu_0
   output:
     revenus_categoriels_tspr: 10e6 - 800e3 - 1800000
-    impot_brut: 0
+    impot_brut: 1_711_000
+
+
+- name: Salarié marié 10_000_000
+  period: 2024
+  absolute_error_margin: 1
+  input:
+    foyer_fiscal:
+      declarants:
+      - individu_0
+      - individu_1
+    persons:
+      individu_0:
+        salaire_imposable: 10_000_000
+        statut_marital: marie
+      individu_1:
+        statut_marital: marie
+  output:
+    revenus_categoriels_tspr: 10e6 - 800e3 - 1800000
+    parts_fiscales: 2
+    impot_net: 662_000
