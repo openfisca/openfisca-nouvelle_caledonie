@@ -14,7 +14,6 @@
     revenus_categoriels_tspr: 10e6 - 800e3 - 1800000
     impot_brut: 1_711_000
 
-
 - name: Salarié marié 10_000_000
   period: 2024
   absolute_error_margin: 1
@@ -28,6 +27,7 @@
         salaire_imposable: 10_000_000
         statut_marital: marie
       individu_1:
+        salaire_imposable: 0
         statut_marital: marie
   output:
     revenus_categoriels_tspr: 10e6 - 800e3 - 1800000
