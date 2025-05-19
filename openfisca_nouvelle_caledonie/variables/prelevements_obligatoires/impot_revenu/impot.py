@@ -190,8 +190,9 @@ class impot_brut(Variable):
 
 class resident(Variable):
     value_type = bool
+    default_value = True
     entity = FoyerFiscal
-    label = "Non résident"
+    label = "Foyer fiscal résident en Nouvelle Calédonie"
     definition_period = YEAR
 
 
