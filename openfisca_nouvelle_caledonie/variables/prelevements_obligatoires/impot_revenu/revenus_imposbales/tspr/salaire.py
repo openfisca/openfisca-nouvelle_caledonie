@@ -1,10 +1,8 @@
 """Traitements et salaires."""
 
-from openfisca_core.periods import Period
-
 from openfisca_core.model_api import *
+from openfisca_core.periods import Period
 from openfisca_nouvelle_caledonie.entities import FoyerFiscal, Person as Individu
-
 
 # TRAITEMENT, SALAIRES
 
