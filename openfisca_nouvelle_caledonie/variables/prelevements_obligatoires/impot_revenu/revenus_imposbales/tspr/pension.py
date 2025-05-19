@@ -47,7 +47,6 @@ class pension_retraite_rente_imposables(Variable):
     definition_period = YEAR
 
 
-
 class pension_imposable_apres_deduction_et_abattement(Variable):
     value_type = float
     entity = FoyerFiscal
@@ -59,19 +58,16 @@ class pension_imposable_apres_deduction_et_abattement(Variable):
             period
         ).prelevements_obligatoires.impot_revenu.revenus_imposables.tspr
 
-        pension_imposable = foyer_fiscal.members("pension_retraite_rente_imposables", period)
+        pension_imposable = foyer_fiscal.members(
+            "pension_retraite_rente_imposables", period
+        )
 
         deduction_pension = tspr.deduction_pension
         montant_deduction_pension = min_(
-            max_(
-                pension_imposable * deduction_pension.taux, deduction_pension.minimum
-                ),
+            max_(pension_imposable * deduction_pension.taux, deduction_pension.minimum),
             deduction_pension.plafond,
-            )
-        pension_apres_deduction = max_(
-            pension_imposable - montant_deduction_pension,
-            0
-            )
+        )
+        pension_apres_deduction = max_(pension_imposable - montant_deduction_pension, 0)
 
         pension_apres_abattement = foyer_fiscal.sum(
             max_(
@@ -80,27 +76,28 @@ class pension_imposable_apres_deduction_et_abattement(Variable):
                     - min_(
                         pension_apres_deduction * tspr.abattement.taux,
                         tspr.abattement.plafond,
-                        )
-                    ),
+                    )
+                ),
                 0,
-                )
             )
+        )
 
         # Abattement spécial sur les pensions pour les non-résidents
         pension_apres_abattement_non_resident = foyer_fiscal.sum(
             pension_imposable - min_(pension_imposable, 1_000_000)  # TODO: paramètre
-            )
+        )
 
         return where(
             foyer_fiscal("resident", period),
             pension_apres_abattement,
             pension_apres_abattement_non_resident,
-            )
+        )
 
 
 # Revenus de la déclaration complémentaire
 
 # Revenus différés salaires et pensions (Cadre 9)
+
 
 class pensions_imposees_selon_le_quotient(Variable):
     unit = "currency"
