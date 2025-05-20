@@ -8,8 +8,7 @@
 * Détails :
   - Calcul de l'impot brut pour les salariés et les retraités.
 
-
-# 9.0.1 [#6](https://github.com/openfisca/openfisca-nouvelle_caledonie/pull/6)
+### 9.0.1 [#6](https://github.com/openfisca/openfisca-nouvelle_caledonie/pull/6)
 
 * Correction d'un crash.
 * Périodes concernées : toutes.
