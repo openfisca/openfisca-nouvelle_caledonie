@@ -1,11 +1,18 @@
 description: Plafond de l'abattement sur les pensions
 values:
-  2024-01-01:
-    value: 550_000
+  2021-09-25:
+    value: 500000
+  2023-11-21:
+    value: 550000
 metadata:
-  short_label: Plafond
+  short_label: Maxime BOLLENGIER
   label_en: Ceiling of the pension allowance
+  short_label_en: Maxime BOLLENGIER
   unit: currency
   reference:
-    2024-01-01:
-      title: TODO (et corriger date)
+    2021-09-25:
+      title: Loi du pays 2001-010 du 25/09/2001
+      href: https://juridoc.gouv.nc/juridoc/jdtextes.nsf/(web-All)/6D6AA0EB181FE21B4B2574CE00780D65/$File/Loi_du_pays_2001-010_du_25-09-2001_ChG.pdf?OpenElement#search=%22Loi%20du%20pays%20n%C2%B0%202001-010%20du%2025%20septembre%202001%20portant%20diverses%20dispositions%20d
+    2023-11-21:
+      title: Loi du pays 2003-7 du 21/11/2003
+      href: https://juridoc.gouv.nc/juridoc/jdtextes.nsf/(web-All)/7EF83ED0E79E7E234B2574CE00780AB3/$File/Loi_du_pays_2003-7_du_21-11-2003_ChG.pdf?OpenElement#search=%22Loi%20du%20pays%20n%C2%B0%202003-7%20du%2021%20novembre%202003%22
