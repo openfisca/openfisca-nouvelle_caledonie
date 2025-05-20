@@ -4,3 +4,7 @@ metadata:
   label_en: Income tax
   order:
   - revenus_imposables
+  - charges_deductibles
+  - bareme
+  - reductions
+  - credits

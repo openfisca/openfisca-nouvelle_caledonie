@@ -43,6 +43,24 @@ class revenu_non_imposable(Variable):
         )
 
 
+class abattement_enfants_accueillis(Variable):
+    value_type = float
+    entity = FoyerFiscal
+    label = "Abattement enfants accueillis"
+    definition_period = YEAR
+
+    def formula(foyer_fiscal, period):
+        return where(
+            foyer_fiscal("resident", period),
+            (
+                foyer_fiscal("enfants_accueillis", period) * 406_000  # TODO: parameters
+                + foyer_fiscal("enfants_accueillis_handicapes", period) * 540_000
+                ),
+            0,
+            )
+
+
+
 class revenu_net_global_imposable(Variable):
     value_type = float
     entity = FoyerFiscal
@@ -50,9 +68,15 @@ class revenu_net_global_imposable(Variable):
     definition_period = YEAR
 
     def formula(foyer_fiscal, period):
-        return foyer_fiscal("revenu_brut_global", period) - foyer_fiscal(
-            "charges_deductibles", period
-        )
+        return max_(
+            (
+                foyer_fiscal("revenu_brut_global", period)
+                - foyer_fiscal("charges_deductibles", period)
+                - foyer_fiscal("deductions_reintegrees", period)
+                - foyer_fiscal("abattement_enfants_accueillis", period)
+                ),
+            0
+            )
 
 
 class impot_brut(Variable):

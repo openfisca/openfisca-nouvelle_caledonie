@@ -44,19 +44,3 @@ class reduction_impot_redistributive(Variable):
         )
 
         return condtion * redcution
-
-        # )
-
-
-# // Condition pour bénéficier de cette RI :
-# // - RGB <= 6.100.000 * (N1 + (N2-N1)/2)
-# // - etre resident
-# // - reste_impot_brut <= 5.000
-# if (outs.getRevenuBrutGlobal() <= (6100000 * nb_parts_redistributive) && ins.isResident()) {
-# 	// calcul de la RI
-# 	if (outs.getRevenuBrutGlobal() >= 6080000 * nb_parts_redistributive) {
-# 		RI = (6100000 * nb_parts_redistributive) - outs.getRevenuBrutGlobal();
-# 	} else {
-# 		RI = min(1d / 100 * nb_parts_redistributive * outs.getRevenuBrutGlobal(), 20000 * nb_parts_redistributive);
-# 	}
-# }
