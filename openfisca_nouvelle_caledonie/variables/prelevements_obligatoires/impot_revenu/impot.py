@@ -72,7 +72,7 @@ class revenu_net_global_imposable(Variable):
             (
                 foyer_fiscal("revenu_brut_global", period)
                 - foyer_fiscal("charges_deductibles", period)
-                - foyer_fiscal("deductions_reintegrees", period)
+                + foyer_fiscal("deductions_reintegrees", period)
                 - foyer_fiscal("abattement_enfants_accueillis", period)
                 ),
             0

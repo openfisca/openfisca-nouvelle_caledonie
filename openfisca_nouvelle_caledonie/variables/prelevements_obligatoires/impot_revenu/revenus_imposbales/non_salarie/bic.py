@@ -93,7 +93,7 @@ class bic_forfait(Variable):
         # Au forfait
         abattement = parameters(
             period
-        ).prelevements_obligatoires.impot_revenu.revenus_imposables.travailleurs_independants.bic.abattement
+        ).prelevements_obligatoires.impot_revenu.revenus_imposables.non_salarie.bic.abattement
         return (
             max_(
                 0,

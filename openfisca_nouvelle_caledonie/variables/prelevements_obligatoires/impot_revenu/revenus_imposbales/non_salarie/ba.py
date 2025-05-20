@@ -43,7 +43,7 @@ class ba(Variable):
         # Le bénéfice, égal à 1/6 e de ce chiffre d’affaires sera déterminé automatiquement.
         diviseur = parameters(
             period
-        ).prelevements_obligatoires.impot_revenu.revenus_imposables.travailleurs_independants.ba.diviseur_ca
+        ).prelevements_obligatoires.impot_revenu.revenus_imposables.non_salarie.ba.diviseur_ca
         return (
             max_(
                 0,
