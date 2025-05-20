@@ -143,24 +143,12 @@ class impot_brut(Variable):
         )
 
 
-#     /**
-#      * Permet de recalculer l'impôt supplémentaire dû à un salaire différé ou à une pension différée. Il se base sur la calcul de l'impôt brut
-#      *
-#      * @param quotient
-#      * @param nbAnnee
-#      * @param ins
-#      * @param outs
-#      * @return le montant de l'impôt supplémentaire
-#      */
-#     static Double calculImpotSupplementaireQuotientDiff(Double quotient, Double nbAnnee, CalculInputs ins, CalculOutputs outs) {
-#         if (quotient != null) {
-#             double rngiRevise = arrondit1000(outs.getRevenuNetGlobalImposable() + quotient);
-#             double impotBrutRevise = ImpotBrutUtil2008.calculImpotBrut(rngiRevise, ins, outs);
-#             return (impotBrutRevise - outs.getImpotBrut()) * nbAnnee;
-#         }
-#         return null;
-#     }
-# }
+#  Permet de recalculer l'impôt supplémentaire dû à un salaire différé ou à une pension différée. Il se base sur la calcul de l'impôt brut
+#
+#  if (quotient != null) {
+#     rngiRevise = arrondit1000(RevenuNetGlobalImposable) + quotient
+#     impotBrutRevise = calculImpotBrut(rngiRevise)
+#     retun impotBrutRevise - ImpotBrut * nbAnnee;
 
 
 class imputations(Variable):
