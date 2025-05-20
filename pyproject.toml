@@ -5,7 +5,7 @@ requires = [ "setuptools>=61" ]
 [project]
 name = "openfisca-nouvelle_caledonie"
 
-version = "9.0.1"
+version = "10.0.0"
 description = "OpenFisca Rules as Code model for Nouvelle Calédonie."
 readme = "README.md"
 keywords = [ "benefit", "microsimulation", "rac", "rules-as-code", "tax" ]
