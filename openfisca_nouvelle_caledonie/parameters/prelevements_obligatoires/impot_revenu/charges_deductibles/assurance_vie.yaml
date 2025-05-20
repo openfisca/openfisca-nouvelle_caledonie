@@ -1,0 +1,8 @@
+description: Plafond de la déduction au titre de l'assurance vie
+values:
+  2023-01-01:
+    value: 275_000
+metadata:
+  short_label: Plafond assurance vie
+  label_en: Ceiling of the deduction for life insurance
+  unit: currency

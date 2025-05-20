@@ -1,0 +1,8 @@
+description: Plafond de la déduction des charges déductible pour travaux dans les immeubles historiques
+values:
+  2007-01-01:
+    value: 12_000_000
+metadata:
+  short_label: Plafond immeubles historiques
+  label_en: Ceiling of the deduction for expenses for work in historical buildings
+  unit: currency

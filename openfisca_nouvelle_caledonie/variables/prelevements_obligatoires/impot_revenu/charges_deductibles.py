@@ -14,13 +14,14 @@ class charges_deductibles(Variable):
     def formula(foyer_fiscal, period):
         # TODO: vérifier si la formule est correcte
         return (
-            foyer_fiscal("deduction_interets_emprunt", period)
-            # + foyer_fiscal("deduction_travaux_immobiliers_equipements_verts", period)
-            # + foyer_fiscal("pensions_alimentaires", period)
-            # + foyer_fiscal("frais_garde_enfants", period)
-            # + foyer_fiscal("depenses_internat_transport_interurbain", period)
-            # + foyer_fiscal("services_a_la_personne", period)
-            # + foyer_fiscal("retenue_cotisations_sociales", period)
+            foyer_fiscal("csg_deductible", period)
+            + foyer_fiscal("deduction_depenses_internat_transport_interurbain", period)
+            + foyer_fiscal("deduction_interets_emprunt", period)
+            + foyer_fiscal("deduction_services_a_la_personne", period)
+            + foyer_fiscal("deduction_travaux_immobiliers_equipements_verts", period)
+            + foyer_fiscal("deduction_travaux_immobiliers", period)
+            + foyer_fiscal("pensions_alimentaires", period)
+            + foyer_fiscal("retenue_cotisations_sociales", period)
         )
 
 
@@ -50,7 +51,7 @@ class interets_emprunt_noumea_etc_moins_recents(Variable):
     entity = FoyerFiscal
     label = "Intérêts d’emprunt pour votre résidence principale à Nouméa (souscrit à partir de 2004), Dumbéa, Païta ou Mont-Dore (souscrit à partir de 2017)"
     definition_period = YEAR
-    cerfa_field = "X0"
+    cerfa_field = "XO"
     # TODO: VEFA ? Condiiton XI
 
 
@@ -101,23 +102,20 @@ class deduction_interets_emprunt(Variable):
 
     def formula(foyer_fiscal, period):
         # Récupération des variables d'intérêts d'emprunt
-        interets_emprunt_noumea_etc_recents = foyer_fiscal(
+        interets_emprunt_noumea_etc_recents = max_(min_(foyer_fiscal(
             "interets_emprunt_noumea_etc_recents", period
-        )
-        interets_emprunt_noumea_etc_moins_recents = foyer_fiscal(
+            ), 1_000_000), 0)  # TODO: paramètres
+        interets_emprunt_noumea_etc_moins_recents = max_(min_(foyer_fiscal(
             "interets_emprunt_noumea_etc_moins_recents", period
-        )
+            ), 500_000), 0)  # TODO: paramètres
         interets_emprunt_hors_noumea_etc_et_anciens = foyer_fiscal(
             "interets_emprunt_hors_noumea_etc_et_anciens", period
         )
-
-        # Calcul de la déduction
-        # TODO: appliquer les plafonds et dates de prêt
         return (
             interets_emprunt_noumea_etc_recents
             + interets_emprunt_noumea_etc_moins_recents
             + interets_emprunt_hors_noumea_etc_et_anciens
-        )
+            )
 
 
 class travaux_immobiliers(Variable):
@@ -127,6 +125,22 @@ class travaux_immobiliers(Variable):
     label = "Travaux immobiliers effectués par un professionnel dans l'année"
     definition_period = YEAR
     cerfa_field = "XX"
+
+
+class deduction_travaux_immobiliers(Variable):
+    unit = "currency"
+    value_type = float
+    entity = FoyerFiscal
+    label = "Charges déductibles du revenu global au titre des travaux immobiliers"
+    definition_period = YEAR
+    end = '2011-12-31'
+
+    def formula_2008(foyer_fiscal, period, parameters):
+        # TODO: vérifier si la date de fin est correcte et corriger avec deduction_travaux_immobiliers_equipements_verts
+        travaux_immobiliers = foyer_fiscal("travaux_immobiliers", period)
+        plafond = parameters(period).prelevements_obligatoires.impot_revenu.charges_deductibles.travaux_immobiliers
+        return max(min_(travaux_immobiliers, plafond), 0)
+
 
 
 class equipements_verts(Variable):
@@ -145,11 +159,11 @@ class deduction_travaux_immobiliers_equipements_verts(Variable):
     label = "Charges déductibles du revenu global au titre des travaux immobiliers et équipements verts"
     definition_period = YEAR
 
-    def formula(foyer_fiscal, period, parameters):
+    def formula_2023(foyer_fiscal, period, parameters):
         travaux_immobiliers = foyer_fiscal("travaux_immobiliers", period)
         equipements_verts = foyer_fiscal("equipements_verts", period)
 
-        plafond = parameters(period).impot_revenu.charges_deductibles.travaux.plafond
+        plafond = parameters(period).prelevements_obligatoires.impot_revenu.charges_deductibles.travaux
         return max(min_(travaux_immobiliers + equipements_verts, plafond), 0)
 
 
@@ -171,6 +185,20 @@ class frais_garde_enfants(Variable):
     cerfa_field = "XL"
 
 
+class deduction_frais_garde_enfants(Variable):
+    unit = "currency"
+    value_type = float
+    entity = FoyerFiscal
+    label = "Charges déductibles du revenu global au titre des frais de garde d’enfants"
+    definition_period = YEAR
+
+    def formula(foyer_fiscal, period, parameters):
+        plafond = parameters(
+            period
+        ).prelevements_obligatoires.impot_revenu.charges_deductibles.frais_garde_enfants
+        return max(min_(foyer_fiscal("frais_garde_enfants", period), plafond), 0)
+
+
 class depenses_internat_transport_interurbain(Variable):
     unit = "currency"
     value_type = float
@@ -178,6 +206,25 @@ class depenses_internat_transport_interurbain(Variable):
     label = "Dépenses d’internat et de transport interurbain pour enfants scolarisés"
     definition_period = YEAR
     cerfa_field = "XZ"
+
+
+class deduction_depenses_internat_transport_interurbain(Variable):
+    unit = "currency"
+    value_type = float
+    entity = FoyerFiscal
+    label = "Charges déductibles du revenu global au titre des dépenses d’internat et de transport interurbain pour enfants scolarisés"
+    definition_period = YEAR
+
+    def formula(foyer_fiscal, period, parameters):
+        plafond = parameters(
+            period
+        ).prelevements_obligatoires.impot_revenu.charges_deductibles.depenses_internat_transport_interurbain
+        resident = foyer_fiscal("resident", period)
+        return where(
+            resident,
+            max(min_(foyer_fiscal("depenses_internat_transport_interurbain", period), plafond), 0),
+            0,
+            )
 
 
 class services_a_la_personne(Variable):
@@ -188,6 +235,19 @@ class services_a_la_personne(Variable):
     definition_period = YEAR
     cerfa_field = "XK"
 
+
+class deduction_services_a_la_personne(Variable):
+    unit = "currency"
+    value_type = float
+    entity = FoyerFiscal
+    label = "Charges déductibles du revenu global au titre des services à la personne"
+    definition_period = YEAR
+
+    def formula(foyer_fiscal, period, parameters):
+        plafond = parameters(
+            period
+        ).prelevements_obligatoires.impot_revenu.charges_deductibles.services_a_la_personne
+        return max(min_(foyer_fiscal("services_a_la_personne", period), plafond), 0)
 
 class cotisations_sociales_hors_gerant_societes_retraite_avant_1992(Variable):
     unit = "currency"
@@ -225,7 +285,7 @@ class retenue_cotisations_sociales(Variable):
     label = "Retenue pour cotisations sociales"
     definition_period = YEAR
 
-    def formula_2022(foyer_fiscal, period, parameters):
+    def formula_2013(foyer_fiscal, period, parameters):
         resident = foyer_fiscal("resident", period)
         period_plafond = period.start.offset("first-of", "month").offset(11, "month")
         plafond_cafat_retraite = parameters(
@@ -253,3 +313,66 @@ class retenue_cotisations_sociales(Variable):
             ),
             0,
         )
+
+
+class primes_assurance_vie(Variable):
+    unit = "currency"
+    value_type = float
+    entity = FoyerFiscal
+    label = "Primes d’assurance vie"
+    definition_period = YEAR
+    cerfa_field = "XF"
+
+
+class deduction_primes_assurance_vie(Variable):
+    unit = "currency"
+    value_type = float
+    entity = FoyerFiscal
+    label = "Charges déductibles du revenu global au titre des primes d’assurance vie"
+    definition_period = YEAR
+
+    def formula(foyer_fiscal, period, parameters):
+        plafond = parameters(
+            period
+        ).prelevements_obligatoires.impot_revenu.charges_deductibles.assurance_vie
+        return max(min_(foyer_fiscal("primes_assurance_vie", period), plafond), 0)
+
+
+class csg_deductible(Variable):
+    unit = "currency"
+    value_type = float
+    entity = FoyerFiscal
+    label = "CSG déductible"
+    definition_period = YEAR
+    cerfa_field = "XC"
+
+
+class immeubles_historiques(Variable):
+    unit = "currency"
+    value_type = float
+    cerfa_field = "XS"
+    entity = FoyerFiscal
+    label = "Dépenses pour immeubles historiques."
+    definition_period = YEAR
+
+
+class deduction_immeubles_historiques(Variable):
+    unit = "currency"
+    value_type = float
+    entity = FoyerFiscal
+    label = "Réduction d'impôt immeubles historiques."
+    definition_period = YEAR
+
+    def formula(foyer_fiscal, period, parameters):
+        plafond = parameters(period).prelevements_obligatoires.impot_revenu.charges_deductibles.immeubles_historiques
+        return max_(min_(foyer_fiscal("immeubles_hitoriques", period), plafond), 0)
+
+
+
+class deductions_reintegrees(Variable):
+    unit = "currency"
+    value_type = float
+    entity = FoyerFiscal
+    cerfa_field = "YM"
+    label = "Deductions réintégrées"
+    definition_period = YEAR

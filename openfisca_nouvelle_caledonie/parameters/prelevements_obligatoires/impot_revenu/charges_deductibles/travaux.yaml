@@ -1,6 +1,6 @@
-description: Plafond de la déduction pour travaux immobiliers ou travaux et achats d'équipelets verts
+description: Plafond de la déduction pour travaux immobiliers ou travaux et achats d'équipements verts
 values:
-  2024-01-01:
+  2023-01-01:
     value: 2_000_000
 metadata:
   short_label: Plafond déduction travaux

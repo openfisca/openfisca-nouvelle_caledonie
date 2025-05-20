@@ -150,3 +150,29 @@ class parts_fiscales_reduites(Variable):
             ],
             [1, 2],
         )
+
+
+
+class enfants_accueillis(Variable):
+    value_type = int
+    default_value = 0
+    entity = FoyerFiscal
+    label = "Nombre d'enfants accueillis"
+    definition_period = YEAR
+
+    def formula(foyer_fiscal, period):
+        return foyer_fiscal.nb_persons(role=FoyerFiscal.ENFANT_ACCUEILLI)
+
+
+class enfants_accueillis_handicapes(Variable):
+    value_type = int
+    default_value = 0
+    entity = FoyerFiscal
+    label = "Nombre d'enfants accueillis"
+    definition_period = YEAR
+
+    def formula(foyer_fiscal, period):
+        return foyer_fiscal.sum(
+            1 * foyer_fiscal.members("handicape_cejh", period),
+            role=FoyerFiscal.ENFANT_ACCUEILLI
+            )
