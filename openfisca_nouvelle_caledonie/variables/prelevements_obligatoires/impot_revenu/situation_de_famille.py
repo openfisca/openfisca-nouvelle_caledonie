@@ -152,7 +152,6 @@ class parts_fiscales_reduites(Variable):
         )
 
 
-
 class enfants_accueillis(Variable):
     value_type = int
     default_value = 0

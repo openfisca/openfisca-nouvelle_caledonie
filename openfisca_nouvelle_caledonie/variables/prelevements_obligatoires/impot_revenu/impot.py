@@ -1,5 +1,8 @@
 """Calcul de l'impôt sur le revenu."""
 
+from numpy import floor
+
+
 from openfisca_core.model_api import *
 from openfisca_nouvelle_caledonie.entities import FoyerFiscal
 
@@ -68,7 +71,7 @@ class revenu_net_global_imposable(Variable):
     definition_period = YEAR
 
     def formula(foyer_fiscal, period):
-        return max_(
+        rngi = max_(
             (
                 foyer_fiscal("revenu_brut_global", period)
                 - foyer_fiscal("charges_deductibles", period)
@@ -77,6 +80,7 @@ class revenu_net_global_imposable(Variable):
                 ),
             0
             )
+        return floor(rngi / 1000) * 1000
 
 
 class impot_brut(Variable):
@@ -196,14 +200,17 @@ class impot_net(Variable):
     definition_period = YEAR
 
     def formula(foyer_fiscal, period):
-        return max_(
-            (
-                foyer_fiscal("impot_brut", period)
-                - foyer_fiscal("imputations", period)
-                - foyer_fiscal("reductions_impot", period)
-            ),
-            0,
-        )
+        impot_brut = foyer_fiscal("impot_brut", period)
+        impot_apres_imputations = max_(
+            impot_brut - foyer_fiscal("imputations", period),
+            0
+            )
+        reductions_palfonnees = min_(
+            impot_brut - 5_000,
+            foyer_fiscal("reductions_impot", period),
+            )
+
+        return max_(impot_brut - reductions_palfonnees, 0)
 
 
 class resident(Variable):

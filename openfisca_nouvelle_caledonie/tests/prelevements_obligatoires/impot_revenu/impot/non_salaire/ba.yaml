@@ -1,0 +1,14 @@
+- name: BA 10_000_000
+  period: 2024
+  absolute_error_margin: 1
+  input:
+    foyer_fiscal:
+      declarants:
+      - individu_0
+    persons:
+      individu_0:
+        chiffre_d_daffaires_agricole_ht_imposable: 10_000_000
+    menage:
+      personne_de_reference: individu_0
+  output:
+    impot_net: 9_973
