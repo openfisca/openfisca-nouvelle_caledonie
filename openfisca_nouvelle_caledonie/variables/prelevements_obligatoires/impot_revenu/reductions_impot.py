@@ -44,3 +44,39 @@ class reduction_impot_redistributive(Variable):
         )
 
         return condtion * redcution
+
+
+class reduction_impots_reintegrees(Variable):
+    unit = "currency"
+    value_type = float
+    entity = FoyerFiscal
+    cerfa_field = "YN"
+    label = "Réduction d'impôts des années précédentes réintégrées"
+    definition_period = YEAR
+
+
+class prestation_compensatoire(Variable):
+    unit = "currency"
+    value_type = float
+    entity = FoyerFiscal
+    cerfa_field = "YU"
+    label = "Prestation compensatoire"
+    definition_period = YEAR
+
+
+class mecenat(Variable):
+    unit = "currency"
+    value_type = float
+    entity = FoyerFiscal
+    cerfa_field = "YY"
+    label = "Mécénat"
+    definition_period = YEAR
+
+
+class cotisations_syndicales(Variable):
+    unit = "currency"
+    value_type = float
+    entity = FoyerFiscal
+    cerfa_field = "YJ"
+    label = "Cotisations syndicales"
+    definition_period = YEAR
