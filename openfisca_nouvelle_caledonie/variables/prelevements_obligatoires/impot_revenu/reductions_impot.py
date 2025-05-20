@@ -24,7 +24,7 @@ class reduction_impot_redistributive(Variable):
     label = "Réduction d'impôt redistributive"
     definition_period = YEAR
 
-    def formula(foyer_fiscal, period, parameters):
+    def formula(foyer_fiscal, period):
         parts_fiscales = foyer_fiscal("parts_fiscales", period)
         parts_fiscales_reduites = foyer_fiscal("parts_fiscales_reduites", period)
         parts_fiscales_redistributives = (
