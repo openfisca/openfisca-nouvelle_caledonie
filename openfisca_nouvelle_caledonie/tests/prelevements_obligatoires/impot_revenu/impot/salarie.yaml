@@ -11,7 +11,7 @@
     menage:
       personne_de_reference: individu_0
   output:
-    revenus_categoriels_tspr: 10e6 - 800e3 - 1800000
+    revenus_categoriels_tspr: 10_000_000 - 800_000 - 1_800_000
     impot_brut: 1_711_000
 
 - name: Salarié marié 10_000_000
@@ -30,6 +30,6 @@
         salaire_imposable: 0
         statut_marital: marie
   output:
-    revenus_categoriels_tspr: 10e6 - 800e3 - 1800000
+    revenus_categoriels_tspr: 10_000_000 - 800_000 - 1_800_000
     parts_fiscales: 2
     impot_net: 662_000

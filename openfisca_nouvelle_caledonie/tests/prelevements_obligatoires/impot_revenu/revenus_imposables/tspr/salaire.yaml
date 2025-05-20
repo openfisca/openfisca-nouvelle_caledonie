@@ -43,7 +43,7 @@
     menage:
       personne_de_reference: individu_0
   output:
-    revenus_categoriels_tspr: 10e6 - 800e3 - 1800000
+    revenus_categoriels_tspr: 10_000_000 - 800_000 - 1_800_000
 
 
 - name: 2 Salariés 10_000_000 et 1_000_000
@@ -60,4 +60,4 @@
       individu_1:
         salaire_imposable: 1_000_000
   output:
-    revenus_categoriels_tspr: 10e6 - 800e3 - 1800000 + 900_000 * (1 - 0.2)
+    revenus_categoriels_tspr: 10_000_000 - 800_000 - 1_800_000 + 900_000 * (1 - 0.2)
