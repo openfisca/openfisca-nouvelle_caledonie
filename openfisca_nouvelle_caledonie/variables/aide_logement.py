@@ -93,9 +93,9 @@ class loyer_mensuel_plafond(Variable):
         )
 
         # Clarification nécessaire
-        # return loyer_mensuel_reference * (1 + pourcentage_plafond) + excedent_pour_charges_montant # noqa: ERA001
+        # return loyer_mensuel_reference * (1 + pourcentage_plafond) + excedent_pour_charges_montant
         # OU
-        # return (loyer_mensuel_reference + excedent_pour_charges_montant) * (1 + pourcentage_plafond) # noqa: ERA001
+        # return (loyer_mensuel_reference + excedent_pour_charges_montant) * (1 + pourcentage_plafond)
         return (loyer_mensuel_reference + excedent_pour_charges_montant) * (
             1 + pourcentage_plafond
         )

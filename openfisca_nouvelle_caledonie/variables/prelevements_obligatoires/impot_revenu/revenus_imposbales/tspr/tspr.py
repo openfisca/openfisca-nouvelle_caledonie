@@ -10,7 +10,7 @@ class revenus_categoriels_tspr(Variable):
     label = "Revenus catégoriels des traitements, salaires, pensions et rentes"
     definition_period = YEAR
 
-    def formula(foyer_fiscal, period, parameters):
+    def formula(foyer_fiscal, period):
         salaire_imposable_apres_deduction_et_abattement = foyer_fiscal(
             "salaire_imposable_apres_deduction_et_abattement", period
         )

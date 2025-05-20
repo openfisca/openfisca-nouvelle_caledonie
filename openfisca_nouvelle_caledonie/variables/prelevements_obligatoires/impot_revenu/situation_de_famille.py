@@ -25,6 +25,7 @@ class statut_marital(Variable):
 
     def formula(individu, period):
         # Par défault, on considère que deux adultes dans un foyer fiscal sont PACSÉS
+        _ = period
         deux_adultes = individu.foyer_fiscal.nb_persons(FoyerFiscal.DECLARANT) >= 2
         return where(
             deux_adultes, TypesStatutMarital.pacse, TypesStatutMarital.celibataire
