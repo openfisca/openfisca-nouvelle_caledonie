@@ -12,12 +12,12 @@ class reductions_impot(Variable):
     definition_period = YEAR
 
     def formula(foyer_fiscal, period):
-        return foyer_fiscal("reduction_impot_redistributive", period)
-
+        return (
+            foyer_fiscal("reduction_impot_redistributive", period)
+            - foyer_fiscal("reduction_impots_reintegrees", period)
+            )
 
 class reduction_impot_redistributive(Variable):
-    """Réduction d'impôt redistributive."""
-
     unit = "currency"
     value_type = float
     entity = FoyerFiscal
@@ -30,20 +30,26 @@ class reduction_impot_redistributive(Variable):
         parts_fiscales_redistributives = (
             parts_fiscales - (parts_fiscales - parts_fiscales_reduites) / 2
         )
-        condtion = foyer_fiscal("resident", period) & (
+        resident = foyer_fiscal("resident", period)
+        condtion = resident & (
             foyer_fiscal("revenu_brut_global", period)
             <= 6100000 * parts_fiscales_redistributives
-        )
-        redcution = min_(
-            max_(
-                0,
-                6100000 * parts_fiscales_redistributives
-                - foyer_fiscal("revenu_brut_global", period),
-            ),
-            20000 * parts_fiscales_redistributives,
-        )
+            )
+        revenu_brut_global = foyer_fiscal("revenu_brut_global", period)
+        reduction = where(
+            (revenu_brut_global <= 6_100_000 * parts_fiscales_redistributives) & resident,
+            where(
+                revenu_brut_global >= 6_080_000 * parts_fiscales_redistributives,
+                6_100_000 * parts_fiscales_redistributives - revenu_brut_global,
+                min(
+                    0.01 * parts_fiscales_redistributives * revenu_brut_global,
+                    20_000 * parts_fiscales_redistributives,
+                    )
+                ),
+            0
+            )
 
-        return condtion * redcution
+        return condtion * reduction
 
 
 class reduction_impots_reintegrees(Variable):
