@@ -161,6 +161,7 @@ class enfants_accueillis(Variable):
     definition_period = YEAR
 
     def formula(foyer_fiscal, period):
+        _ = period
         return foyer_fiscal.nb_persons(role=FoyerFiscal.ENFANT_ACCUEILLI)
 
 

@@ -133,7 +133,7 @@ class deduction_travaux_immobiliers(Variable):
     entity = FoyerFiscal
     label = "Charges déductibles du revenu global au titre des travaux immobiliers"
     definition_period = YEAR
-    end = '2011-12-31'
+    end = "2011-12-31"
 
     def formula_2008(foyer_fiscal, period, parameters):
         # TODO: vérifier si la date de fin est correcte et corriger avec deduction_travaux_immobiliers_equipements_verts
