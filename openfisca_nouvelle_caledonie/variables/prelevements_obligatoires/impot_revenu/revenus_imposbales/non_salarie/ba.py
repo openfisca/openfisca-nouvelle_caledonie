@@ -87,7 +87,7 @@ class deficits_agricoles_regime_reel(Variable):
     definition_period = YEAR
 
 
-# TODO
+# TODO: à compléter
 # class reliquat_cotisation_apres_ba(Variable):
 #     unit = "currency"
 #     value_type = float

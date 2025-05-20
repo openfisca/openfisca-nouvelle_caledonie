@@ -98,7 +98,7 @@ class irvm_impute(Variable):
 
 # • Vous devez inscrire ligne DA le montant brut des revenus d’actions et de parts de
 # sociétés métropolitaines.
-# TODO ajouter les paramètres
+# TODO: ajouter les paramètres
 # Doit être inférieur à .16 * revenus_obligations_actions_jetons_de_presence à partir des revenus 2014 / IR 2015
 # Mais inférieur à .125 * produits_pret_contrat_de_capitalisation à partir des revenus 2007 / IR 2008
 
