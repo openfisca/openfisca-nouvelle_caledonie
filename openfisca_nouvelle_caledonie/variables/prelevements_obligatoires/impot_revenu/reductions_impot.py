@@ -12,10 +12,10 @@ class reductions_impot(Variable):
     definition_period = YEAR
 
     def formula(foyer_fiscal, period):
-        return (
-            foyer_fiscal("reduction_impot_redistributive", period)
-            - foyer_fiscal("reduction_impots_reintegrees", period)
-            )
+        return foyer_fiscal("reduction_impot_redistributive", period) - foyer_fiscal(
+            "reduction_impots_reintegrees", period
+        )
+
 
 class reduction_impot_redistributive(Variable):
     unit = "currency"
@@ -34,20 +34,21 @@ class reduction_impot_redistributive(Variable):
         condtion = resident & (
             foyer_fiscal("revenu_brut_global", period)
             <= 6100000 * parts_fiscales_redistributives
-            )
+        )
         revenu_brut_global = foyer_fiscal("revenu_brut_global", period)
         reduction = where(
-            (revenu_brut_global <= 6_100_000 * parts_fiscales_redistributives) & resident,
+            (revenu_brut_global <= 6_100_000 * parts_fiscales_redistributives)
+            & resident,
             where(
                 revenu_brut_global >= 6_080_000 * parts_fiscales_redistributives,
                 6_100_000 * parts_fiscales_redistributives - revenu_brut_global,
                 min(
                     0.01 * parts_fiscales_redistributives * revenu_brut_global,
                     20_000 * parts_fiscales_redistributives,
-                    )
                 ),
-            0
-            )
+            ),
+            0,
+        )
 
         return condtion * reduction
 

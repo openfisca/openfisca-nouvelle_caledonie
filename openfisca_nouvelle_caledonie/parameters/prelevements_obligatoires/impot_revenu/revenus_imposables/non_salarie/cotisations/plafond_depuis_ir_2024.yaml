@@ -1,0 +1,8 @@
+description: Plafond des cotisations des non-salariés (en mulitple du salaire plafond de la CAFAT relatif à la retraite)
+values:
+  2023-01-01:
+    value: 7
+metadata:
+  short_label: Plafond
+  label_en: Ceiling of the contributions of the self-employed
+  unit: plafond_CAFAT_retraite

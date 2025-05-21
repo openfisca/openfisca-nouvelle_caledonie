@@ -30,7 +30,6 @@ class plus_values_professionnelles_a_taux_normal(Variable):
     definition_period = YEAR
 
 
-
 class plus_values_professionnelles(Variable):
     unit = "currency"
     value_type = float
@@ -39,8 +38,12 @@ class plus_values_professionnelles(Variable):
     definition_period = YEAR
 
     def formula(foyer_fiscal, period, parameters):
-        plus_values = parameters(period).prelevements_obligatoires.impot_revenu.revenus_imposables.non_salaires.plus_values
+        plus_values = parameters(
+            period
+        ).prelevements_obligatoires.impot_revenu.revenus_imposables.non_salaires.plus_values
         return foyer_fiscal.sum(
-            individu("plus_values_professionnelles_a_taux_reduit", period) * plus_values.taux_reduit
-            + individu("plus_values_professionnelles_a_taux_normal", period) * plus_values.taux_normal
-            )
+            individu("plus_values_professionnelles_a_taux_reduit", period)
+            * plus_values.taux_reduit
+            + individu("plus_values_professionnelles_a_taux_normal", period)
+            * plus_values.taux_normal
+        )
