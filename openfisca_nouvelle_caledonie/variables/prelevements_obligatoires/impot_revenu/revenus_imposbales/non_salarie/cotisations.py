@@ -45,12 +45,28 @@ class cotisations_non_salarie(Variable):
     label = "Cotisations non salarié"
     definition_period = YEAR
 
-    def formula(individu, period, parameters):
+    def formula_2023(individu, period, parameters):
         period_plafond = period.start.offset("first-of", "month").offset(11, "month")
         plafond_cafat_retraite = parameters(
             period_plafond
         ).prelevements_obligatoires.prelevements_sociaux.cafat.maladie_retraite.plafond
+        multiple = parameters(
+            period
+        ).prelevements_obligatoires.impot_revenu.revenus_imposables.non_salarie.cotisations.plafond_depuis_ir_2024
         return (
-            min_(individu("cotisations_retraite_exploitant", period), 7 * plafond_cafat_retraite)
+            min_(individu("cotisations_retraite_exploitant", period), multiple * plafond_cafat_retraite)
+            + individu("cotisations_ruamm_mutuelle_ccs_exploitant", period)
+            )
+
+    def formula_2008(individu, period, parameters):
+        period_plafond = period.start.offset("first-of", "month").offset(11, "month")
+        plafond_cafat_retraite = parameters(
+            period_plafond
+        ).prelevements_obligatoires.prelevements_sociaux.cafat.maladie_retraite.plafond
+        multiple = parameters(
+            period
+        ).prelevements_obligatoires.impot_revenu.revenus_imposables.non_salarie.cotisations.plafond_depuis_ir_2024
+        return (
+            min_(individu("cotisations_retraite_exploitant", period), multiple * plafond_cafat_retraite)
             + individu("cotisations_ruamm_mutuelle_ccs_exploitant", period)
             )
