@@ -100,21 +100,15 @@ class deduction_interets_emprunt(Variable):
     label = "Charges déductibles du revenu global au titre des intérêts d’emprunt pour votre résidence principale"
     definition_period = YEAR
 
-    def formula(foyer_fiscal, period):
+    def formula(foyer_fiscal, period, parameters):
+        interets_emprunt = parameters(period).prelevements_obligatoires.impot_revenu.charges_deductibles.interets_emprunt
         # Récupération des variables d'intérêts d'emprunt
-        interets_emprunt_noumea_etc_recents = max_(
-            min_(
-                foyer_fiscal("interets_emprunt_noumea_etc_recents", period), 1_000_000
-            ),
-            0,
-        )  # TODO: paramètres
-        interets_emprunt_noumea_etc_moins_recents = max_(
-            min_(
-                foyer_fiscal("interets_emprunt_noumea_etc_moins_recents", period),
-                500_000,
-            ),
-            0,
-        )  # TODO: paramètres
+        interets_emprunt_noumea_etc_recents = max_(min_(foyer_fiscal(
+            "interets_emprunt_noumea_etc_recents", period
+            ), interets_emprunt.noumea_etc_recents), 0)
+        interets_emprunt_noumea_etc_moins_recents = max_(min_(foyer_fiscal(
+            "interets_emprunt_noumea_etc_moins_recents", period
+            ), interets_emprunt.noumea_etc_moins_recents), 0)
         interets_emprunt_hors_noumea_etc_et_anciens = foyer_fiscal(
             "interets_emprunt_hors_noumea_etc_et_anciens", period
         )
