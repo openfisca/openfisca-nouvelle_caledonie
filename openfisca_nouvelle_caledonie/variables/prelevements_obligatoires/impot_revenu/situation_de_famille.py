@@ -174,5 +174,5 @@ class enfants_accueillis_handicapes(Variable):
     def formula(foyer_fiscal, period):
         return foyer_fiscal.sum(
             1 * foyer_fiscal.members("handicape_cejh", period),
-            role=FoyerFiscal.ENFANT_ACCUEILLI
-            )
+            role=FoyerFiscal.ENFANT_ACCUEILLI,
+        )

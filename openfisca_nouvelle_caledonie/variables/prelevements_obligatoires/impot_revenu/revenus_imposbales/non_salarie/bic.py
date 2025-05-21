@@ -89,7 +89,7 @@ class bic_forfait(Variable):
     label = "Bénéfices indutriels et commerciaux au forfait"
     definition_period = YEAR
 
-    def formula(foyer_fiscal, period, parameters):
+    def formula(individu, period, parameters):
         # Au forfait
         abattement = parameters(
             period
@@ -97,19 +97,34 @@ class bic_forfait(Variable):
         return (
             max_(
                 0,
-                foyer_fiscal("bic_vente_fabrication_transformation_ca_ht", period)
-                - foyer_fiscal("bic_vente_fabrication_transformation_achats", period)
-                - foyer_fiscal(
+                individu("bic_vente_fabrication_transformation_ca_ht", period)
+                - individu("bic_vente_fabrication_transformation_achats", period)
+                - individu(
                     "bic_vente_fabrication_transformation_salaires_et_sous_traitance",
                     period,
-                )
-                + foyer_fiscal("bic_services_ca_ht", period)
-                - foyer_fiscal("bic_services_achats", period)
-                - foyer_fiscal("bic_services_salaires_et_sous_traitance", period),
+                    )
+                + individu("bic_services_ca_ht", period)
+                - individu("bic_services_achats", period)
+                - individu("bic_services_salaires_et_sous_traitance", period),
+                ) * abattement
+            - individu("cotisations_non_salarie", period)
             )
-            * abattement
-        )
-        # TODO: déduire reliquat de cotisations
+
+class reste_cotisations_apres_bic_avant_ba(Variable):
+    unit = "currency"
+    value_type = float
+    entity = Individu
+    label = "Reste des cotisations après BIC avant BA et BNC"
+    definition_period = YEAR
+
+    def formula(individu, period):
+        return max_(
+            (
+                individu("cotisations_non_salarie", period)
+                - individu("bic_forfait", period),
+                0,
+                )
+            )
 
 
 # Régime réel simplifié (Cadre 10 de la déclaration complémentaire)
@@ -164,3 +179,34 @@ class deficits_industriels_et_commerciaux_reel_normal(Variable):
     entity = Individu
     label = "Déficits indutriels et commerciaux au régime réel normal"
     definition_period = YEAR
+
+
+class bic_reel(Variable):
+    unit = "currency"
+    value_type = float
+    entity = Individu
+    label = "Bénéfices indutriels et commerciaux au réel"
+    definition_period = YEAR
+
+    def formula(individu, period):
+        # Au réel
+        return max_(
+            (
+                individu("benefices_industriels_et_commerciaux_reel_simplifie", period)
+                + individu("benefices_industriels_et_commerciaux_reel_normal", period)
+                - individu("deficits_industriels_et_commerciaux_reel_simplifie", period)
+                - individu("deficits_industriels_et_commerciaux_reel_normal", period)
+                ),
+            0,
+            )
+
+
+class bic(Variable):
+    unit = "currency"
+    value_type = float
+    entity = Individu
+    label = "Bénéfices indutriels et commerciaux"
+    definition_period = YEAR
+
+    def formula(individu, period):
+        return individu("bic_reel", period) + individu("bic_forfait", period)

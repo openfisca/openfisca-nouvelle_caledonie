@@ -1,0 +1,10 @@
+description: Plafond des cotisations des non-salariés (en mulitple du salaire plafond de la CAFAT relatif aux prestations familiales, retraite, chômage et accidents du travail)
+values:
+  2023-01-01:
+    value: null
+  2008-01-01:
+    value: 10
+metadata:
+  short_label: Plafond
+  label_en: Ceiling of the contributions of the self-employed
+  unit: plafond_CAFAT_autres_regimes

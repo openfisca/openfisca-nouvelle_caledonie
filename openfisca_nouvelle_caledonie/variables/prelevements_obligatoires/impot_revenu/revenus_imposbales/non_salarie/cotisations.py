@@ -36,3 +36,21 @@ class cotisations_ruamm_mutuelle_ccs_exploitant(Variable):
     entity = Individu
     label = "Cotisations RUAMM, mutuelle et CSS personnelles de l'exploitant"
     definition_period = YEAR
+
+
+class cotisations_non_salarie(Variable):
+    unit = "currency"
+    value_type = float
+    entity = Individu
+    label = "Cotisations non salarié"
+    definition_period = YEAR
+
+    def formula(individu, period, parameters):
+        period_plafond = period.start.offset("first-of", "month").offset(11, "month")
+        plafond_cafat_retraite = parameters(
+            period_plafond
+        ).prelevements_obligatoires.prelevements_sociaux.cafat.maladie_retraite.plafond
+        return (
+            min_(individu("cotisations_retraite_exploitant", period), 7 * plafond_cafat_retraite)
+            + individu("cotisations_ruamm_mutuelle_ccs_exploitant", period)
+            )

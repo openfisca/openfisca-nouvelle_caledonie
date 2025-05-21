@@ -2,7 +2,6 @@
 
 from numpy import floor
 
-
 from openfisca_core.model_api import *
 from openfisca_nouvelle_caledonie.entities import FoyerFiscal
 
@@ -58,10 +57,9 @@ class abattement_enfants_accueillis(Variable):
             (
                 foyer_fiscal("enfants_accueillis", period) * 406_000  # TODO: parameters
                 + foyer_fiscal("enfants_accueillis_handicapes", period) * 540_000
-                ),
+            ),
             0,
-            )
-
+        )
 
 
 class revenu_net_global_imposable(Variable):
@@ -77,9 +75,9 @@ class revenu_net_global_imposable(Variable):
                 - foyer_fiscal("charges_deductibles", period)
                 + foyer_fiscal("deductions_reintegrees", period)
                 - foyer_fiscal("abattement_enfants_accueillis", period)
-                ),
-            0
-            )
+            ),
+            0,
+        )
         return floor(rngi / 1000) * 1000
 
 
@@ -202,13 +200,12 @@ class impot_net(Variable):
     def formula(foyer_fiscal, period):
         impot_brut = foyer_fiscal("impot_brut", period)
         impot_apres_imputations = max_(
-            impot_brut - foyer_fiscal("imputations", period),
-            0
-            )
+            impot_brut - foyer_fiscal("imputations", period), 0
+        )
         reductions_palfonnees = min_(
             impot_brut - 5_000,
             foyer_fiscal("reductions_impot", period),
-            )
+        )
 
         return max_(impot_brut - reductions_palfonnees, 0)
 

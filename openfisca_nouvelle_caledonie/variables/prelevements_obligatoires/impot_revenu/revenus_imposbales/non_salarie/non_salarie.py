@@ -12,6 +12,6 @@ class revenu_categoriel_non_salarie(Variable):
 
     def formula(foyer_fiscal, period):
         return foyer_fiscal.sum(
-            foyer_fiscal.members("bic_forfait", period)
+            foyer_fiscal.members("bic", period)
             + foyer_fiscal.members("ba", period)
-        )  # Ajouter régime réel BA et BIC et BNC
+        )  # Ajouter régime réel à BA et BNC

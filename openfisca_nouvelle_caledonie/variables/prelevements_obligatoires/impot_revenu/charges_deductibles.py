@@ -102,12 +102,19 @@ class deduction_interets_emprunt(Variable):
 
     def formula(foyer_fiscal, period):
         # Récupération des variables d'intérêts d'emprunt
-        interets_emprunt_noumea_etc_recents = max_(min_(foyer_fiscal(
-            "interets_emprunt_noumea_etc_recents", period
-            ), 1_000_000), 0)  # TODO: paramètres
-        interets_emprunt_noumea_etc_moins_recents = max_(min_(foyer_fiscal(
-            "interets_emprunt_noumea_etc_moins_recents", period
-            ), 500_000), 0)  # TODO: paramètres
+        interets_emprunt_noumea_etc_recents = max_(
+            min_(
+                foyer_fiscal("interets_emprunt_noumea_etc_recents", period), 1_000_000
+            ),
+            0,
+        )  # TODO: paramètres
+        interets_emprunt_noumea_etc_moins_recents = max_(
+            min_(
+                foyer_fiscal("interets_emprunt_noumea_etc_moins_recents", period),
+                500_000,
+            ),
+            0,
+        )  # TODO: paramètres
         interets_emprunt_hors_noumea_etc_et_anciens = foyer_fiscal(
             "interets_emprunt_hors_noumea_etc_et_anciens", period
         )
@@ -115,7 +122,7 @@ class deduction_interets_emprunt(Variable):
             interets_emprunt_noumea_etc_recents
             + interets_emprunt_noumea_etc_moins_recents
             + interets_emprunt_hors_noumea_etc_et_anciens
-            )
+        )
 
 
 class travaux_immobiliers(Variable):
@@ -138,9 +145,10 @@ class deduction_travaux_immobiliers(Variable):
     def formula_2008(foyer_fiscal, period, parameters):
         # TODO: vérifier si la date de fin est correcte et corriger avec deduction_travaux_immobiliers_equipements_verts
         travaux_immobiliers = foyer_fiscal("travaux_immobiliers", period)
-        plafond = parameters(period).prelevements_obligatoires.impot_revenu.charges_deductibles.travaux_immobiliers
+        plafond = parameters(
+            period
+        ).prelevements_obligatoires.impot_revenu.charges_deductibles.travaux_immobiliers
         return max(min_(travaux_immobiliers, plafond), 0)
-
 
 
 class equipements_verts(Variable):
@@ -163,7 +171,9 @@ class deduction_travaux_immobiliers_equipements_verts(Variable):
         travaux_immobiliers = foyer_fiscal("travaux_immobiliers", period)
         equipements_verts = foyer_fiscal("equipements_verts", period)
 
-        plafond = parameters(period).prelevements_obligatoires.impot_revenu.charges_deductibles.travaux
+        plafond = parameters(
+            period
+        ).prelevements_obligatoires.impot_revenu.charges_deductibles.travaux
         return max(min_(travaux_immobiliers + equipements_verts, plafond), 0)
 
 
@@ -222,9 +232,15 @@ class deduction_depenses_internat_transport_interurbain(Variable):
         resident = foyer_fiscal("resident", period)
         return where(
             resident,
-            max(min_(foyer_fiscal("depenses_internat_transport_interurbain", period), plafond), 0),
+            max(
+                min_(
+                    foyer_fiscal("depenses_internat_transport_interurbain", period),
+                    plafond,
+                ),
+                0,
+            ),
             0,
-            )
+        )
 
 
 class services_a_la_personne(Variable):
@@ -248,6 +264,7 @@ class deduction_services_a_la_personne(Variable):
             period
         ).prelevements_obligatoires.impot_revenu.charges_deductibles.services_a_la_personne
         return max(min_(foyer_fiscal("services_a_la_personne", period), plafond), 0)
+
 
 class cotisations_sociales_hors_gerant_societes_retraite_avant_1992(Variable):
     unit = "currency"
@@ -364,9 +381,10 @@ class deduction_immeubles_historiques(Variable):
     definition_period = YEAR
 
     def formula(foyer_fiscal, period, parameters):
-        plafond = parameters(period).prelevements_obligatoires.impot_revenu.charges_deductibles.immeubles_historiques
+        plafond = parameters(
+            period
+        ).prelevements_obligatoires.impot_revenu.charges_deductibles.immeubles_historiques
         return max_(min_(foyer_fiscal("immeubles_hitoriques", period), plafond), 0)
-
 
 
 class deductions_reintegrees(Variable):
