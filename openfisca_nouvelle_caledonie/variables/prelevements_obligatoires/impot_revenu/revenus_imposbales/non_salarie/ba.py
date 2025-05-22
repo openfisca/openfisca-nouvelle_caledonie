@@ -3,8 +3,8 @@
 from openfisca_core.model_api import *
 from openfisca_nouvelle_caledonie.entities import Person as Individu
 from openfisca_nouvelle_caledonie.variables.prelevements_obligatoires.impot_revenu.revenus_imposbales.non_salarie import (
-    get_multiple_and_plafond_cafat_cotisation
-    )
+    get_multiple_and_plafond_cafat_cotisation,
+)
 
 
 class chiffre_d_daffaires_agricole_ht_imposable(Variable):
@@ -47,15 +47,20 @@ class ba(Variable):
         diviseur = parameters(
             period
         ).prelevements_obligatoires.impot_revenu.revenus_imposables.non_salarie.ba.diviseur_ca
-        multiple, plafond_cafat = get_multiple_and_plafond_cafat_cotisation(period, parameters)
-        ba = max_(
-            0,
-            individu("chiffre_d_daffaires_agricole_ht_imposable", period)
-            - min_(
-                individu("reste_cotisations_apres_bic_avant_ba", period),
-                multiple * plafond_cafat
-                )
-            ) / diviseur
+        multiple, plafond_cafat = get_multiple_and_plafond_cafat_cotisation(
+            period, parameters
+        )
+        ba = (
+            max_(
+                0,
+                individu("chiffre_d_daffaires_agricole_ht_imposable", period)
+                - min_(
+                    individu("reste_cotisations_apres_bic_avant_ba", period),
+                    multiple * plafond_cafat,
+                ),
+            )
+            / diviseur
+        )
         return ba
 
 
