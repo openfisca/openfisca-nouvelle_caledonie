@@ -203,7 +203,7 @@ class impot_net(Variable):
             impot_brut - foyer_fiscal("imputations", period), 0
         )
         reductions_palfonnees = min_(
-            impot_brut - 5_000,
+            impot_apres_imputations - 5_000,
             foyer_fiscal("reductions_impot", period),
         )
 
