@@ -2,6 +2,9 @@
 
 from openfisca_core.model_api import *
 from openfisca_nouvelle_caledonie.entities import Person as Individu
+from openfisca_nouvelle_caledonie.variables.prelevements_obligatoires.impot_revenu.revenus_imposbales.non_salarie.cotisations import (
+    get_multiple_and_plafond_cafat_cotisation
+    )
 
 
 class chiffre_d_daffaires_agricole_ht_imposable(Variable):
@@ -38,23 +41,22 @@ class ba(Variable):
     label = "Bénéfices agricoles"
     definition_period = YEAR
 
-    def formula(foyer_fiscal, period, parameters):
+    def formula(individu, period, parameters):
         # Au forfait
         # Le bénéfice, égal à 1/6 e de ce chiffre d’affaires sera déterminé automatiquement.
         diviseur = parameters(
             period
         ).prelevements_obligatoires.impot_revenu.revenus_imposables.non_salarie.ba.diviseur_ca
+        multiple, plafond_cafat = get_multiple_and_plafond_cafat_cotisation(period, parameters)
         return (
             max_(
                 0,
-                foyer_fiscal("chiffre_d_daffaires_agricole_ht_imposable", period),
-                # TODO: déduire mes cotisations dans la limite d'un plafond
-                # min_(
-                # foyer_fiscal("cotisations_retraite_exploitant", period),
-                #  plafonf
-                # )
-                # - foyer_fiscal("cotisations_ruamm_mutuelle_ccs_exploitant", period)
-                # )
+                individu("chiffre_d_daffaires_agricole_ht_imposable", period),
+                -
+                min_(
+                    individu("cotisations_retraite_exploitant", period),
+                    multiple * plafond_cafat,
+                )
             )
             / diviseur
         )
