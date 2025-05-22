@@ -12,6 +12,8 @@ from openfisca_nouvelle_caledonie.entities import Person as Individu
 # nos locaux ou sur notre site dsf.gouv.nc.
 
 
+
+
 class cotisations_retraite_exploitant(Variable):
     unit = "currency"
     value_type = float
@@ -45,28 +47,60 @@ class cotisations_non_salarie(Variable):
     label = "Cotisations non salarié"
     definition_period = YEAR
 
-    def formula_2023(individu, period, parameters):
-        period_plafond = period.start.offset("first-of", "month").offset(11, "month")
-        plafond_cafat_retraite = parameters(
-            period_plafond
-        ).prelevements_obligatoires.prelevements_sociaux.cafat.maladie_retraite.plafond
-        multiple = parameters(
-            period
-        ).prelevements_obligatoires.impot_revenu.revenus_imposables.non_salarie.cotisations.plafond_depuis_ir_2024
+    def formula(individu, period, parameters):
+        multiple, plafond_cafat = get_multiple_and_plafond_cafat_cotisation(period, parameters)
         return (
-            min_(individu("cotisations_retraite_exploitant", period), multiple * plafond_cafat_retraite)
+            min_(individu("cotisations_retraite_exploitant", period), multiple * plafond_cafat)
             + individu("cotisations_ruamm_mutuelle_ccs_exploitant", period)
             )
 
-    def formula_2008(individu, period, parameters):
-        period_plafond = period.start.offset("first-of", "month").offset(11, "month")
-        plafond_cafat_retraite = parameters(
-            period_plafond
-        ).prelevements_obligatoires.prelevements_sociaux.cafat.maladie_retraite.plafond
-        multiple = parameters(
-            period
-        ).prelevements_obligatoires.impot_revenu.revenus_imposables.non_salarie.cotisations.plafond_depuis_ir_2024
-        return (
-            min_(individu("cotisations_retraite_exploitant", period), multiple * plafond_cafat_retraite)
-            + individu("cotisations_ruamm_mutuelle_ccs_exploitant", period)
+
+class reste_cotisations_apres_bic_avant_ba(Variable):
+    unit = "currency"
+    value_type = float
+    entity = Individu
+    label = "Reste des cotisations après BIC avant BA et BNC"
+    definition_period = YEAR
+
+    def formula(individu, period):
+        return max_(
+            (
+                individu("cotisations_non_salarie", period)
+                - individu("bic_forfait", period),  # Ne concerne pas les BIC réels
+                0,
+                )
             )
+
+
+class reste_cotisations_apres_bic_ba_avant_bnc(Variable):
+    unit = "currency"
+    value_type = float
+    entity = Individu
+    label = "Reste des cotisations après BIC et BA et avant BNC"
+    definition_period = YEAR
+
+    def formula(individu, period):
+        return max_(
+            (
+                individu("reste_cotisations_apres_bic_avant_ba", period)
+                - individu("bic_forfait", period),
+                0,
+                )
+            )
+
+# Helpers
+
+def get_multiple_and_plafond_cafat_cotisation(period, parameters):
+    """Renvoie le plafond de la cotisation CAFAT pour l'année revenus donnée."""
+
+    period_plafond = period.start.offset("first-of", "month").offset(11, "month")
+    cafat = parameters(period_plafond).prelevements_obligatoires.prelevements_sociaux.cafat
+    cotisations = parameters(period).prelevements_obligatoires.impot_revenu.revenus_imposables.non_salarie.cotisations
+    if period_plafond.year >= 2023:
+        plafond_cafat = cafat.maladie_retraite.plafond # Donc année revenus 2023
+        multiple = cotisations.plafond_depuis_ir_2024
+    else:
+        plafond_cafat = cafat.autres_regimes.plafond
+        multiple = cotisations.plafond_avant_ir_2024
+
+    return multiple, plafond_cafat

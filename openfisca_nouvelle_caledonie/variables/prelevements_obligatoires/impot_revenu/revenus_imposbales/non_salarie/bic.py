@@ -110,25 +110,8 @@ class bic_forfait(Variable):
             - individu("cotisations_non_salarie", period)
             )
 
-class reste_cotisations_apres_bic_avant_ba(Variable):
-    unit = "currency"
-    value_type = float
-    entity = Individu
-    label = "Reste des cotisations après BIC avant BA et BNC"
-    definition_period = YEAR
-
-    def formula(individu, period):
-        return max_(
-            (
-                individu("cotisations_non_salarie", period)
-                - individu("bic_forfait", period),
-                0,
-                )
-            )
-
 
 # Régime réel simplifié (Cadre 10 de la déclaration complémentaire)
-
 
 class benefices_industriels_et_commerciaux_reel_simplifie(Variable):
     unit = "currency"
