@@ -102,17 +102,20 @@ class bic_forfait(Variable):
                 - individu(
                     "bic_vente_fabrication_transformation_salaires_et_sous_traitance",
                     period,
-                    )
+                )
                 + individu("bic_services_ca_ht", period)
                 - individu("bic_services_achats", period)
                 - individu("bic_services_salaires_et_sous_traitance", period)
-                ) * abattement
-                - individu("cotisations_non_salarie", period)
-                )
+            )
+            * abattement
+            - individu("cotisations_non_salarie", period),
+        )
 
         return bic_forfait
 
+
 # Régime réel simplifié (Cadre 10 de la déclaration complémentaire)
+
 
 class benefices_industriels_et_commerciaux_reel_simplifie(Variable):
     unit = "currency"
@@ -180,9 +183,9 @@ class bic_reel(Variable):
                 + individu("benefices_industriels_et_commerciaux_reel_normal", period)
                 - individu("deficits_industriels_et_commerciaux_reel_simplifie", period)
                 - individu("deficits_industriels_et_commerciaux_reel_normal", period)
-                ),
-            0
-            )
+            ),
+            0,
+        )
 
 
 class bic(Variable):

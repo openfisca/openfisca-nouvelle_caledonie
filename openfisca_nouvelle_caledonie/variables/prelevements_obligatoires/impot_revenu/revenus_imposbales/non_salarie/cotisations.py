@@ -3,8 +3,8 @@
 from openfisca_core.model_api import *
 from openfisca_nouvelle_caledonie.entities import Person as Individu
 from openfisca_nouvelle_caledonie.variables.prelevements_obligatoires.impot_revenu.revenus_imposbales.non_salarie import (
-    get_multiple_and_plafond_cafat_cotisation
-    )
+    get_multiple_and_plafond_cafat_cotisation,
+)
 
 # • Indiquez lignes QA, QB, QC vos cotisations de retraite (en tant que chef d’entre-
 # prise) dans la limite du plafond, soit 3 776 500 F.
@@ -13,8 +13,6 @@ from openfisca_nouvelle_caledonie.variables.prelevements_obligatoires.impot_reve
 # • Indiquez ligne XY le montant total de vos autres cotisations sociales volontaires.
 # Pour davantage de précisions, un dépliant d’information est à votre disposition dans
 # nos locaux ou sur notre site dsf.gouv.nc.
-
-
 
 
 class cotisations_retraite_exploitant(Variable):
@@ -51,14 +49,19 @@ class cotisations_non_salarie(Variable):
     definition_period = YEAR
 
     def formula(individu, period, parameters):
-        multiple, plafond_cafat = get_multiple_and_plafond_cafat_cotisation(period, parameters)
+        multiple, plafond_cafat = get_multiple_and_plafond_cafat_cotisation(
+            period, parameters
+        )
         cotisations_non_salarie = max_(
             (
-                min_(individu("cotisations_retraite_exploitant", period), multiple * plafond_cafat)
+                min_(
+                    individu("cotisations_retraite_exploitant", period),
+                    multiple * plafond_cafat,
+                )
                 + individu("cotisations_ruamm_mutuelle_ccs_exploitant", period)
-                ),
-            0
-            )
+            ),
+            0,
+        )
         return cotisations_non_salarie
 
 
@@ -74,10 +77,9 @@ class reste_cotisations_apres_bic_avant_ba(Variable):
             (
                 individu("cotisations_non_salarie", period)
                 - individu("bic_forfait", period)  # Ne concerne pas les BIC réels
-                ),
+            ),
             0,
-            )
-
+        )
 
 
 class reste_cotisations_apres_bic_ba_avant_bnc(Variable):
@@ -92,6 +94,6 @@ class reste_cotisations_apres_bic_ba_avant_bnc(Variable):
             (
                 individu("reste_cotisations_apres_bic_avant_ba", period)
                 - individu("bic_forfait", period)
-                ),
-            0
-            )
+            ),
+            0,
+        )
