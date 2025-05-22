@@ -1,0 +1,6 @@
+description: Bénéfices non commerciaux
+metadata:
+  short_label: BNC
+  label_en: Non-commercial profits
+  order:
+  - diviseur_recettes
