@@ -2,7 +2,7 @@
 
 from openfisca_core.model_api import *
 from openfisca_nouvelle_caledonie.entities import Person as Individu
-from openfisca_nouvelle_caledonie.variables.prelevements_obligatoires.impot_revenu.revenus_imposbales.non_salarie.cotisations import (
+from openfisca_nouvelle_caledonie.variables.prelevements_obligatoires.impot_revenu.revenus_imposbales.non_salarie import (
     get_multiple_and_plafond_cafat_cotisation
     )
 
@@ -48,18 +48,15 @@ class ba(Variable):
             period
         ).prelevements_obligatoires.impot_revenu.revenus_imposables.non_salarie.ba.diviseur_ca
         multiple, plafond_cafat = get_multiple_and_plafond_cafat_cotisation(period, parameters)
-        return (
-            max_(
-                0,
-                individu("chiffre_d_daffaires_agricole_ht_imposable", period),
-                -
-                min_(
-                    individu("cotisations_retraite_exploitant", period),
-                    multiple * plafond_cafat,
+        ba = max_(
+            0,
+            individu("chiffre_d_daffaires_agricole_ht_imposable", period)
+            - min_(
+                individu("reste_cotisations_apres_bic_avant_ba", period),
+                multiple * plafond_cafat
                 )
-            )
-            / diviseur
-        )
+            ) / diviseur
+        return ba
 
 
 # Régime réel simplifié (Cadre 10 de la déclaration complémentaire)
@@ -87,12 +84,3 @@ class deficits_agricoles_regime_reel(Variable):
     entity = Individu
     label = "Déficits agricoles du régime réel simplifié"
     definition_period = YEAR
-
-
-# TODO: à compléter
-# class reliquat_cotisation_apres_ba(Variable):
-#     unit = "currency"
-#     value_type = float
-#     entity = Individu
-#     label = "Bénéfices agricoles"
-#     definition_period = YEAR

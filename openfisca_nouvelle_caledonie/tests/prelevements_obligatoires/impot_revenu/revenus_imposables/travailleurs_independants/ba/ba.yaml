@@ -11,4 +11,4 @@
     menage:
       personne_de_reference: individu_0
   output:
-    ba: 100000 / 6
+    ba: 100_000 / 6
