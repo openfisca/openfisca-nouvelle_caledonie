@@ -2,6 +2,7 @@ description: Impôt sur le revenu
 metadata:
   short_label: Impôt sur le revenu
   label_en: Income tax
+  income_tax_year: true
   order:
   - revenus_imposables
   - charges_deductibles
