@@ -1,5 +1,13 @@
 # Changelog
 
+# 11.0.0 [#32](https://github.com/openfisca/openfisca-nouvelle_caledonie/pull/32)
+
+* Évolution du système socio-fiscal.
+* Périodes concernées : toutes.
+* Zones impactées : `prelevements_obligatoires/impot_revenu/revenus_imposbales/non_salarie/bnc.py`.
+* Détails :
+  - Ajout et fiabilisation des BIC, BA, BNC
+
 # 10.0.0 [#21](https://github.com/openfisca/openfisca-nouvelle_caledonie/pull/21)
 
 * Correction d'un crash.
