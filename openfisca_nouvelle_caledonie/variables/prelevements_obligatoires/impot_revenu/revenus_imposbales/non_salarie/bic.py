@@ -94,7 +94,7 @@ class bic_forfait(Variable):
         abattement = parameters(
             period
         ).prelevements_obligatoires.impot_revenu.revenus_imposables.non_salarie.bic.abattement
-        bic_forfait = max_(
+        return max_(
             0,
             (
                 individu("bic_vente_fabrication_transformation_ca_ht", period)
@@ -110,8 +110,6 @@ class bic_forfait(Variable):
             * abattement
             - individu("cotisations_non_salarie", period),
         )
-
-        return bic_forfait
 
 
 # Régime réel simplifié (Cadre 10 de la déclaration complémentaire)

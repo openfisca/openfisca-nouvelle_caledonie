@@ -50,7 +50,7 @@ class ba(Variable):
         multiple, plafond_cafat = get_multiple_and_plafond_cafat_cotisation(
             period, parameters
         )
-        ba = (
+        return (
             max_(
                 0,
                 individu("chiffre_d_daffaires_agricole_ht_imposable", period)
@@ -61,7 +61,6 @@ class ba(Variable):
             )
             / diviseur
         )
-        return ba
 
 
 # Régime réel simplifié (Cadre 10 de la déclaration complémentaire)

@@ -3,7 +3,6 @@
 
 def get_multiple_and_plafond_cafat_cotisation(period, parameters):
     """Renvoie le plafond de la cotisation CAFAT pour l'année revenus donnée."""
-
     period_plafond = period.start.offset("first-of", "month").offset(11, "month")
     cafat = parameters(
         period_plafond
