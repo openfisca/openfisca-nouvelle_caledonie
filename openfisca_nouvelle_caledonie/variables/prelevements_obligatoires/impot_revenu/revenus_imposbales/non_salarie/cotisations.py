@@ -64,7 +64,6 @@ class cotisations_non_salarie(Variable):
         )
 
 
-
 class reste_cotisations_apres_bic_avant_ba(Variable):
     unit = "currency"
     value_type = float
