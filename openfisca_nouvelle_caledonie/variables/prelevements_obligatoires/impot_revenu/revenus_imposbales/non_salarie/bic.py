@@ -94,9 +94,9 @@ class bic_forfait(Variable):
         abattement = parameters(
             period
         ).prelevements_obligatoires.impot_revenu.revenus_imposables.non_salarie.bic.abattement
-        return (
-            max_(
-                0,
+        bic_forfait = max_(
+            0,
+            (
                 individu("bic_vente_fabrication_transformation_ca_ht", period)
                 - individu("bic_vente_fabrication_transformation_achats", period)
                 - individu(
@@ -105,11 +105,12 @@ class bic_forfait(Variable):
                     )
                 + individu("bic_services_ca_ht", period)
                 - individu("bic_services_achats", period)
-                - individu("bic_services_salaires_et_sous_traitance", period),
+                - individu("bic_services_salaires_et_sous_traitance", period)
                 ) * abattement
-            - individu("cotisations_non_salarie", period)
-            )
+                - individu("cotisations_non_salarie", period)
+                )
 
+        return bic_forfait
 
 # Régime réel simplifié (Cadre 10 de la déclaration complémentaire)
 
@@ -180,7 +181,7 @@ class bic_reel(Variable):
                 - individu("deficits_industriels_et_commerciaux_reel_simplifie", period)
                 - individu("deficits_industriels_et_commerciaux_reel_normal", period)
                 ),
-            0,
+            0
             )
 
 
