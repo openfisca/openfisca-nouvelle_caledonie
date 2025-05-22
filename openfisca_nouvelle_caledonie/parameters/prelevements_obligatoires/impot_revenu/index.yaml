@@ -6,5 +6,5 @@ metadata:
   - revenus_imposables
   - charges_deductibles
   - bareme
-  - reductions
-  - credits
+  # - reductions
+  # - credits
