@@ -52,7 +52,7 @@ class cotisations_non_salarie(Variable):
         multiple, plafond_cafat = get_multiple_and_plafond_cafat_cotisation(
             period, parameters
         )
-        cotisations_non_salarie = max_(
+        return max_(
             (
                 min_(
                     individu("cotisations_retraite_exploitant", period),
@@ -62,7 +62,7 @@ class cotisations_non_salarie(Variable):
             ),
             0,
         )
-        return cotisations_non_salarie
+
 
 
 class reste_cotisations_apres_bic_avant_ba(Variable):
