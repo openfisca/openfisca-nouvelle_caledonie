@@ -92,7 +92,24 @@ class reste_cotisations_apres_bic_ba_avant_bnc(Variable):
         return max_(
             (
                 individu("reste_cotisations_apres_bic_avant_ba", period)
-                - individu("bic_forfait", period)
+                - individu("bic_forfait", period)  # Ne concerne pas les BIC forfait
+            ),
+            0,
+        )
+
+
+class reste_cotisations_apres_bic_ba_bnc(Variable):
+    unit = "currency"
+    value_type = float
+    entity = Individu
+    label = "Reste des cotisations après BIC et BA et avant BNC"
+    definition_period = YEAR
+
+    def formula(individu, period):
+        return max_(
+            (
+                individu("reste_cotisations_apres_bic_avant_ba", period)
+                - individu("bnc", period)  # Concerne tous les BNC
             ),
             0,
         )
