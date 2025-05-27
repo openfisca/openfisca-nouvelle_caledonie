@@ -1,0 +1,11 @@
+description: nombre de parts fiscales pour un enfant demi-part
+values:
+  2024-01-01:
+    value: 0.5
+metadata:
+  short_label: Parts fiscales pour un enfant demi-part
+  label_en: Tax parts for a half-part child
+  unit: part_fiscale
+  comment: |
+    Nombre de parts fiscales pour un enfant demi-part.
+    Pour les enfants à charge, le nombre de parts fiscales est de 0.5.
