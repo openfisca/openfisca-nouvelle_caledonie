@@ -235,8 +235,7 @@ class impot_net(Variable):
     def formula(foyer_fiscal, period):
         impot_apres_reductions = foyer_fiscal("impot_apres_reductions", period)
         credits_impot = foyer_fiscal("credits_impot", period)
-
-        plus_values_professionnelles = foyer_fiscal"plus_values_professionnelles", period)
+        plus_values_professionnelles = foyer_fiscal("plus_values_professionnelles", period)
 
         return (
             impot_apres_reductions

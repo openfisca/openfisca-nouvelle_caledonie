@@ -130,7 +130,7 @@ class credits_impot(Variable):
 
     def formula(foyer_fiscal, period):
 
-        impot_apres_reduction = foyer_fiscal("impot_brut_apres_reduction", period)
+        impot_apres_reductions = foyer_fiscal("impot_apres_reductions", period)
         credits_resident = where(
             foyer_fiscal("resident", period),
             (
@@ -156,28 +156,28 @@ class credits_impot(Variable):
         # Calcul des plafonds
         plaf_70 = where(
             credits_investissement > 0,
-            np.ceil(.70 * impot_apres_reduction),
+            np.ceil(.70 * impot_apres_reductions),
             0,  # TODO: parameters
             )
 
         investissement_productif_industriel = foyer_fiscal("investissement_productif_industriel", period)
         plaf_50 = where(
             investissement_productif_industriel > 0,
-            np.ceil(.50 * impot_apres_reduction)  # TODO: parameters
+            np.ceil(.50 * impot_apres_reductions),  # TODO: parameters
             0,
             )  # TOD0: manque case WE https://github.com/openfisca/openfisca-nouvelle_caledonie/issues/34
 
         souscription_fcp = foyer_fiscal("souscription_fcp", period)
         plaf_60 = where(
             souscription_fcp > 0,
-            np.ceil(.60 * impot_apres_reduction),  # TODO: parameters
+            np.ceil(.60 * impot_apres_reductions),  # TODO: parameters
             0,
             )  # TOD0: manque case WW https://github.com/openfisca/openfisca-nouvelle_caledonie/issues/34
 
         mecenat_creche = foyer_fiscal("mecenat_entreprise", period) + foyer_fiscal("creche_entreprise", period)
         plaf_100 = where(
             mecenat_creche > 0,
-            impot_apres_reduction,
+            impot_apres_reductions,
             0,
             )
 
@@ -226,18 +226,24 @@ class credits_impot(Variable):
         # report_yo
         report_investissements_agrees_noumea_= where(
             solde_investissements_agrees > 0,
-            (foyer_fiscal("investissements_agrees_noumea", period)
-            * report_solde_investissements_agrees_net
-            / solde_investissements_agrees,
+            (
+                foyer_fiscal("investissements_agrees_noumea_etc", period)
+                * report_solde_investissements_agrees_net
+                / solde_investissements_agrees
+                ),
+            0,
             )
 
         # report wb
         report_investissements_agrees_noumea = where(
             solde_investissements_agrees > 0,
-            (foyer_fiscal("solde_investissements_agrees_autres", period)
-            * report_solde_investissements_agrees_net
-            / solde_investissements_agrees,
-        )
+            (
+                foyer_fiscal("solde_investissements_agrees_autres", period)
+                * report_solde_investissements_agrees_net
+                / solde_investissements_agrees
+                ),
+            0,
+            )
 
         # On reporte le reste sur les autres crédits d'impôt pour investissement     # On reporte le reste sur les autres crédits d'impôt pour investissement
         credits_investissement_restants = (
@@ -251,7 +257,6 @@ class credits_impot(Variable):
             min_(
                 credits_investissement_restants,
                 plaf_70,
-                0,
                 ),
             reilquat_plafond_credits,
             )
@@ -384,7 +389,6 @@ class credits_impot(Variable):
             + credit_souscription_fcp
             # + credit_we
             )
-        )
 
         # YG
         credit_creche_entreprise = min_(
@@ -396,7 +400,7 @@ class credits_impot(Variable):
             )
         credit_creche_entreprise = min_(
             credit_creche_entreprise,
-            impot_apres_reduction - credits_totaux,
+            impot_apres_reductions - credits_totaux,
             )
 
         reliquat_plafond_credits = max_(
@@ -408,8 +412,8 @@ class credits_impot(Variable):
         credit_mecenat_entreprise = where(
             foyer_fiscal("resident", period),
             min_(
-                np.ceil(.80 * foyer_fiscal("mecenat_entreprise", period))
-                impot_apres_reduction - credits_totaux,
+                np.ceil(.80 * foyer_fiscal("mecenat_entreprise", period)),
+                impot_apres_reductions - credits_totaux,
                 ),
             0,
             )
@@ -425,11 +429,11 @@ class credits_impot(Variable):
             min_(
                 foyer_fiscal("depenses_exportation", period),
                 (
-                    impot_apres_reduction
+                    impot_apres_reductions
                     - credit_mecenat_entreprise
-                    - credits_totaux,
+                    - credits_totaux
                     )
-                )
+                ),
             0,
             )
 
@@ -439,12 +443,12 @@ class credits_impot(Variable):
             min_(
                 foyer_fiscal("depenses_recherche_innovation", period),
                 (
-                    impot_apres_reduction
+                    impot_apres_reductions
                     - credit_mecenat_entreprise
                     - credit_depenses_exportation
                     - credits_totaux
                     ),
-                )
+                ),
             0,
             )
 
@@ -457,8 +461,6 @@ class credits_impot(Variable):
             + credit_investissement_productif_industriel
             + credit_souscription_fcp
             # + credit_we
-            + ,
-
             + credit_mecenat_entreprise
             + credit_depenses_exportation
             + credit_depenses_recherche_innovation,
