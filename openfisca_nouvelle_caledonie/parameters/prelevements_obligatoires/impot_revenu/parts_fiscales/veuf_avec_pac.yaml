@@ -1,0 +1,11 @@
+description: nombre de parts fiscales pour un veuf avec au moins une personne à charge
+values:
+  2024-01-01:
+    value: 1.5
+metadata:
+  short_label: Parts fiscales pour un veuf avec au moins une personne à charge
+  label_en: Tax parts for widower with one dependent
+  unit: part_fiscale
+  comment: |
+    Nombre de parts fiscales pour un veuf avec une personne à charge.
+    Pour les veufs avec au moins une personne à charge, le nombre de parts fiscales est de 1.5.

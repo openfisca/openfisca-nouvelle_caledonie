@@ -70,8 +70,10 @@ class parts_fiscales(Variable):
     label = "Nombre de parts"
     definition_period = YEAR
 
-    def formula(foyer_fiscal, period):
+    def formula(foyer_fiscal, period, parameters):
         statut_marital = foyer_fiscal.declarant_principal("statut_marital", period)
+        parts_fiscales = parameters(period).prelevements_obligatoires.impot_revenu.parts_fiscales
+
         celibataire_ou_divorce = (
             (statut_marital == TypesStatutMarital.celibataire)
             | (statut_marital == TypesStatutMarital.divorce)
@@ -89,7 +91,9 @@ class parts_fiscales(Variable):
                 marie_ou_pacse,
                 veuf & (nombre_de_pac > 0),
             ],
-            [1, 2, 1.5],
+            [parts_fiscales.celibataire_divorce_ou_veuf_sans_pac,
+             parts_fiscales.marie_ou_pacse,
+             parts_fiscales.veuf_avec_pac]
         )
 
         enfant_en_garde_alternee_i = foyer_fiscal.sum(
@@ -103,13 +107,13 @@ class parts_fiscales(Variable):
         enfants_parts_entiere_i = etudiant_hors_nc_i + handicape_cejh_i + invalidite_i
         parts_enfants = foyer_fiscal.sum(
             (
-                1
+                parts_fiscales.enfant_part_entiere
                 * (enfants_parts_entiere_i)
                 * (
                     1 * not_(enfant_en_garde_alternee_i)
                     + 0.5 * enfant_en_garde_alternee_i
                 )
-                + 0.5
+                + parts_fiscales.enfant_demi_part
                 * not_(enfants_parts_entiere_i)
                 * (
                     1 * not_(enfant_en_garde_alternee_i)
@@ -120,7 +124,7 @@ class parts_fiscales(Variable):
         )
         # TODO: mettre ces parts dans les paramètres
         parts_ascendants = (
-            foyer_fiscal.nb_persons(role=FoyerFiscal.ASCENDANT_A_CHARGE) * 0.5
+            foyer_fiscal.nb_persons(role=FoyerFiscal.ASCENDANT_A_CHARGE) * parts_fiscales.ascendant_a_charge
         )
 
         return parts_de_base + parts_enfants + parts_ascendants
@@ -132,9 +136,10 @@ class parts_fiscales_reduites(Variable):
     label = "Nombre de parts"
     definition_period = YEAR
 
-    def formula_2015(foyer_fiscal, period):
+    def formula_2015(foyer_fiscal, period, parameters):
         # Réforme de l'impôt 2016 sur les revenus 2015
         statut_marital = foyer_fiscal.declarant_principal("statut_marital", period)
+        parts_fiscales = parameters(period).prelevements_obligatoires.impot_revenu.parts_fiscales
         celibataire_ou_divorce = (
             (statut_marital == TypesStatutMarital.celibataire)
             | (statut_marital == TypesStatutMarital.divorce)
@@ -148,7 +153,8 @@ class parts_fiscales_reduites(Variable):
                 celibataire_ou_divorce | veuf,
                 marie_ou_pacse,
             ],
-            [1, 2],
+            [parts_fiscales.celibataire_divorce_ou_veuf_sans_pac,
+             parts_fiscales.marie_ou_pacse],
         )
 
 
