@@ -1,5 +1,13 @@
 # Changelog
 
+# 12.0.0 [#37](https://github.com/openfisca/openfisca-nouvelle_caledonie/pull/37)
+
+* Évolution du système socio-fiscal.
+* Périodes concernées : toutes.
+* Zones impactées : `impot_revenu``.
+* Détails :
+  - Complétion bénéfices, imputations, réductions et crédits d'impôts.
+
 # 11.0.0 [#32](https://github.com/openfisca/openfisca-nouvelle_caledonie/pull/32)
 
 * Évolution du système socio-fiscal.
