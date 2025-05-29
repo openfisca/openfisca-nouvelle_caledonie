@@ -40,7 +40,7 @@ class plus_values_professionnelles(Variable):
     def formula(foyer_fiscal, period, parameters):
         plus_values = parameters(
             period
-        ).prelevements_obligatoires.impot_revenu.revenus_imposables.non_salaires.plus_values
+        ).prelevements_obligatoires.impot_revenu.revenus_imposables.non_salarie.plus_values
         return foyer_fiscal.sum(
             foyer_fiscal.members("plus_values_professionnelles_a_taux_reduit", period)
             * plus_values.taux_reduit

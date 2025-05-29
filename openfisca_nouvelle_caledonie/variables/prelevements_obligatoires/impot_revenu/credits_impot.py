@@ -258,7 +258,7 @@ class credits_impot(Variable):
                 credits_investissement_restants,
                 plaf_70,
                 ),
-            reilquat_plafond_credits,
+            reliquat_plafond_credits,
             )
 
         # retenu_yo
@@ -295,7 +295,7 @@ class credits_impot(Variable):
 
         # retenu_yz
         credit_investissements_agrees_mixtes = where(
-            foyer_fiscal("investisesment_agrees_mixtes", period) > 0,
+            foyer_fiscal("investissements_agrees_mixtes", period) > 0,
             reliquet_credits_investissement_restants_plafonnes
             - credit_investissements_agrees_noumea_etc
             - credit_investissements_agrees_autres,
@@ -306,10 +306,13 @@ class credits_impot(Variable):
         credit_investissements_agrees_autres = where(
             (
                 (foyer_fiscal("investissements_agrees_autres", period) > 0)
-                & (foyer_fiscal("investisesment_agrees_mixtes", period) == 0)
+                & (foyer_fiscal("investissements_agrees_mixtes", period) == 0)
                 ),
-            reliquet_credits_investissement_restants_plafonnes
-            - credit_investissements_agrees_noumea_etc,
+            (
+                reliquet_credits_investissement_restants_plafonnes
+                - credit_investissements_agrees_noumea_etc,
+                ),
+            credit_investissements_agrees_autres,
             )
 
         reliquat_plafond_credits = max_(
@@ -371,7 +374,8 @@ class credits_impot(Variable):
             )
         reliquat_plafond_credits = max_(
             reliquat_plafond_credits
-            - credit_souscription_fcp
+            - credit_souscription_fcp,
+            0,
             )
         report_yv = max_(
             (
