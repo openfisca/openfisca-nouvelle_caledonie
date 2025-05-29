@@ -152,7 +152,7 @@ class deduction_travaux_immobiliers(Variable):
         plafond = parameters(
             period
         ).prelevements_obligatoires.impot_revenu.charges_deductibles.travaux_immobiliers
-        return max(min_(travaux_immobiliers, plafond), 0)
+        return max_(min_(travaux_immobiliers, plafond), 0)
 
 
 class equipements_verts(Variable):
@@ -178,7 +178,7 @@ class deduction_travaux_immobiliers_equipements_verts(Variable):
         plafond = parameters(
             period
         ).prelevements_obligatoires.impot_revenu.charges_deductibles.travaux
-        return max(min_(travaux_immobiliers + equipements_verts, plafond), 0)
+        return max_(min_(travaux_immobiliers + equipements_verts, plafond), 0)
 
 
 class pensions_alimentaires(Variable):
@@ -210,7 +210,18 @@ class deduction_frais_garde_enfants(Variable):
         plafond = parameters(
             period
         ).prelevements_obligatoires.impot_revenu.charges_deductibles.frais_garde_enfants
-        return max(min_(foyer_fiscal("frais_garde_enfants", period), plafond), 0)
+        resident = foyer_fiscal("resident", period)
+        return where(
+            resident,
+            max_(
+                min_(
+                    foyer_fiscal("frais_garde_enfants", period),
+                    plafond,
+                ),
+                0,
+            ),
+            0,
+        )
 
 
 class depenses_internat_transport_interurbain(Variable):
@@ -236,7 +247,7 @@ class deduction_depenses_internat_transport_interurbain(Variable):
         resident = foyer_fiscal("resident", period)
         return where(
             resident,
-            max(
+            max_(
                 min_(
                     foyer_fiscal("depenses_internat_transport_interurbain", period),
                     plafond,
@@ -267,7 +278,7 @@ class deduction_services_a_la_personne(Variable):
         plafond = parameters(
             period
         ).prelevements_obligatoires.impot_revenu.charges_deductibles.services_a_la_personne
-        return max(min_(foyer_fiscal("services_a_la_personne", period), plafond), 0)
+        return max_(min_(foyer_fiscal("services_a_la_personne", period), plafond), 0)
 
 
 class cotisations_sociales_hors_gerant_societes_retraite_avant_1992(Variable):
@@ -356,7 +367,7 @@ class deduction_primes_assurance_vie(Variable):
         plafond = parameters(
             period
         ).prelevements_obligatoires.impot_revenu.charges_deductibles.assurance_vie
-        return max(min_(foyer_fiscal("primes_assurance_vie", period), plafond), 0)
+        return max_(min_(foyer_fiscal("primes_assurance_vie", period), plafond), 0)
 
 
 class csg_deductible(Variable):
