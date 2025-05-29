@@ -130,15 +130,6 @@ class credits_impot(Variable):
 
     def formula(foyer_fiscal, period):
         impot_apres_reductions = foyer_fiscal("impot_apres_reductions", period)
-        credits_resident = where(
-            foyer_fiscal("resident", period),
-            (
-                foyer_fiscal("mecenat_entreprise", period)
-                + foyer_fiscal("depenses_exportation", period)
-                + foyer_fiscal("depenses_recherche_innovation", period)
-            ),
-            0,
-        )
 
         solde_investissements_agrees = foyer_fiscal(
             "solde_investissements_agrees_noumea_etc", period
@@ -336,7 +327,7 @@ class credits_impot(Variable):
         report_investissements_agrees_noumea = report_investissements
 
         # Amortissements excedentaires WE TODO; à vérifer et inclure
-        credit_we
+        # credit_we
         _ = where(
             solde_investissement_plafonnes > 0,
             np.ceil(
