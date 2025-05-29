@@ -1,5 +1,13 @@
 # Changelog
 
+# 13.0.0 [#38](https://github.com/openfisca/openfisca-nouvelle_caledonie/pull/38)
+
+* Amélioration technique.
+* Périodes concernées : toutes.
+* Zones impactées : `parameters/prelevements_obligatoires/impot_revenu/parts_fiscales`
+* Détails :
+  - Ajoute les paramètres de parts fiscales
+
 # 12.0.0 [#37](https://github.com/openfisca/openfisca-nouvelle_caledonie/pull/37)
 
 * Évolution du système socio-fiscal.
