@@ -72,7 +72,9 @@ class parts_fiscales(Variable):
 
     def formula(foyer_fiscal, period, parameters):
         statut_marital = foyer_fiscal.declarant_principal("statut_marital", period)
-        parts_fiscales = parameters(period).prelevements_obligatoires.impot_revenu.parts_fiscales
+        parts_fiscales = parameters(
+            period
+        ).prelevements_obligatoires.impot_revenu.parts_fiscales
 
         celibataire_ou_divorce = (
             (statut_marital == TypesStatutMarital.celibataire)
@@ -91,9 +93,11 @@ class parts_fiscales(Variable):
                 marie_ou_pacse,
                 veuf & (nombre_de_pac > 0),
             ],
-            [parts_fiscales.celibataire_divorce_ou_veuf_sans_pac,
-             parts_fiscales.marie_ou_pacse,
-             parts_fiscales.veuf_avec_pac]
+            [
+                parts_fiscales.celibataire_divorce_ou_veuf_sans_pac,
+                parts_fiscales.marie_ou_pacse,
+                parts_fiscales.veuf_avec_pac,
+            ],
         )
 
         enfant_en_garde_alternee_i = foyer_fiscal.sum(
@@ -124,7 +128,8 @@ class parts_fiscales(Variable):
         )
         # TODO: mettre ces parts dans les paramètres
         parts_ascendants = (
-            foyer_fiscal.nb_persons(role=FoyerFiscal.ASCENDANT_A_CHARGE) * parts_fiscales.ascendant_a_charge
+            foyer_fiscal.nb_persons(role=FoyerFiscal.ASCENDANT_A_CHARGE)
+            * parts_fiscales.ascendant_a_charge
         )
 
         return parts_de_base + parts_enfants + parts_ascendants
@@ -139,7 +144,9 @@ class parts_fiscales_reduites(Variable):
     def formula_2015(foyer_fiscal, period, parameters):
         # Réforme de l'impôt 2016 sur les revenus 2015
         statut_marital = foyer_fiscal.declarant_principal("statut_marital", period)
-        parts_fiscales = parameters(period).prelevements_obligatoires.impot_revenu.parts_fiscales
+        parts_fiscales = parameters(
+            period
+        ).prelevements_obligatoires.impot_revenu.parts_fiscales
         celibataire_ou_divorce = (
             (statut_marital == TypesStatutMarital.celibataire)
             | (statut_marital == TypesStatutMarital.divorce)
@@ -153,8 +160,10 @@ class parts_fiscales_reduites(Variable):
                 celibataire_ou_divorce | veuf,
                 marie_ou_pacse,
             ],
-            [parts_fiscales.celibataire_divorce_ou_veuf_sans_pac,
-             parts_fiscales.marie_ou_pacse],
+            [
+                parts_fiscales.celibataire_divorce_ou_veuf_sans_pac,
+                parts_fiscales.marie_ou_pacse,
+            ],
         )
 
 
