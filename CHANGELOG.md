@@ -1,5 +1,12 @@
 # Changelog
 
+### 13.0.2 [#40](https://github.com/openfisca/openfisca-nouvelle_caledonie/pull/40)
+* Amélioration technique.
+* Périodes concernées : toutes.
+* Zones impactées : `openfisca_nouvelle_caledonie/variables/prelevements_obligatoires/impot_revenu/charges_deductibles.py`.
+* Détails :
+  - Add the underscore to max for scalar calculation
+
 ### 13.0.1 [#39](https://github.com/openfisca/openfisca-nouvelle_caledonie/pull/39)
 
 * Amélioration technique.
