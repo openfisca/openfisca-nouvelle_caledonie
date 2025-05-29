@@ -224,7 +224,8 @@ class credits_impot(Variable):
         )
 
         # report_yo
-        report_investissements_agrees_noumea_ = where(
+        # report_investissements_agrees_noumea
+        _ = where(
             solde_investissements_agrees > 0,
             (
                 foyer_fiscal("investissements_agrees_noumea_etc", period)
@@ -335,7 +336,8 @@ class credits_impot(Variable):
         report_investissements_agrees_noumea = report_investissements
 
         # Amortissements excedentaires WE TODO; à vérifer et inclure
-        credit_we = where(
+        credit_we
+        _ = where(
             solde_investissement_plafonnes > 0,
             np.ceil(
                 (
@@ -386,7 +388,8 @@ class credits_impot(Variable):
             reliquat_plafond_credits - credit_souscription_fcp,
             0,
         )
-        report_yv = max_(
+        # report_yv
+        _ = max_(
             (credit_souscription_fcp - plaf_50),
             0,
         )
