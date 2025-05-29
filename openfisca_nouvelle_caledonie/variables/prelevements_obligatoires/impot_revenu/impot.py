@@ -1,6 +1,5 @@
 """Calcul de l'impôt sur le revenu."""
 
-import numpy as np
 from numpy import floor
 
 from openfisca_core.model_api import *
