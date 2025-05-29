@@ -1,5 +1,14 @@
 # Changelog
 
+### 13.0.1 [#39](https://github.com/openfisca/openfisca-nouvelle_caledonie/pull/39)
+
+* Amélioration technique.
+* Périodes concernées : toutes.
+* Zones impactées : `openfisca-nouvelle_caledonie/openfisca_nouvelle_caledonie/variables/revenu_imposable`.
+* Détails :
+  - Change le nom du folder et corrige une faute
+
+
 # 13.0.0 [#38](https://github.com/openfisca/openfisca-nouvelle_caledonie/pull/38)
 
 * Amélioration technique.
