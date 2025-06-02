@@ -15,6 +15,9 @@ import os
 from openfisca_core.taxbenefitsystems import TaxBenefitSystem
 from openfisca_nouvelle_caledonie import entities
 
+from openfisca_nouvelle_caledonie.variables.prelevements_obligatoires.prelevements_sociaux import preprocessing
+
+
 COUNTRY_DIR = os.path.dirname(os.path.abspath(__file__))
 
 
@@ -23,10 +26,15 @@ COUNTRY_DIR = os.path.dirname(os.path.abspath(__file__))
 # the OpenFisca ecosystem expect a CountryTaxBenefitSystem class to be exposed
 # in the __init__ module of a country package.
 class CountryTaxBenefitSystem(TaxBenefitSystem):
+
+    # We preprocess some parameters before loading them into the system.
+    preprocess_parameters = staticmethod(preprocessing.preprocess_parameters)
+
     def __init__(self):
         """Initialize our country's tax and benefit system."""
         # We initialize our tax and benefit system with the general constructor
         super().__init__(entities.entities)
+
 
         # We add to our tax and benefit system all the variables
         self.add_variables_from_directory(os.path.join(COUNTRY_DIR, "variables"))

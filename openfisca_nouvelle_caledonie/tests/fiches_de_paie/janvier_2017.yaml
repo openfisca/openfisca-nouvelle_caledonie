@@ -1,0 +1,15 @@
+name: Saalrié janvier 2017
+period: 2017-01
+absolute_error_margin: 0.005
+input:
+  salaire_de_base: 0
+  categorie_salarie: prive_non_cadre
+output:
+  categorie_salarie: prive_non_cadre
+  salaire_de_base: 0
+
+  # cotisations_salariales: 28_457
+  # #
+  # # cotisations_salariales_contributives: -5.71 -22.14 -17.14 -2.14 -48.92
+  # # cotisations_salariales_non_contributives: -5.36
+  # cotisations_employeur: 80_381
