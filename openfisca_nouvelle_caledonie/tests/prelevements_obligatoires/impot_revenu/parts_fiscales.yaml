@@ -28,6 +28,40 @@
   output:
     parts_fiscales: 2
 
+# - name: Couples pacsés avec un conjoint invalide
+#   period: 2024
+#   absolute_error_margin: 0
+#   input:
+#     foyer_fiscal:
+#       declarants:
+#       - declarant
+#       - conjoint
+#     persons:
+#       declarant:
+#         statut_marital: pacse
+#       conjoint:
+#         statut_marital: pacse
+#         taux_invalidite: 0.8
+#   output:
+#     parts_fiscales: 2.5
+
+- name: Couple marié avec un ancien combattant
+  period: 2024
+  absolute_error_margin: 0
+  input:
+    foyer_fiscal:
+      declarants:
+      - declarant
+      - conjoint
+    persons:
+      declarant:
+        statut_marital: marie
+        ancien_combattant: true
+      conjoint:
+        statut_marital: marie
+  output:
+    parts_fiscales: 2.5
+
 
 - name: Couples mariés avec 1 enfant
   period: 2024
