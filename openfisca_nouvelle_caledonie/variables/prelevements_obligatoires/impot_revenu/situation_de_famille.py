@@ -109,7 +109,7 @@ class parts_fiscales(Variable):
         invalidite_i = foyer_fiscal.members("taux_invalidite", period) > 0.5
 
         enfants_parts_entiere_i = etudiant_hors_nc_i + handicape_cejh_i + invalidite_i
-        parts_enfants = foyer_fiscal.sum(
+        parts_enfants = foyer_fiscal.sum( #TODO: Erreur dans le calcul des parts garde alternée
             (
                 parts_fiscales.enfant_part_entiere
                 * (enfants_parts_entiere_i)
@@ -126,7 +126,6 @@ class parts_fiscales(Variable):
             ),
             role=FoyerFiscal.ENFANT_A_CHARGE,
         )
-        # TODO: mettre ces parts dans les paramètres
         parts_ascendants = (
             foyer_fiscal.nb_persons(role=FoyerFiscal.ASCENDANT_A_CHARGE)
             * parts_fiscales.ascendant_a_charge
