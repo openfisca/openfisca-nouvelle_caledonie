@@ -63,6 +63,12 @@ class taux_invalidite(Variable):
     label = "Taux d'invalidité"
     definition_period = YEAR
 
+class ancien_combattant(Variable):
+    value_type = bool
+    default_value = False
+    entity = Individu
+    label = "Ancien combattant"
+    definition_period = YEAR
 
 class parts_fiscales(Variable):
     value_type = float
@@ -99,6 +105,16 @@ class parts_fiscales(Variable):
                 parts_fiscales.veuf_avec_pac,
             ],
         )
+        parts_additionnelles = (
+            parts_fiscales.ancien_combattant * (
+                foyer_fiscal.declarant_principal("ancien_combattant", period)
+                )
+            + parts_fiscales.handicape * (
+                foyer_fiscal.declarant_principal("taux_invalidite", period) > 0.5
+                + foyer_fiscal.conjoint("taux_invalidite", period) > 0.5
+            )
+        )
+        parts_de_base += parts_additionnelles
 
         enfant_en_garde_alternee_i = foyer_fiscal.sum(
             foyer_fiscal.members("enfant_en_garde_alternee", period),
