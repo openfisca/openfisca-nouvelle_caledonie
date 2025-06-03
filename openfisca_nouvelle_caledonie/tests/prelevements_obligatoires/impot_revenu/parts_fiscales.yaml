@@ -150,28 +150,28 @@
   output:
     parts_fiscales: 1.25
 
-# - name: Parent divorcé avec 2 enfants en garde alternée dont un invalide
-#   period: 2024
-#   absolute_error_margin: 0
-#   input:
-#     foyer_fiscal:
-#       declarants:
-#       - declarant
-#       enfants_a_charge:
-#       - riri
-#       - fifi
-#     persons:
-#       declarant:
-#         statut_marital: divorce
-#       riri:
-#         statut_marital: celibataire
-#         enfant_en_garde_alternee: true
-#       fifi:
-#         statut_marital: celibataire
-#         enfant_en_garde_alternee: true
-#         taux_invalidite: .80
-#   output:
-#     parts_fiscales: 1.75
+- name: Parent divorcé avec 2 enfants en garde alternée dont un invalide
+  period: 2024
+  absolute_error_margin: 0
+  input:
+    foyer_fiscal:
+      declarants:
+      - declarant
+      enfants_a_charge:
+      - riri
+      - fifi
+    persons:
+      declarant:
+        statut_marital: divorce
+      riri:
+        statut_marital: celibataire
+        enfant_en_garde_alternee: true
+      fifi:
+        statut_marital: celibataire
+        enfant_en_garde_alternee: true
+        taux_invalidite: .80
+  output:
+    parts_fiscales: 1.75
 
 - name: Célibataire avec 1 ascendant à charge
   period: 2024
@@ -231,27 +231,27 @@
   output:
     parts_fiscales: 2.5
 
-# - name: Couple pacsé avec conjoint handicapé et 1 ascendant à charge invalide
-#   period: 2024
-#   absolute_error_margin: 0
-#   input:
-#     foyer_fiscal:
-#       declarants:
-#         - declarant
-#         - conjoint
-#       ascendants_a_charge:
-#         - ascendant
-#     persons:
-#       declarant:
-#         statut_marital: pacse
-#       conjoint:
-#         statut_marital: pacse
-#         taux_invalidite: .80
-#       ascendant:
-#         statut_marital: celibataire
-#         taux_invalidite: .80
-#   output:
-#     parts_fiscales: 3
+- name: Couple pacsé avec conjoint handicapé et 1 ascendant à charge invalide
+  period: 2024
+  absolute_error_margin: 0
+  input:
+    foyer_fiscal:
+      declarants:
+        - declarant
+        - conjoint
+      ascendants_a_charge:
+        - ascendant
+    persons:
+      declarant:
+        statut_marital: pacse
+      conjoint:
+        statut_marital: pacse
+        taux_invalidite: .80
+      ascendant:
+        statut_marital: celibataire
+        taux_invalidite: .80
+  output:
+    parts_fiscales: 3
 
 - name: Couple pacsé avec un étudiant hors nouvelle calédonie
   period: 2024
@@ -321,6 +321,24 @@
         statut_marital: celibataire
   output:
     parts_fiscales: 2
+
+- name: Veuf invalide avec 1 enfant à charge
+  period: 2024
+  absolute_error_margin: 0
+  input:
+    foyer_fiscal:
+      declarants:
+        - declarant
+      enfants_a_charge:
+        - enfant
+    persons:
+      declarant:
+        statut_marital: veuf
+        taux_invalidite: .80
+      enfant:
+        statut_marital: celibataire
+  output:
+    parts_fiscales: 2.5
 
 - name: Veuf avec 1 enfant à charge invalide
   period: 2024
@@ -401,24 +419,24 @@
   output:
     parts_fiscales: 1.75
 
-# - name: Veuf avec 1 enfant handicapé en garde alternée
-#   period: 2024
-#   absolute_error_margin: 0
-#   input:
-#     foyer_fiscal:
-#       declarants:
-#         - declarant
-#       enfants_a_charge:
-#         - enfant
-#     persons:
-#       declarant:
-#         statut_marital: veuf
-#       enfant:
-#         statut_marital: celibataire
-#         taux_invalidite: .80
-#         enfant_en_garde_alternee: true
-#   output:
-#     parts_fiscales: 2.25
+- name: Veuf avec 1 enfant handicapé en garde alternée
+  period: 2024
+  absolute_error_margin: 0
+  input:
+    foyer_fiscal:
+      declarants:
+        - declarant
+      enfants_a_charge:
+        - enfant
+    persons:
+      declarant:
+        statut_marital: veuf
+      enfant:
+        statut_marital: celibataire
+        taux_invalidite: .80
+        enfant_en_garde_alternee: true
+  output:
+    parts_fiscales: 2.25
 
 - name: Veuf avec 1 ascendant à charge
   period: 2024
