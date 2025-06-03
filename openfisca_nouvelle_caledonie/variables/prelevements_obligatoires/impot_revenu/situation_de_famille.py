@@ -110,10 +110,10 @@ class parts_fiscales(Variable):
                 foyer_fiscal.declarant_principal("ancien_combattant", period)
                 )
             + parts_fiscales.handicape * (
-                foyer_fiscal.declarant_principal("taux_invalidite", period) > 0.5
-                + foyer_fiscal.conjoint("taux_invalidite", period) > 0.5
+                1 * (foyer_fiscal.declarant_principal("taux_invalidite", period) > 0.5)  # TODO parameters
+                + 1 * (foyer_fiscal.conjoint("taux_invalidite", period) > 0.5)  # TODO parameters
+                )
             )
-        )
         parts_de_base += parts_additionnelles
 
         enfant_en_garde_alternee_i = foyer_fiscal.sum(
