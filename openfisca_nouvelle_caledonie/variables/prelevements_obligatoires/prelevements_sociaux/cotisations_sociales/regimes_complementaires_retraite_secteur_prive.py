@@ -2,6 +2,13 @@ from openfisca_core.model_api import *
 
 
 from openfisca_nouvelle_caledonie.entities import Person as Individu
+from openfisca_nouvelle_caledonie.variables.prelevements_obligatoires.prelevements_sociaux.cotisations_sociales.helpers import (
+    apply_bareme,
+    apply_bareme_for_relevant_type_sal,
+    )
+
+from openfisca_nouvelle_caledonie.variables.prelevements_obligatoires.prelevements_sociaux.cotisations_sociales.salarie import TypesCategorieSalarie
+
 
 class agff_salarie(Variable):
     value_type = float
@@ -79,7 +86,7 @@ class agirc_gmp_salarie(Variable):
             & (assiette_cotisations_sociales > 0)
             )
 
-        gmp = parameters(period).prelevements_sociaux.regimes_complementaires_retraite_secteur_prive.gmp
+        gmp = parameters(period).prelevements_obligatoires.prelevements_sociaux.regimes_complementaires_retraite_secteur_prive.gmp
         cotisation_forfaitaire_temps_plein = gmp.cotisation_forfaitaire_mensuelle.part_salariale
         cotisation_forfaitaire = cotisation_forfaitaire_temps_plein * quotite
 
@@ -281,3 +288,89 @@ class arrco_employeur(Variable):
         return (
             cotisation_minimale * (arrco_tranche_a_taux_employeur == 0) + cotisation_entreprise
             ) * prive
+
+
+class contribution_equilibre_general_salarie(Variable):
+    value_type = float
+    entity = Individu
+    label = "Contribution d'équilibre général (salarie)"
+    definition_period = MONTH
+    set_input = set_input_divide_by_period
+
+    def formula_2019_01_01(individu, period, parameters):
+
+        cotisation = apply_bareme(
+            individu,
+            period,
+            parameters,
+            cotisation_type = 'salarie',
+            bareme_name = 'ceg',
+            variable_name = 'contribution_equilibre_general_salarie',
+            )
+        return cotisation
+
+
+class contribution_equilibre_general_employeur(Variable):
+    value_type = float
+    entity = Individu
+    label = "Contribution d'équilibre général (employeur)"
+    definition_period = MONTH
+    set_input = set_input_divide_by_period
+
+    def formula_2019_01_01(individu, period, parameters):
+
+        cotisation = apply_bareme(
+            individu,
+            period,
+            parameters,
+            cotisation_type = 'employeur',
+            bareme_name = 'ceg',
+            variable_name = 'contribution_equilibre_general_employeur',
+            )
+        return cotisation
+
+
+class contribution_equilibre_technique_salarie(Variable):
+    value_type = float
+    entity = Individu
+    label = "Contribution d'équilibre technique (salarie)"
+    definition_period = MONTH
+    set_input = set_input_divide_by_period
+
+    def formula_2019_01_01(individu, period, parameters):
+
+        plafond_securite_sociale = individu('plafond_securite_sociale', period)
+        assiette_cotisations_sociales = individu('assiette_cotisations_sociales', period)
+
+        cotisation = apply_bareme(
+            individu,
+            period,
+            parameters,
+            cotisation_type = 'salarie',
+            bareme_name = 'cet2019',
+            variable_name = 'contribution_equilibre_technique_salarie',
+            )
+        return cotisation * (assiette_cotisations_sociales > plafond_securite_sociale)
+
+
+class contribution_equilibre_technique_employeur(Variable):
+    value_type = float
+    entity = Individu
+    label = "Contribution d'équilibre technique (employeur)"
+    definition_period = MONTH
+    set_input = set_input_divide_by_period
+
+    def formula_2019_01_01(individu, period, parameters):
+
+        plafond_securite_sociale = individu('plafond_securite_sociale', period)
+        assiette_cotisations_sociales = individu('assiette_cotisations_sociales', period)
+
+        cotisation = apply_bareme(
+            individu,
+            period,
+            parameters,
+            cotisation_type = 'employeur',
+            bareme_name = 'cet2019',
+            variable_name = 'contribution_equilibre_technique_employeur',
+            )
+        return cotisation * (assiette_cotisations_sociales > plafond_securite_sociale)

@@ -4,5 +4,6 @@ metadata:
   label_en: Social contributions
   order:
   - cafat
+  - pss
   - regimes_complementaires_retraite_secteur_prive
   - contribution_solidarite
