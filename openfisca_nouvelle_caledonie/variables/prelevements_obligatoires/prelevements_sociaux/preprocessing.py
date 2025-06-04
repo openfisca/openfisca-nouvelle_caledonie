@@ -3,7 +3,7 @@ import logging
 
 from openfisca_core.model_api import *
 
-from openfisca_nouvelle_caledonie.variables.revenus.activite.salarie import TypesCategorieSalarie
+from openfisca_nouvelle_caledonie.variables.prelevements_obligatoires.prelevements_sociaux.cotisations_sociales.salarie import TypesCategorieSalarie
 
 
 log = logging.getLogger(__name__)
@@ -12,7 +12,7 @@ log = logging.getLogger(__name__)
 def build_cotisations_employeur(parameters):
     '''Construit le dictionnaire de barèmes des cotisations employeur à partir des paramètres de parameters.'''
     # TODO: contribution patronale de prévoyance complémentaire
-    cotisations_employeur = ParameterNode('cotisations_employeur_tmp', data=dict(description='Cotisations sociales employeur'))  # Génère cotisations_employeur
+    cotisations_employeur = ParameterNode('cotisations_employeur', data=dict(description='Cotisations sociales employeur'))  # Génère cotisations_employeur
     commun = ParameterNode('commun', data=dict(
         description='Cotisations sociales employeur communes à plusieurs régimes',
         metadata=dict(order=[]),
@@ -86,7 +86,7 @@ def build_cotisations_salarie(parameters):
     '''
     Construit le dictionnaire de barèmes des cotisations salariales
     '''
-    cotisations_salarie = ParameterNode('cotisations_salarie_tmp', data=dict(description='Cotisations sociales salariales'))  # Génère cotisations_salarie
+    cotisations_salarie = ParameterNode('cotisations_salarie', data=dict(description='Cotisations sociales salariales'))  # Génère cotisations_salarie
 
     prelevements_sociaux = parameters.prelevements_obligatoires.prelevements_sociaux
     cafat = parameters.prelevements_obligatoires.prelevements_sociaux.cafat
@@ -140,7 +140,7 @@ def build_cotisations_salarie(parameters):
         retraite_complementaire.agirc_arrco.salarie,
         ]
     for key in keys_retraite_complementaire:
-        cotisations_salarie.children['prive_cadre'].children.update(key.children)
+        cotisations_salarie.children['prive_non_cadre'].children.update(key.children)
 
     return cotisations_salarie
 
