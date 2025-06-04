@@ -68,11 +68,10 @@ class cotisations_salariales(Variable):
     calculate_output = calculate_output_add
 
     def formula(individu, period, parameters):
+        # CAFAT
         # ruamm = individu('ruamm_salarie', period, options=[ADD])
-        # retraite = individu('retraite_salarie', period, options=[ADD])
-
-
-
+        retraite = individu('retraite_salarie', period, options=[ADD])
+        # Retraite complémentaire
         agff_salarie = individu('agff_salarie', period)
         agirc_arrco_salarie = individu('agirc_arrco_salarie', period)
         agirc_salarie = individu('agirc_salarie', period)
@@ -85,7 +84,10 @@ class cotisations_salariales(Variable):
 
 
         return (
-            agff_salarie
+            # CAFAT
+            retraite
+            # Retraite complémentaire
+            + agff_salarie
             + agirc_arrco_salarie
             + agirc_salarie
             + agirc_gmp_salarie
