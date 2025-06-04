@@ -1,5 +1,6 @@
 from openfisca_core.model_api import *
 
+from openfisca_nouvelle_caledonie.variables.prelevements_obligatoires.prelevements_sociaux.cotisations_sociales.salarie import TypesCategorieSalarie
 
 DEFAULT_ROUND_BASE_DECIMALS = 2
 
@@ -48,12 +49,8 @@ cotisations_salarie_by_categorie_salarie = {
         'ceg',
         'cet',
         'cet2019',
-        'chomage',
-        # "forfait_annuel",  # Antérieur à 2011, pas présent sous forme de barème
-        'maladie_alsace_moselle',
-        'maladie',
-        'vieillesse_deplafonnee',
-        'vieillesse_plafonnee',
+        'retraite',
+        'ruam',
         ],
     'prive_non_cadre': [
         'agff',
@@ -62,36 +59,16 @@ cotisations_salarie_by_categorie_salarie = {
         'arrco',
         'ceg',
         'cet2019',
-        'chomage',
-        'maladie_alsace_moselle',
-        'maladie',
-        'vieillesse_deplafonnee',
-        'vieillesse_plafonnee',
+        'retraite',
+        'ruam',
         ],
     'public_non_titulaire': [
-        'excep_solidarite',
-        'ircantec',
-        'maladie_alsace_moselle',
-        'maladie',
-        'vieillesse_deplafonnee',
-        'vieillesse_plafonnee',
         ],
     'public_titulaire_etat': [
-        'excep_solidarite',
-        'pension',
-        'rafp',
         ],
     'public_titulaire_hospitaliere': [
-        'cnracl_s_ti',
-        'cnracl_s_nbi',
-        'excep_solidarite',
-        'rafp',
         ],
     'public_titulaire_territoriale': [
-        'cnracl_s_ti',
-        'cnracl_s_nbi',
-        'excep_solidarite',
-        'rafp',
         ],
     }
 
@@ -117,20 +94,18 @@ def apply_bareme_for_relevant_type_sal(
             if categorie_salarie_type == TypesCategorieSalarie.non_pertinent:
                 continue
 
-            if bareme_by_categorie_salarie._name == 'cotisations_employeur_after_preprocessing':
+            if bareme_by_categorie_salarie._name == 'cotisations_employeur':
                 cotisations_by_categorie_salarie = cotisations_employeur_by_categorie_salarie
-            elif bareme_by_categorie_salarie._name == 'cotisations_salarie_after_preprocessing':
+            elif bareme_by_categorie_salarie._name == 'cotisations_salarie':
                 cotisations_by_categorie_salarie = cotisations_salarie_by_categorie_salarie
             else:
-                NameError()
+                raise NameError('cotisations_employeur nor cotisations_salarie not found')
 
             try:
                 categorie_salarie_baremes = bareme_by_categorie_salarie[categorie_salarie_type.name]
             except KeyError as e:
-                # FIXME: dirty fix since public_titulaire_militaire does not exist
-                if categorie_salarie_type.name == 'public_titulaire_militaire':
-                    continue
-                raise e
+                print(f'KeyError: {e} in {bareme_by_categorie_salarie._name} for {categorie_salarie_type.name}')
+                continue
 
             if bareme_name in cotisations_by_categorie_salarie[categorie_salarie_type.name]:
                 bareme = categorie_salarie_baremes[bareme_name]
@@ -144,7 +119,7 @@ def apply_bareme_for_relevant_type_sal(
                 round_base_decimals = round_base_decimals,
                 )
 
-    return - sum(iter_cotisations())
+    return sum(iter_cotisations())
 
 
 def apply_bareme(individu, period, parameters, cotisation_type = None, bareme_name = None, variable_name = None):
