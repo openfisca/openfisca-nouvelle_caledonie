@@ -107,12 +107,15 @@ def apply_bareme_for_relevant_type_sal(
                 print(f'KeyError: {e} in {bareme_by_categorie_salarie._name} for {categorie_salarie_type.name}')
                 continue
 
+            # BAM
+
             if bareme_name in cotisations_by_categorie_salarie[categorie_salarie_type.name]:
                 bareme = categorie_salarie_baremes[bareme_name]
             else:
                 KeyError(f'{bareme_name} not in {bareme_by_categorie_salarie._name} for {categorie_salarie_type.name}')
                 continue
 
+            print(f'computing {bareme_name} for {categorie_salarie_type.name}')
             yield bareme.calc(
                 base * (categorie_salarie == categorie_salarie_type),
                 factor = plafond_securite_sociale,
