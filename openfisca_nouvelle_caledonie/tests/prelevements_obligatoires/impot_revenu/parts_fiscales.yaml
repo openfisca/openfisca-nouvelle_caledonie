@@ -432,7 +432,6 @@
       declarant:
         statut_marital: veuf
       enfant:
-        statut_marital: celibataire
         taux_invalidite: .80
         enfant_en_garde_alternee: true
   output:
