@@ -120,12 +120,6 @@ class parts_fiscales(Variable):
             )  # TODO: parameters
         )
         parts_de_base += parts_additionnelles
-
-        # enfant_en_garde_alternee_i = foyer_fiscal.sum(
-        #     foyer_fiscal.members("enfant_en_garde_alternee", period),
-        #     role=FoyerFiscal.ENFANT_A_CHARGE,
-        # )
-
         enfant = foyer_fiscal.members.has_role(FoyerFiscal.ENFANT_A_CHARGE)
         enfant_en_garde_alternee_i = enfant * foyer_fiscal.members(
             "enfant_en_garde_alternee", period
