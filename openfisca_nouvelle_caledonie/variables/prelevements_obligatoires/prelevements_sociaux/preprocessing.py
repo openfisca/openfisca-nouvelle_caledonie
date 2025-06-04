@@ -13,22 +13,18 @@ def build_cotisations_employeur(parameters):
     '''Construit le dictionnaire de barèmes des cotisations employeur à partir des paramètres de parameters.'''
     # TODO: contribution patronale de prévoyance complémentaire
     cotisations_employeur = ParameterNode('cotisations_employeur', data=dict(description='Cotisations sociales employeur'))  # Génère cotisations_employeur
-    commun = ParameterNode('commun', data=dict(
-        description='Cotisations sociales employeur communes à plusieurs régimes',
-        metadata=dict(order=[]),
-        ))  # Génère commun
 
     # Raccourcis
     prelevements_sociaux = parameters.prelevements_obligatoires.prelevements_sociaux
-    cafat = parameters.prelevements_obligatoires.prelevements_sociaux.cafat
+    cafat = prelevements_sociaux.cafat
     accident_travail = cafat.autres_regimes.accident_travail
     chomage = cafat.autres_regimes.chomage
     famille = cafat.autres_regimes.prestations_familiales
     fds = cafat.fds
     fiaf = cafat.fiaf
-    formation_professionnelle = cafat.formation_professionnelle
-    formation_professionnelle_continue = cafat.formation_professionnelle_continue
-    fsh = cafat.fsh
+    formation_professionnelle = prelevements_sociaux.formation_professionnelle
+    formation_professionnelle_continue = prelevements_sociaux.formation_professionnelle_continue
+    fsh = prelevements_sociaux.fsh
     retraite = cafat.maladie_retraite.retraite
     ruamm = cafat.maladie_retraite.ruamm
     retraite_complementaire = prelevements_sociaux.regimes_complementaires_retraite_secteur_prive
@@ -89,7 +85,7 @@ def build_cotisations_salarie(parameters):
     cotisations_salarie = ParameterNode('cotisations_salarie', data=dict(description='Cotisations sociales salariales'))  # Génère cotisations_salarie
 
     prelevements_sociaux = parameters.prelevements_obligatoires.prelevements_sociaux
-    cafat = parameters.prelevements_obligatoires.prelevements_sociaux.cafat
+    cafat = prelevements_sociaux.cafat
     chomage = cafat.autres_regimes.chomage
     retraite = cafat.maladie_retraite.retraite
     ruamm = cafat.maladie_retraite.ruamm
@@ -154,7 +150,6 @@ def preprocess_parameters(parameters):
 
     cotsoc = ParameterNode('cotsoc', data=dict(description='Cotisations sociales'))
     parameters.add_child('cotsoc', cotsoc)
-    print(cotsoc)
     cotsoc.add_child('cotisations_employeur', cotisations_employeur)
     cotsoc.add_child('cotisations_salarie', cotisations_salarie)
 
