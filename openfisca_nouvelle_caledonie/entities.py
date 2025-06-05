@@ -96,7 +96,7 @@ FoyerFiscal = build_entity(
         {
             "key": "enfant_accueilli",
             "plural": "enfants_accueillis",
-            "label": "Enfnts accueillis",
+            "label": "Enfants accueillis",
         },
     ],
 )

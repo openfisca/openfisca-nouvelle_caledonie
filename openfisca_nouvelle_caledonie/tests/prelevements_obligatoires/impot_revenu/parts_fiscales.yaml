@@ -435,7 +435,7 @@
         taux_invalidite: .80
         enfant_en_garde_alternee: true
   output:
-    parts_fiscales: 2.25
+    parts_fiscales: 2
 
 - name: Veuf avec 1 ascendant à charge
   period: 2024
