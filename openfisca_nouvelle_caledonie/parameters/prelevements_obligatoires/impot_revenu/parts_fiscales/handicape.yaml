@@ -1,0 +1,14 @@
+description: nombre de parts fiscales additionelles pour un déclarant handicapé
+values:
+  2024-01-01:
+    value: 0.5
+metadata:
+  short_label: Parts fiscales pour un déclarant (principal ou conjoint) handicapé
+  label_en: Tax parts for a disabled declarant (main or spouse)
+  unit: part_fiscale
+  comment: |
+    Nombre de parts fiscales pour un déclarant (principal ou conjoint) handicapé.
+    Conditions: titulaire d'une pension (militaire ou accident de travail) pour
+    invalidité d'au moins 40%, carte d'invalidité supérieure à 50% ou perte d'autonomie
+    GIR1, GIR2, GIR3 ou GIR4.
+    Veuve/veuf et conjoint avait une pension militaire pour une invalidité d'au moins 40%.
