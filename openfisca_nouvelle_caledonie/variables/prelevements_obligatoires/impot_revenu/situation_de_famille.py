@@ -122,7 +122,6 @@ class parts_fiscales(Variable):
         parts_de_base += parts_additionnelles
         # `enfant` represents whether each member of the fiscal household has the role ENFANT_A_CHARGE.
         enfant = foyer_fiscal.members.has_role(FoyerFiscal.ENFANT_A_CHARGE)
-        enfant = int(enfant)  # Convert to integer for clarity in subsequent calculations.
         enfant_en_garde_alternee_i = enfant * foyer_fiscal.members(
             "enfant_en_garde_alternee", period
         )
