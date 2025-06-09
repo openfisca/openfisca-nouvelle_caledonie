@@ -25,6 +25,13 @@
         other: Euros
       name: currency-EUR
       short_label: €
+- name: part_fiscale
+  label:
+    one: Part fiscale
+    other: Parts fiscales
+  short_label:
+    one: Part
+    other: Parts
 - name: plafond_CAFAT_retraite
   label:
     one: Plafond de la CAFAT relatif à la retraite
