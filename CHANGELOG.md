@@ -7,7 +7,7 @@
 * Zones impactées : `parameters`.
 * Détails :
   - Corrige entrée erronée dans les metadata
-  -
+
 ## 13.1.1 [#45](https://github.com/openfisca/openfisca-nouvelle_caledonie/pull/45)
 
 * Changement mineur.
