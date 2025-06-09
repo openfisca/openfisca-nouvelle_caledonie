@@ -78,7 +78,7 @@ class revenu_net_global_imposable(Variable):
             ),
             0,
         )
-        return floor(rngi / 1000) * 1000
+        return floor(rngi / 1000) * 1000  # Arrondi à la baisse par tranche de 1000
 
 
 class impot_brut(Variable):
@@ -87,7 +87,8 @@ class impot_brut(Variable):
     label = "Impot brut"
     definition_period = YEAR
 
-    def formula(foyer_fiscal, period, parameters):
+    def formula_2016(foyer_fiscal, period, parameters):
+
         # from tmp/engine/rules/_2008/impots/ImpotBrutUtil2008.java
         tauxPart1 = 8 / 100
 
@@ -97,7 +98,102 @@ class impot_brut(Variable):
 
         # Calcul de l'impôt brut pour les résidents
 
-        nombre_de_parts = foyer_fiscal("parts_fiscales", period)
+        parts_fiscales = foyer_fiscal("parts_fiscales", period)
+        revenu_non_imposable = foyer_fiscal("revenu_non_imposable", period)
+        revenu_net_global_imposable = foyer_fiscal(
+            "revenu_net_global_imposable", period
+        )
+
+        parts_fiscales_reduites = foyer_fiscal("parts_fiscales_reduites", period)
+
+        revenu_par_part = (
+            max_(revenu_net_global_imposable, 0) + revenu_non_imposable
+        ) / parts_fiscales
+
+        revenu_par_part_reduite = (
+                max_(revenu_net_global_imposable, 0) + revenu_non_imposable
+            ) / parts_fiscales_reduites
+
+        bareme = parameters(period).prelevements_obligatoires.impot_revenu.bareme
+
+        impot_brut_complet = bareme.calc(revenu_par_part) * parts_fiscales
+        impot_brut_reduit = bareme.calc(revenu_par_part_reduite) * parts_fiscales_reduites
+
+        # Au final, l'impôt brut est une fraction du résultat précédent
+        revenu_total = where(revenu_net_global_imposable > 0, revenu_net_global_imposable + revenu_non_imposable, 1)
+        fraction = where(revenu_net_global_imposable > 0, revenu_net_global_imposable / revenu_total, 1)
+
+        impot_brut_complet = where(impot_brut_complet > 0, impot_brut_complet, 0)
+        impot_brut_complet = where(
+            fraction < 0.01,  # TODO: parameters
+            0,
+            impot_brut_complet * fraction,
+        )
+
+        impot_brut_reduit = where(impot_brut_reduit > 0, impot_brut_reduit, 0)
+        impot_brut_reduit = where(
+            fraction < 0.01,  # TODO: parameters
+            0,
+            impot_brut_reduit * fraction,
+        )
+
+        impot_brut = max_(impot_brut_complet, impot_brut_reduit - ((parts_fiscales - parts_fiscales_reduites) * 2 * 300000))  # TODO: parameters
+
+        # L'impôt brut est plafonné à 50% des revenus
+        taux_plafond = parameters(
+            period
+        ).prelevements_obligatoires.impot_revenu.taux_plafond
+        impot_brut_resident = min_(
+            taux_plafond * revenu_net_global_imposable, impot_brut
+        )
+
+        # Calcul de l'impôt brut Non résident
+        revenu_brut_global = foyer_fiscal("revenu_brut_global", period)
+        den = where(
+            revenu_brut_global == 0,
+            1,
+            revenu_brut_global,
+        )
+        interets_de_depots = foyer_fiscal("interets_de_depots", period)
+        pourcentage = (
+            where(
+                revenu_brut_global == 0,
+                0,
+                interets_de_depots,  # case BB
+            )
+            / den
+        )
+        # //  TxNI= 25 % si case 46 = 1 et case 47 =vide
+        txNI = where(
+            taux_moyen_imposition_non_resident > 0,
+            taux_moyen_imposition_non_resident,
+            0.25,
+        )
+        # // 8% x RNGI x pourcentage
+        part1 = (
+            tauxPart1 * revenu_net_global_imposable * pourcentage
+        )  # // txNI x rngi x (1 - pourcentage)
+        part2 = txNI * revenu_net_global_imposable * (1 - pourcentage)
+        # Résultat pour les non résidents
+        impot_brut_non_resident = part1 + part2
+
+        return where(
+            foyer_fiscal("resident", period),
+            impot_brut_resident,
+            impot_brut_non_resident,
+        )
+
+    def formula_2008(foyer_fiscal, period, parameters):
+        # from tmp/engine/rules/_2008/impots/ImpotBrutUtil2008.java
+        tauxPart1 = 8 / 100
+
+        taux_moyen_imposition_non_resident = foyer_fiscal(
+            "taux_moyen_imposition_non_resident", period
+        )
+
+        # Calcul de l'impôt brut pour les résidents
+
+        parts_fiscales = foyer_fiscal("parts_fiscales", period)
         revenu_non_imposable = foyer_fiscal("revenu_non_imposable", period)
         revenu_net_global_imposable = foyer_fiscal(
             "revenu_net_global_imposable", period
@@ -105,20 +201,19 @@ class impot_brut(Variable):
 
         revenu_par_part = (
             max_(revenu_net_global_imposable, 0) + revenu_non_imposable
-        ) / nombre_de_parts
+        ) / parts_fiscales
 
         bareme = parameters(period).prelevements_obligatoires.impot_revenu.bareme
 
-        impot_brut = bareme.calc(revenu_par_part) * nombre_de_parts
+        impot_brut = bareme.calc(revenu_par_part) * parts_fiscales
 
         # Au final, l'impôt brut est une fraction du résultat précédent
-        numerateur = revenu_net_global_imposable
-        denominateur = where(numerateur > 0, numerateur + revenu_non_imposable, 1)
-        fraction = where(numerateur > 0, numerateur / denominateur, 1)
+        revenu_total = where(revenu_net_global_imposable > 0, revenu_net_global_imposable + revenu_non_imposable, 1)
+        fraction = where(revenu_net_global_imposable > 0, revenu_net_global_imposable / revenu_total, 1)
 
         impot_brut = where(impot_brut > 0, impot_brut, 0)
         impot_brut = where(
-            fraction < 0.01,  # TODO: à introduire dans les paramètres
+            fraction < 0.01,  # TODO: parameters
             0,
             impot_brut * fraction,
         )
