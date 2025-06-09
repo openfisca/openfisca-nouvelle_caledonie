@@ -1,5 +1,13 @@
 # Changelog
 
+## 13.1.1 [#45](https://github.com/openfisca/openfisca-nouvelle_caledonie/pull/45)
+
+* Changement mineur.
+* Périodes concernées : toutes.
+* Zones impactées : `parameters`.
+* Détails :
+  - Ajoute l'unité `part_fiscale`
+
 ## 13.1.0 [#43](https://github.com/openfisca/openfisca-nouvelle_caledonie/pull/43)
 
 * Évolution du système socio-fiscal.
