@@ -8,6 +8,7 @@
 * Détails :
   - Ajout de la nouvelle variable ancien_combattant avec sa configuration de paramètres associée.
   - Modification de la formule de calcul des éléments fiscaux afin de tenir compte de conditions telles que l'invalidité et le statut d'ancien combattant.
+  - Ajout du plafonnement du quotient familial intervenu en 2016.
   - Extension de la couverture des tests avec de nombreux scénarios YAML et correction de fautes de frappe mineures.
 
 ### 13.0.2 [#40](https://github.com/openfisca/openfisca-nouvelle_caledonie/pull/40)
