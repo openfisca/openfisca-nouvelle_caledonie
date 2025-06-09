@@ -6,7 +6,7 @@ metadata:
   short_label: Parts fiscales pour un déclarant (principal ou conjoint) handicapé
   label_en: Tax parts for a disabled declarant (main or spouse)
   unit: part_fiscale
-  comment: |
+  documentation: |
     Nombre de parts fiscales pour un déclarant (principal ou conjoint) handicapé.
     Conditions: titulaire d'une pension (militaire ou accident de travail) pour
     invalidité d'au moins 40%, carte d'invalidité supérieure à 50% ou perte d'autonomie
