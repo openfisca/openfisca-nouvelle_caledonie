@@ -5,10 +5,14 @@ input:
   salaire_de_base: 214_120
   categorie_salarie: prive_non_cadre
 output:
-  agff_salarie: 1_713
   agff_employeur: 2_569
-  cotisations_salariales: 28_457
+  agff_salarie: 1_713
+  fsh_employeur: 4_282
+  ruamm_employeur: 24_988
+  ruamm_salarie: 8_244
+  ccs: 2_141
+  cotisations_salariales: 28457-2141
   # #
   # # cotisations_salariales_contributives: -5.71 -22.14 -17.14 -2.14 -48.92
   # # cotisations_salariales_non_contributives: -5.36
-  # cotisations_employeur: 80_381
+  cotisations_employeur: 80_381
