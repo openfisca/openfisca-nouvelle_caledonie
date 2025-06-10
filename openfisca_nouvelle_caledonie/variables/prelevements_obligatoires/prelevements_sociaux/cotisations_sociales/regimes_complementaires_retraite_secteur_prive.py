@@ -52,7 +52,7 @@ class agff_employeur(Variable):
             bareme_by_categorie_salarie = parameters.cotisations_employeur,
             bareme_name = 'agffnc',
             base = assiette_cotisations_sociales,
-            plafond_securite_sociale = plafond_securite_sociale,
+            plafond = plafond_securite_sociale,
             categorie_salarie = categorie_salarie,
             )
 
@@ -60,7 +60,7 @@ class agff_employeur(Variable):
             bareme_by_categorie_salarie = parameters.cotisations_employeur,
             bareme_name = 'agffc',
             base = assiette_cotisations_sociales,
-            plafond_securite_sociale = plafond_securite_sociale,
+            plafond = plafond_securite_sociale,
             categorie_salarie = categorie_salarie,
             )
         return cotisation_cadre + cotisation_non_cadre
@@ -118,7 +118,7 @@ class agirc_gmp_employeur(Variable):
             & (assiette_cotisations_sociales > 0)
             )
 
-        gmp = parameters(period).prelevements_sociaux.regimes_complementaires_retraite_secteur_prive.gmp
+        gmp = parameters(period).prelevements_obligatoires.prelevements_sociaux.regimes_complementaires_retraite_secteur_prive.gmp
         cotisation_forfaitaire_temps_plein = gmp.cotisation_forfaitaire_mensuelle.part_patronale
         cotisation_forfaitaire = cotisation_forfaitaire_temps_plein * quotite
 

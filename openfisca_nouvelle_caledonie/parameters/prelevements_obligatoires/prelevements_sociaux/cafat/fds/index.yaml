@@ -4,6 +4,6 @@ metadata:
   short_label_en: FDS contribution
   label_en: Contribution to the financing of social dialogue
   order:
-  - cotisation_employeur
+  - employeur
 documentation: |
   Il s’agit d’une contribution patronale au financement du dialogue social créée en 2017. Elle finance les permanences syndicales, selon une répartition issue du résultat des élections professionnelles.

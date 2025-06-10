@@ -38,6 +38,9 @@ def build_cotisations_employeur(parameters):
         ))
     cotisations_employeur.add_child('prive_cadre', prive_cadre)
 
+    cotisations_employeur.children['prive_cadre'].add_child('chomage', chomage.employeur)
+    cotisations_employeur.children['prive_cadre'].add_child('fds', fds.employeur)
+    cotisations_employeur.children['prive_cadre'].add_child('fiaf', fiaf.employeur)
     cotisations_employeur.children['prive_cadre'].add_child('fsh', fsh.employeur)
     cotisations_employeur.children['prive_cadre'].add_child('retraite',retraite.employeur)
     cotisations_employeur.children['prive_cadre'].add_child('ruamm', ruamm.employeur)
@@ -64,6 +67,13 @@ def build_cotisations_employeur(parameters):
         ))
 
     cotisations_employeur.add_child('prive_non_cadre', prive_non_cadre)
+
+    cotisations_employeur.children['prive_non_cadre'].add_child('chomage', chomage.employeur)
+    cotisations_employeur.children['prive_non_cadre'].add_child('fds', fds.employeur)
+    cotisations_employeur.children['prive_non_cadre'].add_child('fiaf', fiaf.employeur)
+    cotisations_employeur.children['prive_non_cadre'].add_child('fsh', fsh.employeur)
+    cotisations_employeur.children['prive_non_cadre'].add_child('retraite',retraite.employeur)
+    cotisations_employeur.children['prive_non_cadre'].add_child('ruamm', ruamm.employeur)
 
     keys_retraite_complementaire = [
         retraite_complementaire.agff.employeur.noncadre,
@@ -100,8 +110,9 @@ def build_cotisations_salarie(parameters):
         ))
     cotisations_salarie.add_child('prive_cadre', prive_cadre)
 
-    cotisations_salarie.children['prive_cadre'].add_child('retraite', retraite.employeur)
-    cotisations_salarie.children['prive_cadre'].add_child('ruamm', ruamm.employeur)
+    cotisations_salarie.children['prive_cadre'].add_child('chomage', chomage.salarie)
+    cotisations_salarie.children['prive_cadre'].add_child('retraite', retraite.salarie)
+    cotisations_salarie.children['prive_cadre'].add_child('ruamm', ruamm.salarie)
 
     keys_retraite_complementaire = [
         retraite_complementaire.agff.salarie.cadre,
@@ -125,8 +136,9 @@ def build_cotisations_salarie(parameters):
 
     cotisations_salarie.add_child('prive_non_cadre', prive_non_cadre)
 
-    cotisations_salarie.children['prive_non_cadre'].add_child('retraite', retraite.employeur)
-    cotisations_salarie.children['prive_non_cadre'].add_child('ruamm', ruamm.employeur)
+    cotisations_salarie.children['prive_non_cadre'].add_child('chomage', chomage.salarie)
+    cotisations_salarie.children['prive_non_cadre'].add_child('retraite', retraite.salarie)
+    cotisations_salarie.children['prive_non_cadre'].add_child('ruamm', ruamm.salarie)
 
     keys_retraite_complementaire = [
         retraite_complementaire.agff.salarie.cadre,

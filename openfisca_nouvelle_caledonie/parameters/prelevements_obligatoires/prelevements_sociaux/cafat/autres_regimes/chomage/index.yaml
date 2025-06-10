@@ -4,5 +4,5 @@ metadata:
   short_label_en: Unemployment
   label_en: Contributions for unemployment insurance
   order:
-  - cotisation_employeur
-  - cotisation_salarie
+  - employeur
+  - salarie

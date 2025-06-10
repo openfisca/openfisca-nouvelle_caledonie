@@ -59,6 +59,53 @@ class assiette_cotisations_sociales(Variable):
             )
 
 
+class cotisations_employeur(Variable):
+    value_type = float
+    entity = Individu
+    label = 'Cotisations sociales employeur'
+    set_input = set_input_divide_by_period
+    definition_period = MONTH
+    calculate_output = calculate_output_add
+
+    def formula(individu, period, parameters):
+        # CAFAT
+        chomage = individu('chomage_employeur', period)
+        fds = individu('fds_employeur', period)
+        fiaf = individu('fiaf_employeur', period)
+        fsh = individu('fsh_employeur', period)
+        retraite = individu('retraite_employeur', period)
+        # RUAMM
+        ruamm = individu('ruamm_employeur', period)
+        # Retraite complémentaire
+        agff_employeur = individu('agff_employeur', period)
+        agirc_arrco_employeur = individu('agirc_arrco_employeur', period)
+        agirc_employeur = individu('agirc_employeur', period)
+        agirc_gmp_employeur = individu('agirc_gmp_employeur', period)
+        arrco_employeur = individu('arrco_employeur', period)
+        # chomage_employeur = individu('chomage_employeur', period)
+        contribution_equilibre_general_employeur = individu('contribution_equilibre_general_employeur', period)
+        contribution_equilibre_technique_employeur = individu('contribution_equilibre_technique_employeur', period)
+
+        return (
+            # CAFAT
+            chomage
+            + fds
+            + fiaf
+            + fsh
+            + retraite
+            # RUAMM
+            + ruamm
+            # Retraite complémentaire
+            + agff_employeur
+            + agirc_arrco_employeur
+            + agirc_employeur
+            + agirc_gmp_employeur
+            + arrco_employeur
+            + contribution_equilibre_general_employeur
+            + contribution_equilibre_technique_employeur
+        )
+
+
 class cotisations_salariales(Variable):
     value_type = float
     entity = Individu
@@ -69,8 +116,10 @@ class cotisations_salariales(Variable):
 
     def formula(individu, period, parameters):
         # CAFAT
-        # ruamm = individu('ruamm_salarie', period, options=[ADD])
         retraite = individu('retraite_salarie', period, options=[ADD])
+        chomage = individu('chomage_salarie', period, options=[ADD])
+        # RUAMM
+        ruamm = individu('ruamm_salarie', period, options=[ADD])
         # Retraite complémentaire
         agff_salarie = individu('agff_salarie', period)
         agirc_arrco_salarie = individu('agirc_arrco_salarie', period)
@@ -81,11 +130,12 @@ class cotisations_salariales(Variable):
         contribution_equilibre_general_salarie = individu('contribution_equilibre_general_salarie', period)
         contribution_equilibre_technique_salarie = individu('contribution_equilibre_technique_salarie', period)
 
-
-
         return (
             # CAFAT
             retraite
+            + chomage
+            # RUAMM
+            + ruamm
             # Retraite complémentaire
             + agff_salarie
             + agirc_arrco_salarie
@@ -95,3 +145,21 @@ class cotisations_salariales(Variable):
             + contribution_equilibre_general_salarie
             + contribution_equilibre_technique_salarie
         )
+
+
+class salaire_net(Variable):
+    value_type = float
+    entity = Individu
+    label = "Salaires nets d'après définition INSEE"
+    set_input = set_input_divide_by_period
+    definition_period = MONTH
+
+    def formula(individu, period, parameters):
+        '''
+        Calcul du salaire net d'après définition INSEE
+        '''
+        salaire_imposable = individu('salaire_de_base', period)
+        cotisations_salariales = individu('cotisations_salariales', period)
+        ccs = individu('ccs', period)
+
+        return salaire_imposable - cotisations_salariales - ccs

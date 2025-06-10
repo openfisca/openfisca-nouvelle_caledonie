@@ -1,47 +1,47 @@
 description: Plafond mensuel de la cotisation retraite et tranche 1 du RUAMM
 values:
   2006-01-01:
-    value: 399100
+    value: 399_100
   2006-04-01:
-    value: 430650
+    value: 430_650
   2007-01-01:
-    value: 438800
+    value: 438_800
   2008-01-01:
-    value: 446300
+    value: 446_300
   2009-01-01:
-    value: 460500
+    value: 460_500
   2010-01-01:
-    value: 460500
+    value: 460_500
   2011-01-01:
-    value: 473600
+    value: 473_600
   2012-01-01:
-    value: 483600
+    value: 483_600
   2013-01-01:
-    value: 490700
+    value: 490_700
   2014-01-01:
-    value: 494300
+    value: 494_300
   2015-01-01:
-    value: 498300
+    value: 498_300
   2016-01-01:
-    value: 498300
+    value: 498_300
   2017-01-01:
-    value: 498300
+    value: 498_300
   2018-01-01:
-    value: 505100
+    value: 505_100
   2019-01-01:
-    value: 510500
+    value: 510_500
   2020-01-01:
-    value: 510500
+    value: 510_500
   2021-01-01:
-    value: 510500
+    value: 510_500
   2022-01-01:
-    value: 513900
+    value: 513_900
   2023-01-01:
-    value: 539500
+    value: 539_500
   2024-01-01:
-    value: 539500
+    value: 539_500
   2025-01-01:
-    value: 548600
+    value: 548_600
 metadata:
   short_label: Plafond retraite et tranche 1 RUAMM
   label_en: Ceiling for retirement and first tranche of RUAMM

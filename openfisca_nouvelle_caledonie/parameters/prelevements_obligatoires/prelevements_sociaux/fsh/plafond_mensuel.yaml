@@ -1,55 +1,55 @@
 description: Plafond de cotisation au Fonds Social de l’Habitat (FSH)
 values:
   2025-01-01:
-    value: 329700
+    value: 329_700
   2024-01-01:
-    value: 329700
+    value: 329_700
   2023-01-01:
-    value: 324300
+    value: 324_300
   2022-01-01:
-    value: 308900
+    value: 308_900
   2021-01-01:
-    value: 308900
+    value: 308_900
   2020-01-01:
-    value: 308900
+    value: 308_900
   2019-01-01:
-    value: 308900
+    value: 308_900
   2018-01-01:
-    value: 308900
+    value: 308_900
   2017-01-01:
-    value: 308900
+    value: 308_900
   2016-01-01:
-    value: 308900
+    value: 308_900
   2015-01-01:
-    value: 308900
+    value: 308_900
   2014-01-01:
-    value: 308900
+    value: 308_900
   2013-01-01:
-    value: 308900
+    value: 308_900
   2012-01-01:
-    value: 308900
+    value: 308_900
   2011-01-01:
-    value: 308900
+    value: 308_900
   2010-01-01:
-    value: 308900
+    value: 308_900
   2009-01-01:
-    value: 308900
+    value: 308_900
   2008-01-01:
-    value: 308900
+    value: 308_900
   2007-01-01:
-    value: 308900
+    value: 308_900
   2006-01-01:
-    value: 308900
+    value: 308_900
   2005-01-01:
-    value: 308900
+    value: 308_900
   2004-01-01:
-    value: 308900
+    value: 308_900
   2003-01-01:
-    value: 308900
+    value: 308_900
   2002-01-01:
-    value: 308900
+    value: 308_900
   2001-01-01:
-    value: 239882
+    value: 239_882
 metadata:
   unit: currency
 documentation: |
