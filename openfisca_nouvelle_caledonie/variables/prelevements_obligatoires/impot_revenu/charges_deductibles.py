@@ -322,7 +322,7 @@ class retenue_cotisations_sociales(Variable):
         period_plafond = period.start.offset("first-of", "month").offset(11, "month")
         plafond_cafat_retraite = parameters(
             period_plafond
-        ).prelevements_obligatoires.prelevements_sociaux.cafat.maladie_retraite.plafond
+        ).prelevements_obligatoires.prelevements_sociaux.cafat.maladie_retraite.plafond_retraite_mensuel
         return where(
             resident,
             (

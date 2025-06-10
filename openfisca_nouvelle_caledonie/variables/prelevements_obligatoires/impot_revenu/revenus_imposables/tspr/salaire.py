@@ -139,7 +139,7 @@ class cotisations(Variable):
         period_plafond = period.start.offset("first-of", "month").offset(11, "month")
         plafond_cafat_retraite = parameters(
             period_plafond
-        ).prelevements_obligatoires.prelevements_sociaux.cafat.maladie_retraite.plafond
+        ).prelevements_obligatoires.prelevements_sociaux.cafat.maladie_retraite.plafond_retraite_mensuel
         return (
             min_(cotisations_retraite_gerant_cotisant_ruamm, 7 * plafond_cafat_retraite)
             + autres_cotisations_gerant_cotisant_ruamm

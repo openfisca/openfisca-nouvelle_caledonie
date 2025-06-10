@@ -1,3 +1,5 @@
+import numpy as np
+
 from openfisca_core.model_api import *
 
 from openfisca_nouvelle_caledonie.variables.prelevements_obligatoires.prelevements_sociaux.cotisations_sociales.salarie import TypesCategorieSalarie
@@ -13,9 +15,13 @@ cotisations_employeur_by_categorie_salarie = {
         'ceg',
         'cet',
         'cet2019',
+        'chomage',
+        'fds',
+        'fiaf',
         'fsh',
+        'prestations_familiales',
         'retraite',
-        'ruam',
+        'ruamm',
         ],
     'prive_non_cadre': [
         'agffnc',
@@ -24,6 +30,13 @@ cotisations_employeur_by_categorie_salarie = {
         'asf',
         'ceg',
         'cet2019',
+        'chomage',
+        'fds',
+        'fiaf',
+        'fsh',
+        'prestations_familiales',
+        'retraite',
+        'ruamm',
         ],
     'public_non_titulaire': [
         ],
@@ -49,6 +62,7 @@ cotisations_salarie_by_categorie_salarie = {
         'ceg',
         'cet',
         'cet2019',
+        'chomage',
         'retraite',
         'ruam',
         ],
@@ -59,8 +73,9 @@ cotisations_salarie_by_categorie_salarie = {
         'arrco',
         'ceg',
         'cet2019',
+        'chomage',
         'retraite',
-        'ruam',
+        'ruamm',
         ],
     'public_non_titulaire': [
         ],
@@ -78,7 +93,7 @@ def apply_bareme_for_relevant_type_sal(
         bareme_name,
         categorie_salarie,
         base,
-        plafond_securite_sociale,
+        plafond,
         round_base_decimals = DEFAULT_ROUND_BASE_DECIMALS,
         ):
     '''Apply bareme corresponding to bareme_name to the relevant categorie_salarie.'''
@@ -86,7 +101,7 @@ def apply_bareme_for_relevant_type_sal(
     assert bareme_name is not None
     assert categorie_salarie is not None
     assert base is not None
-    assert plafond_securite_sociale is not None
+    assert plafond is not None
     TypesCategorieSalarie = categorie_salarie.possible_values
 
     def iter_cotisations():
@@ -118,7 +133,7 @@ def apply_bareme_for_relevant_type_sal(
             print(f'computing {bareme_name} for {categorie_salarie_type.name}')
             yield bareme.calc(
                 base * (categorie_salarie == categorie_salarie_type),
-                factor = plafond_securite_sociale,
+                factor = plafond,
                 round_base_decimals = round_base_decimals,
                 )
 
@@ -172,14 +187,24 @@ def compute_cotisation(individu, period, parameters, cotisation_type = None, bar
     assert bareme_name is not None
 
     assiette_cotisations_sociales = individu('assiette_cotisations_sociales', period, options = [ADD])
-    plafond_securite_sociale = individu('plafond_securite_sociale', period, options = [ADD])
+    plafond = individu('plafond_securite_sociale', period, options = [ADD])
+
+    if bareme_name in ['retraite', 'fiaf']:
+        plafond = individu('plafond_retraite', period, options = [ADD])
+
+    if bareme_name in ['chomage', 'fds', 'prestations_familiales']:
+        plafond = individu('plafond_cafat_autres_regimes', period, options = [ADD])
+
+    if bareme_name == 'fsh':
+        plafond = individu('plafond_fsh', period, options = [ADD])
+
     categorie_salarie = individu('categorie_salarie', period.first_month)
 
     cotisation = apply_bareme_for_relevant_type_sal(
         bareme_by_categorie_salarie = bareme_by_type_sal_name,
         bareme_name = bareme_name,
         base = assiette_cotisations_sociales,
-        plafond_securite_sociale = plafond_securite_sociale,
+        plafond = plafond,
         categorie_salarie = categorie_salarie,
         )
     return cotisation
