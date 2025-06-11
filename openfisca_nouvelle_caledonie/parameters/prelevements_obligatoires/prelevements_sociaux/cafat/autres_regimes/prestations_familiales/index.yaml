@@ -4,4 +4,4 @@ metadata:
   short_label_en: Family benefits
   label_en: Contributions for family allowances
   order:
-  - cotisation_employeur
+  - employeur
