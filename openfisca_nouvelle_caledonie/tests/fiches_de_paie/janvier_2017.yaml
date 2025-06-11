@@ -1,4 +1,4 @@
-name: Saalrié janvier 2017
+name: Salarié janvier 2017
 period: 2017-01
 absolute_error_margin: 1
 input:
@@ -7,12 +7,11 @@ input:
 output:
   agff_employeur: 2_569
   agff_salarie: 1_713
-  fsh_employeur: 4_282
+  arrco_employeur: 9957
+  arrco_salarie: 6_638
+  fsh: 4_282
   ruamm_employeur: 24_988
   ruamm_salarie: 8_244
   ccs: 2_141
-  cotisations_salariales: 28457-2141
-  # #
-  # # cotisations_salariales_contributives: -5.71 -22.14 -17.14 -2.14 -48.92
-  # # cotisations_salariales_non_contributives: -5.36
-  cotisations_employeur: 80_381
+  cotisations_salariales: 28457 - 2141
+  # cotisations_employeur: 80_381  # Manque accident du travail et sûrement qu'il y a des cotisations en trop car montant trop élevé

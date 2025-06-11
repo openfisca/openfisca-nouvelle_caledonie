@@ -69,10 +69,12 @@ class cotisations_employeur(Variable):
 
     def formula(individu, period, parameters):
         # CAFAT
+        accident_du_travail = individu('accident_du_travail', period)
         chomage = individu('chomage_employeur', period)
-        fds = individu('fds_employeur', period)
-        fiaf = individu('fiaf_employeur', period)
-        fsh = individu('fsh_employeur', period)
+        fds = individu('fds', period)
+        fiaf = individu('fiaf', period)
+        fsh = individu('fsh', period)
+        prestations_familiales = individu('prestations_familiales', period)
         retraite = individu('retraite_employeur', period)
         # RUAMM
         ruamm = individu('ruamm_employeur', period)
@@ -88,10 +90,12 @@ class cotisations_employeur(Variable):
 
         return (
             # CAFAT
-            chomage
+            accident_du_travail
+            + chomage
             + fds
             + fiaf
             + fsh
+            + prestations_familiales
             + retraite
             # RUAMM
             + ruamm

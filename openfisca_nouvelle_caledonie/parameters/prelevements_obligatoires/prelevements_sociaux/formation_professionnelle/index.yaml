@@ -4,6 +4,6 @@ metadata:
   short_label_en: Professional training contribution
   label_en: Professional training contribution
   order:
-  - cotisation_employeur
+  - employeur
 documentation: |
   Le produit est affecté au Groupement pour l’insertion et l’évolution professionnelle (GIEP, 40%), à la Chambre de commerce et d’industrie (30%), à la Chambre de métiers et de l’artisanat (30%).

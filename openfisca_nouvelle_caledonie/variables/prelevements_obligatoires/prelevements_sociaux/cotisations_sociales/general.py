@@ -36,28 +36,28 @@ class plafond_fsh(Variable):
 
         return plafond
 
-    def formula_2023_09(individu, period, parameters):
-        plafond_temps_plein = parameters(period).prelevements_obligatoires.prelevements_sociaux.fsh.plafond_mensuel
-        quotite = individu('quotite_de_travail', period)
-        renonciation_ajustement_pss_temps_partiel = individu('renonciation_ajustement_pss_temps_partiel', period)
+    # def formula_2023_09(individu, period, parameters):
+    #     plafond_temps_plein = parameters(period).prelevements_obligatoires.prelevements_sociaux.fsh.plafond_mensuel
+    #     quotite = individu('quotite_de_travail', period)
+    #     renonciation_ajustement_pss_temps_partiel = individu('renonciation_ajustement_pss_temps_partiel', period)
 
-        plafond = plafond_temps_plein * renonciation_ajustement_pss_temps_partiel + plafond_temps_plein * quotite * not_(renonciation_ajustement_pss_temps_partiel)
+    #     plafond = plafond_temps_plein * renonciation_ajustement_pss_temps_partiel + plafond_temps_plein * quotite * not_(renonciation_ajustement_pss_temps_partiel)
 
-        # 2) Proratisation pour mois incomplet selon la méthode des 30èmes
+    #     # 2) Proratisation pour mois incomplet selon la méthode des 30èmes
 
-        # Pour les salariés entrés ou sortis en cours de mois,
-        # le plafond applicable est égal à autant de trentièmes du plafond mensuel
-        # que le salarié a été présent de jours calendaires. Source urssaf.fr "L’assiette maximale"
-        # calcul du nombre de jours calendaires de présence du salarié
-        nombre_jours_calendaires = individu('nombre_jours_calendaires', period)
-        plafond = plafond * (min_(nombre_jours_calendaires, 30) / 30)
+    #     # Pour les salariés entrés ou sortis en cours de mois,
+    #     # le plafond applicable est égal à autant de trentièmes du plafond mensuel
+    #     # que le salarié a été présent de jours calendaires. Source urssaf.fr "L’assiette maximale"
+    #     # calcul du nombre de jours calendaires de présence du salarié
+    #     nombre_jours_calendaires = individu('nombre_jours_calendaires', period)
+    #     plafond = plafond * (min_(nombre_jours_calendaires, 30) / 30)
 
-        # "Ce rapport ne peut pas conduire à un résultat supérieur à la valeur mensuelle du plafond de sécurité sociale."
-        # Source : https://boss.gouv.fr/portail/accueil/regles-dassujettissement/assiette-generale.html#titre-chapitre-6---le-plafond-de-la-se-section-2---determination-de-las-a-principe-de-lajustement-a-due-2-salaries-a-temps-partiel
-        # §810
-        plafond = min_(plafond, plafond_temps_plein)
+    #     # "Ce rapport ne peut pas conduire à un résultat supérieur à la valeur mensuelle du plafond de sécurité sociale."
+    #     # Source : https://boss.gouv.fr/portail/accueil/regles-dassujettissement/assiette-generale.html#titre-chapitre-6---le-plafond-de-la-se-section-2---determination-de-las-a-principe-de-lajustement-a-due-2-salaries-a-temps-partiel
+    #     # §810
+    #     plafond = min_(plafond, plafond_temps_plein)
 
-        return plafond
+    #     return plafond
 
 class plafond_cafat_autres_regimes(Variable):
     value_type = float
@@ -89,28 +89,28 @@ class plafond_cafat_autres_regimes(Variable):
 
         return plafond
 
-    def formula_2023_09(individu, period, parameters):
-        plafond_temps_plein = parameters(period).prelevements_obligatoires.prelevements_sociaux.pss.plafond_securite_sociale_mensuel
-        quotite = individu('quotite_de_travail', period)
-        renonciation_ajustement_pss_temps_partiel = individu('renonciation_ajustement_pss_temps_partiel', period)
+    # def formula_2023_09(individu, period, parameters):
+    #     plafond_temps_plein = parameters(period).prelevements_obligatoires.prelevements_sociaux.pss.plafond_securite_sociale_mensuel
+    #     quotite = individu('quotite_de_travail', period)
+    #     renonciation_ajustement_pss_temps_partiel = individu('renonciation_ajustement_pss_temps_partiel', period)
 
-        plafond = plafond_temps_plein * renonciation_ajustement_pss_temps_partiel + plafond_temps_plein * quotite * not_(renonciation_ajustement_pss_temps_partiel)
+    #     plafond = plafond_temps_plein * renonciation_ajustement_pss_temps_partiel + plafond_temps_plein * quotite * not_(renonciation_ajustement_pss_temps_partiel)
 
-        # 2) Proratisation pour mois incomplet selon la méthode des 30èmes
+    #     # 2) Proratisation pour mois incomplet selon la méthode des 30èmes
 
-        # Pour les salariés entrés ou sortis en cours de mois,
-        # le plafond applicable est égal à autant de trentièmes du plafond mensuel
-        # que le salarié a été présent de jours calendaires. Source urssaf.fr "L’assiette maximale"
-        # calcul du nombre de jours calendaires de présence du salarié
-        nombre_jours_calendaires = individu('nombre_jours_calendaires', period)
-        plafond = plafond * (min_(nombre_jours_calendaires, 30) / 30)
+    #     # Pour les salariés entrés ou sortis en cours de mois,
+    #     # le plafond applicable est égal à autant de trentièmes du plafond mensuel
+    #     # que le salarié a été présent de jours calendaires. Source urssaf.fr "L’assiette maximale"
+    #     # calcul du nombre de jours calendaires de présence du salarié
+    #     nombre_jours_calendaires = individu('nombre_jours_calendaires', period)
+    #     plafond = plafond * (min_(nombre_jours_calendaires, 30) / 30)
 
-        # "Ce rapport ne peut pas conduire à un résultat supérieur à la valeur mensuelle du plafond de sécurité sociale."
-        # Source : https://boss.gouv.fr/portail/accueil/regles-dassujettissement/assiette-generale.html#titre-chapitre-6---le-plafond-de-la-se-section-2---determination-de-las-a-principe-de-lajustement-a-due-2-salaries-a-temps-partiel
-        # §810
-        plafond = min_(plafond, plafond_temps_plein)
+    #     # "Ce rapport ne peut pas conduire à un résultat supérieur à la valeur mensuelle du plafond de sécurité sociale."
+    #     # Source : https://boss.gouv.fr/portail/accueil/regles-dassujettissement/assiette-generale.html#titre-chapitre-6---le-plafond-de-la-se-section-2---determination-de-las-a-principe-de-lajustement-a-due-2-salaries-a-temps-partiel
+    #     # §810
+    #     plafond = min_(plafond, plafond_temps_plein)
 
-        return plafond
+    #     return plafond
 
 
 class plafond_retraite(Variable):
@@ -143,28 +143,28 @@ class plafond_retraite(Variable):
 
         return plafond
 
-    def formula_2023_09(individu, period, parameters):
-        plafond_temps_plein = parameters(period).prelevements_obligatoires.prelevements_sociaux.pss.plafond_securite_sociale_mensuel
-        quotite = individu('quotite_de_travail', period)
-        renonciation_ajustement_pss_temps_partiel = individu('renonciation_ajustement_pss_temps_partiel', period)
+    # def formula_2023_09(individu, period, parameters):
+    #     plafond_temps_plein = parameters(period).prelevements_obligatoires.prelevements_sociaux.pss.plafond_securite_sociale_mensuel
+    #     quotite = individu('quotite_de_travail', period)
+    #     renonciation_ajustement_pss_temps_partiel = individu('renonciation_ajustement_pss_temps_partiel', period)
 
-        plafond = plafond_temps_plein * renonciation_ajustement_pss_temps_partiel + plafond_temps_plein * quotite * not_(renonciation_ajustement_pss_temps_partiel)
+    #     plafond = plafond_temps_plein * renonciation_ajustement_pss_temps_partiel + plafond_temps_plein * quotite * not_(renonciation_ajustement_pss_temps_partiel)
 
-        # 2) Proratisation pour mois incomplet selon la méthode des 30èmes
+    #     # 2) Proratisation pour mois incomplet selon la méthode des 30èmes
 
-        # Pour les salariés entrés ou sortis en cours de mois,
-        # le plafond applicable est égal à autant de trentièmes du plafond mensuel
-        # que le salarié a été présent de jours calendaires. Source urssaf.fr "L’assiette maximale"
-        # calcul du nombre de jours calendaires de présence du salarié
-        nombre_jours_calendaires = individu('nombre_jours_calendaires', period)
-        plafond = plafond * (min_(nombre_jours_calendaires, 30) / 30)
+    #     # Pour les salariés entrés ou sortis en cours de mois,
+    #     # le plafond applicable est égal à autant de trentièmes du plafond mensuel
+    #     # que le salarié a été présent de jours calendaires. Source urssaf.fr "L’assiette maximale"
+    #     # calcul du nombre de jours calendaires de présence du salarié
+    #     nombre_jours_calendaires = individu('nombre_jours_calendaires', period)
+    #     plafond = plafond * (min_(nombre_jours_calendaires, 30) / 30)
 
-        # "Ce rapport ne peut pas conduire à un résultat supérieur à la valeur mensuelle du plafond de sécurité sociale."
-        # Source : https://boss.gouv.fr/portail/accueil/regles-dassujettissement/assiette-generale.html#titre-chapitre-6---le-plafond-de-la-se-section-2---determination-de-las-a-principe-de-lajustement-a-due-2-salaries-a-temps-partiel
-        # §810
-        plafond = min_(plafond, plafond_temps_plein)
+    #     # "Ce rapport ne peut pas conduire à un résultat supérieur à la valeur mensuelle du plafond de sécurité sociale."
+    #     # Source : https://boss.gouv.fr/portail/accueil/regles-dassujettissement/assiette-generale.html#titre-chapitre-6---le-plafond-de-la-se-section-2---determination-de-las-a-principe-de-lajustement-a-due-2-salaries-a-temps-partiel
+    #     # §810
+    #     plafond = min_(plafond, plafond_temps_plein)
 
-        return plafond
+    #     return plafond
 
 
 class plafond_securite_sociale(Variable):
@@ -197,28 +197,28 @@ class plafond_securite_sociale(Variable):
 
         return plafond
 
-    def formula_2023_09(individu, period, parameters):
-        plafond_temps_plein = parameters(period).prelevements_obligatoires.prelevements_sociaux.pss.plafond_securite_sociale_mensuel
-        quotite = individu('quotite_de_travail', period)
-        renonciation_ajustement_pss_temps_partiel = individu('renonciation_ajustement_pss_temps_partiel', period)
+    # def formula_2023_09(individu, period, parameters):
+    #     plafond_temps_plein = parameters(period).prelevements_obligatoires.prelevements_sociaux.pss.plafond_securite_sociale_mensuel
+    #     quotite = individu('quotite_de_travail', period)
+    #     renonciation_ajustement_pss_temps_partiel = individu('renonciation_ajustement_pss_temps_partiel', period)
 
-        plafond = plafond_temps_plein * renonciation_ajustement_pss_temps_partiel + plafond_temps_plein * quotite * not_(renonciation_ajustement_pss_temps_partiel)
+    #     plafond = plafond_temps_plein * renonciation_ajustement_pss_temps_partiel + plafond_temps_plein * quotite * not_(renonciation_ajustement_pss_temps_partiel)
 
-        # 2) Proratisation pour mois incomplet selon la méthode des 30èmes
+    #     # 2) Proratisation pour mois incomplet selon la méthode des 30èmes
 
-        # Pour les salariés entrés ou sortis en cours de mois,
-        # le plafond applicable est égal à autant de trentièmes du plafond mensuel
-        # que le salarié a été présent de jours calendaires. Source urssaf.fr "L’assiette maximale"
-        # calcul du nombre de jours calendaires de présence du salarié
-        nombre_jours_calendaires = individu('nombre_jours_calendaires', period)
-        plafond = plafond * (min_(nombre_jours_calendaires, 30) / 30)
+    #     # Pour les salariés entrés ou sortis en cours de mois,
+    #     # le plafond applicable est égal à autant de trentièmes du plafond mensuel
+    #     # que le salarié a été présent de jours calendaires. Source urssaf.fr "L’assiette maximale"
+    #     # calcul du nombre de jours calendaires de présence du salarié
+    #     nombre_jours_calendaires = individu('nombre_jours_calendaires', period)
+    #     plafond = plafond * (min_(nombre_jours_calendaires, 30) / 30)
 
-        # "Ce rapport ne peut pas conduire à un résultat supérieur à la valeur mensuelle du plafond de sécurité sociale."
-        # Source : https://boss.gouv.fr/portail/accueil/regles-dassujettissement/assiette-generale.html#titre-chapitre-6---le-plafond-de-la-se-section-2---determination-de-las-a-principe-de-lajustement-a-due-2-salaries-a-temps-partiel
-        # §810
-        plafond = min_(plafond, plafond_temps_plein)
+    #     # "Ce rapport ne peut pas conduire à un résultat supérieur à la valeur mensuelle du plafond de sécurité sociale."
+    #     # Source : https://boss.gouv.fr/portail/accueil/regles-dassujettissement/assiette-generale.html#titre-chapitre-6---le-plafond-de-la-se-section-2---determination-de-las-a-principe-de-lajustement-a-due-2-salaries-a-temps-partiel
+    #     # §810
+    #     plafond = min_(plafond, plafond_temps_plein)
 
-        return plafond
+    #     return plafond
 
 
 class quotite_de_travail(Variable):
@@ -334,5 +334,13 @@ class arrco_tranche_a_taux_salarie(Variable):
     value_type = float
     entity = Individu
     label = "Taux ARRCO tranche A salarié propre à l'entreprise"
+    definition_period = MONTH
+    set_input = set_input_dispatch_by_period
+
+
+class taux_accident_du_travail(Variable):
+    value_type = float
+    entity = Individu
+    label = "Taux accident du travail"
     definition_period = MONTH
     set_input = set_input_dispatch_by_period

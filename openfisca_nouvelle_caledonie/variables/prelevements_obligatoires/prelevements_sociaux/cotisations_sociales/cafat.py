@@ -10,6 +10,28 @@ from openfisca_nouvelle_caledonie.variables.prelevements_obligatoires.prelevemen
 from openfisca_nouvelle_caledonie.variables.prelevements_obligatoires.prelevements_sociaux.cotisations_sociales.salarie import TypesCategorieSalarie
 
 
+class accident_du_travail(Variable):
+    value_type = float
+    entity = Individu
+    label = 'Cotisations employeur accident du travail et maladie professionelle'
+    definition_period = MONTH
+    set_input = set_input_divide_by_period
+
+    def formula_1991(individu, period, parameters):    # TODO : rajouter formule pré-1991 : s'applique au salaire sous PSS uniquement
+        assiette = min_(
+            individu('salaire_de_base', period),
+            individu('plafond_cafat_autres_regimes', period)
+        )
+        taux_accident_du_travail = individu('taux_accident_du_travail', period)
+        categorie_salarie = individu('categorie_salarie', period)
+        assujetti = (
+            (categorie_salarie == TypesCategorieSalarie.prive_non_cadre)
+            + (categorie_salarie == TypesCategorieSalarie.prive_cadre)
+            )
+        # TODO: ajouter contractuel du public salarié de moins d'un an ou à temps partiel
+        return assiette * taux_accident_du_travail * assujetti
+
+
 class chomage_employeur(Variable):
     value_type = float
     entity = Individu
@@ -48,7 +70,7 @@ class chomage_salarie(Variable):
         return cotisation
 
 
-class fds_employeur(Variable):
+class fds(Variable):
     value_type = float
     entity = Individu
     label = 'Cotisation FDS employeur'
@@ -62,31 +84,12 @@ class fds_employeur(Variable):
             parameters,
             cotisation_type = 'employeur',
             bareme_name = 'fds',
-            variable_name = 'fds_employeur'
+            variable_name = 'fds'
             )
         return cotisation
 
 
-class fiaf_salarie(Variable):
-    value_type = float
-    entity = Individu
-    label = 'Cotisation FIAF salarié'
-    definition_period = MONTH
-    set_input = set_input_divide_by_period
-
-    def formula(individu, period, parameters):
-        cotisation = apply_bareme(
-            individu,
-            period,
-            parameters,
-            cotisation_type = 'salarie',
-            bareme_name = 'fiaf',
-            variable_name = 'fiaf_salarie'
-            )
-        return cotisation
-
-
-class fiaf_employeur(Variable):
+class fiaf(Variable):
     value_type = float
     entity = Individu
     label = 'Cotisation FIAF employeur'
@@ -100,31 +103,12 @@ class fiaf_employeur(Variable):
             parameters,
             cotisation_type = 'employeur',
             bareme_name = 'fiaf',
-            variable_name = 'fiaf_employeur'
+            variable_name = 'fiaf'
             )
         return cotisation
 
 
-class fiaf_salarie(Variable):
-    value_type = float
-    entity = Individu
-    label = 'Cotisation FIAF salarié'
-    definition_period = MONTH
-    set_input = set_input_divide_by_period
-
-    def formula(individu, period, parameters):
-        cotisation = apply_bareme(
-            individu,
-            period,
-            parameters,
-            cotisation_type = 'salarie',
-            bareme_name = 'fiaf',
-            variable_name = 'fiaf_salarie'
-            )
-        return cotisation
-
-
-class fsh_employeur(Variable):
+class fsh(Variable):
     value_type = float
     entity = Individu
     label = 'Cotisation FSH employeur'
@@ -138,15 +122,15 @@ class fsh_employeur(Variable):
             parameters,
             cotisation_type = 'employeur',
             bareme_name = 'fsh',
-            variable_name = 'fsh_employeur'
+            variable_name = 'fsh'
             )
         return cotisation
 
 
-class fsh_salarie(Variable):
+class prestations_familiales(Variable):
     value_type = float
     entity = Individu
-    label = 'Cotisation FSH salarié'
+    label = 'Cotisation prestations familiales (employeur seulement)'
     definition_period = MONTH
     set_input = set_input_divide_by_period
 
@@ -155,12 +139,11 @@ class fsh_salarie(Variable):
             individu,
             period,
             parameters,
-            cotisation_type = 'salarie',
-            bareme_name = 'fsh',
-            variable_name = 'chomage_salarie'
+            cotisation_type = 'employeur',
+            bareme_name = 'prestations_familiales',
+            variable_name = 'prestations_familiales_employeur'
             )
         return cotisation
-
 
 class retraite_employeur(Variable):
     value_type = float

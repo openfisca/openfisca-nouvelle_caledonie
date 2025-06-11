@@ -19,7 +19,7 @@ def build_cotisations_employeur(parameters):
     cafat = prelevements_sociaux.cafat
     accident_travail = cafat.autres_regimes.accident_travail
     chomage = cafat.autres_regimes.chomage
-    famille = cafat.autres_regimes.prestations_familiales
+    prestations_familiales = cafat.autres_regimes.prestations_familiales
     fds = cafat.fds
     fiaf = cafat.fiaf
     formation_professionnelle = prelevements_sociaux.formation_professionnelle
@@ -42,6 +42,7 @@ def build_cotisations_employeur(parameters):
     cotisations_employeur.children['prive_cadre'].add_child('fds', fds.employeur)
     cotisations_employeur.children['prive_cadre'].add_child('fiaf', fiaf.employeur)
     cotisations_employeur.children['prive_cadre'].add_child('fsh', fsh.employeur)
+    cotisations_employeur.children['prive_cadre'].add_child('prestations_familiales', prestations_familiales.employeur)
     cotisations_employeur.children['prive_cadre'].add_child('retraite',retraite.employeur)
     cotisations_employeur.children['prive_cadre'].add_child('ruamm', ruamm.employeur)
 
@@ -72,6 +73,7 @@ def build_cotisations_employeur(parameters):
     cotisations_employeur.children['prive_non_cadre'].add_child('fds', fds.employeur)
     cotisations_employeur.children['prive_non_cadre'].add_child('fiaf', fiaf.employeur)
     cotisations_employeur.children['prive_non_cadre'].add_child('fsh', fsh.employeur)
+    cotisations_employeur.children['prive_non_cadre'].add_child('prestations_familiales', prestations_familiales.employeur)
     cotisations_employeur.children['prive_non_cadre'].add_child('retraite',retraite.employeur)
     cotisations_employeur.children['prive_non_cadre'].add_child('ruamm', ruamm.employeur)
 
@@ -125,7 +127,6 @@ def build_cotisations_salarie(parameters):
         ]
     for key in keys_retraite_complementaire:
         cotisations_salarie.children['prive_cadre'].children.update(key.children)
-
 
     # Non Cadre
     # Initialisation

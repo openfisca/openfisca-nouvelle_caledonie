@@ -29,17 +29,9 @@ brackets:
       value: 494_300
     2015-01-01:
       value: 498_300
-    2016-01-01:
-      value: 498_300
-    2017-01-01:
-      value: 498_300
     2018-01-01:
       value: 505_100
     2019-01-01:
-      value: 510_500
-    2020-01-01:
-      value: 510_500
-    2021-01-01:
       value: 510_500
     2022-01-01:
       value: 513_900
@@ -50,8 +42,22 @@ brackets:
     2025-01-01:
       value: 548_600
   rate:
-    2023-01-01:
+    2017-01-01:
       value: 0.0375
+- threshold:
+    2017-01-01:
+      value: 5_152_900
+    2018-01-01:
+      value: 5_223_400
+    2019-01-01:
+      value: 5_279_700
+    2022-01-01:
+      value: null
+  rate:
+    2006-01-01:
+      value: 0
+    2022-01-01:
+      value: null
 metadata:
   short_label: Cotisation RUAMM employeur
   label_en: Employer's RUAMM contribution
