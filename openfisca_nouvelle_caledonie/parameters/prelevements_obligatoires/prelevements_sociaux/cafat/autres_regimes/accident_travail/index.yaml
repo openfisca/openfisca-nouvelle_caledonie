@@ -4,4 +4,4 @@ metadata:
   short_label_en: Work accident
   label_en: Contributions for work accidents
   order:
-  - cotisation_employeur
+  - employeur
