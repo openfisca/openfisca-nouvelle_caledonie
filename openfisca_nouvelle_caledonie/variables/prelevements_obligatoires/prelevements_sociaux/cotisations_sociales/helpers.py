@@ -64,7 +64,7 @@ cotisations_salarie_by_categorie_salarie = {
         'cet2019',
         'chomage',
         'retraite',
-        'ruam',
+        'ruamm',
         ],
     'prive_non_cadre': [
         'agff',
@@ -122,8 +122,6 @@ def apply_bareme_for_relevant_type_sal(
                 print(f'KeyError: {e} in {bareme_by_categorie_salarie._name} for {categorie_salarie_type.name}')
                 continue
 
-            # BAM
-
             if bareme_name in cotisations_by_categorie_salarie[categorie_salarie_type.name]:
                 bareme = categorie_salarie_baremes[bareme_name]
             else:
@@ -131,11 +129,13 @@ def apply_bareme_for_relevant_type_sal(
                 continue
 
             print(f'computing {bareme_name} for {categorie_salarie_type.name}')
+
             yield bareme.calc(
                 base * (categorie_salarie == categorie_salarie_type),
                 factor = plafond,
                 round_base_decimals = round_base_decimals,
                 )
+
 
     return sum(iter_cotisations())
 
@@ -197,6 +197,9 @@ def compute_cotisation(individu, period, parameters, cotisation_type = None, bar
 
     if bareme_name == 'fsh':
         plafond = individu('plafond_fsh', period, options = [ADD])
+
+    if bareme_name == 'ruamm':
+        plafond = plafond / plafond
 
     categorie_salarie = individu('categorie_salarie', period.first_month)
 
