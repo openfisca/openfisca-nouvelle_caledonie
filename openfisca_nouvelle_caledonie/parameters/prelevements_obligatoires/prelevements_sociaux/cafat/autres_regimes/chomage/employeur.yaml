@@ -1,0 +1,19 @@
+description: Cotisation chômage payée par l'employeur
+brackets:
+- threshold:
+    2017-01-01:
+      value: 0
+  rate:
+    2017-01-01:
+      value: 0.0172  # jusqu'à .0648
+- threshold:
+    2017-01-01:
+      value: 1
+  rate:
+    2017-01-01:
+      value: 0
+metadata:
+  short_label: Cotisation chômage employeur
+  label_en: Employer's unemployment contribution
+  rate_unit: /1
+  threshold_unit: plafond_CAFAT_autres_regimes

@@ -1,0 +1,46 @@
+description: Plafond mensuel de la Sécurité sociale en Nouvelle-Calédonie
+values:
+  2025-01-01:
+    value: 468_377
+  2024-01-01:
+    value: 461_098
+  2023-01-01:
+    value: 437_470
+  2022-01-01:
+    value: 409_069
+  2021-01-01:
+    value: 409_069
+  2020-01-01:
+    value: 409_069
+  2019-01-01:
+    value: 402_983
+  2018-01-01:
+    value: 395_107
+  2017-01-01:
+    value: 390_095
+  2016-01-01:
+    value: 384_009
+  2015-01-01:
+    value: 378_281
+  2014-01-01:
+    value: 373_389
+  2013-01-01:
+    value: 368_258
+  2012-01-01:
+    value: 361_695
+  2011-01-01:
+    value: 351_551
+  2010-01-01:
+    value: 344_272
+  2009-01-01:
+    value: 341_169
+  2008-01-01:
+    value: 330_907
+  2007-01-01:
+    value: 320_048
+  2006-01-01:
+    value: 308_950
+metadata:
+  unit: currency-XPF
+documentation: |
+    Source : https://www.medef.nc/chiffres-cles/plafond-mensuels-de-cotisations-sociales

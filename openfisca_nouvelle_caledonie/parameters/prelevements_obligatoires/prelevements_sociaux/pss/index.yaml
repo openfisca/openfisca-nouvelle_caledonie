@@ -1,0 +1,6 @@
+description: Plafond de la sécurité sociale
+metadata:
+  short_label: Plafond de la sécurité sociale
+  label_en: Ceiling of social security
+  order:
+    - plafond_securite_sociale_mensuel
