@@ -1,9 +1,5 @@
-import numpy as np
-
 from openfisca_core.model_api import *
-from openfisca_nouvelle_caledonie.variables.prelevements_obligatoires.prelevements_sociaux.cotisations_sociales.salarie import (
-    TypesCategorieSalarie,
-)
+
 
 DEFAULT_ROUND_BASE_DECIMALS = 2
 
