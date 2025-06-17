@@ -1,5 +1,5 @@
 from openfisca_core.model_api import *
-from openfisca_nouvelle_caledonie.entities import Person as Individu
+from openfisca_nouvelle_caledonie.entities import Individu
 
 
 class TypesCategorieSalarie(Enum):

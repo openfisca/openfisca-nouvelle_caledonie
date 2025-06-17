@@ -3,7 +3,7 @@ from functools import partial
 from numpy import busday_count as original_busday_count, datetime64, timedelta64, where
 
 from openfisca_core.model_api import *
-from openfisca_nouvelle_caledonie.entities import Person as Individu
+from openfisca_nouvelle_caledonie.entities import Individu
 
 
 class plafond_fsh(Variable):
