@@ -1,6 +1,6 @@
 description: nombre de parts fiscales additionelles pour un déclarant handicapé
 values:
-  2024-01-01:
+  2017-01-01:
     value: 0.5
 metadata:
   short_label: Parts fiscales pour un déclarant (principal ou conjoint) handicapé

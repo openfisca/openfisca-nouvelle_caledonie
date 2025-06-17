@@ -3,8 +3,8 @@
 from openfisca_core.entities import build_entity
 
 Household = build_entity(
-    key="household",
-    plural="households",
+    key="menage",
+    plural="menages",
     label="All the people in a family or group who live together in the same place.",
     doc="""
     Household is an example of a group entity.
@@ -20,11 +20,11 @@ Household = build_entity(
 
     Usage:
         Check the number of individuals of a specific role (e.g. check if there
-        is a 'second_parent' with household.nb_persons(Household.SECOND_PARENT)).
+        is a 'second_parent' with menage.nb_persons(Household.SECOND_PARENT)).
         Calculate a variable applied to each individual of the group entity
         (e.g. calculate the 'salary' of each member of the 'Household' with:
-            salaries = household.members("salary", period = MONTH)
-            sum_salaries = household.sum(salaries)).
+            salaries = menage.members("salary", period = MONTH)
+            sum_salaries = menage.sum(salaries)).
 
     For more information, see: https://openfisca.org/doc/coding-the-legislation/50_entities.html
     """,
@@ -35,13 +35,13 @@ Household = build_entity(
             "label": "Parents",
             "max": 2,
             "subroles": ["first_parent", "second_parent"],
-            "doc": "The one or two adults in charge of the household.",
+            "doc": "The one or two adults in charge of the menage.",
         },
         {
             "key": "child",
             "plural": "children",
             "label": "Child",
-            "doc": "Other individuals living in the household.",
+            "doc": "Other individuals living in the menage.",
         },
     ],
 )

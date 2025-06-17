@@ -8,8 +8,6 @@
     persons:
       individu_0:
         pension_retraite_rente_imposables: 10_000_000
-    menage:
-      personne_de_reference: individu_0
   output:
     impot_brut: 1_811_000
     impot_net: 1_811_000

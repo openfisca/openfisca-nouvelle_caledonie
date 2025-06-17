@@ -24,7 +24,7 @@ class typologie_logement(Variable):
     default_value = TypologieLogement.chambre
     entity = Household
     definition_period = MONTH
-    label = "Legal housing situation of the household concerning their main residence"
+    label = "Legal housing situation of the menage concerning their main residence"
 
 
 class loyer(Variable):
@@ -47,11 +47,11 @@ class aide_logement_loyer(Variable):
     definition_period = MONTH
     label = "Loyer mensuel de base"
 
-    def formula(household, period):
-        loyer_mensuel_reference = household("loyer_mensuel_reference", period)
-        loyer = household("loyer", period)
+    def formula(menage, period):
+        loyer_mensuel_reference = menage("loyer_mensuel_reference", period)
+        loyer = menage("loyer", period)
 
-        typologie_logement = household("typologie_logement", period)
+        typologie_logement = menage("typologie_logement", period)
 
         # Clarification nécessaire
         # Prise en compte ou non de l'excédent de loyer pour charges importantes ?
@@ -68,8 +68,8 @@ class loyer_mensuel_reference(Variable):
     definition_period = MONTH
     label = "Loyer mensuel de référence"
 
-    def formula(household, period, parameters):
-        typologie_logement = household("typologie_logement", period)
+    def formula(menage, period, parameters):
+        typologie_logement = menage("typologie_logement", period)
         return parameters(period).benefits.aide_logement.loyer_mensuel_reference[
             typologie_logement
         ]
@@ -81,13 +81,13 @@ class loyer_mensuel_plafond(Variable):
     definition_period = MONTH
     label = "Loyer mensuel de référence"
 
-    def formula(household, period, parameters):
-        loyer_mensuel_reference = household("loyer_mensuel_reference", period)
+    def formula(menage, period, parameters):
+        loyer_mensuel_reference = menage("loyer_mensuel_reference", period)
         params = parameters(period).benefits.aide_logement.loyer_mensuel_plafond
         pourcentage_plafond = params.pourcentage
         excedent_pour_charges = params.excedent_pour_charges
 
-        charges = household("charges_locatives", period)
+        charges = menage("charges_locatives", period)
         excedent_pour_charges_montant = max_(
             0, charges - loyer_mensuel_reference * excedent_pour_charges
         )
@@ -106,9 +106,9 @@ class famille_monoparentale(Variable):
     entity = Household
     definition_period = MONTH
 
-    def formula(household, period):
-        return (household("aide_logement_nb_adultes", period) == 1) * (
-            household("aide_logement_nb_enfants", period) > 0
+    def formula(menage, period):
+        return (menage("aide_logement_nb_adultes", period) == 1) * (
+            menage("aide_logement_nb_enfants", period) > 0
         )
 
 
@@ -131,10 +131,10 @@ class aide_logement_forfait_familial(Variable):
     definition_period = MONTH
     label = "Solde de revenu pour le calcul de l'aide au logement"
 
-    def formula(household, period, parameters):
-        monoparentale = household("famille_monoparentale", period)
-        nb_adultes = household("aide_logement_nb_adultes", period)
-        nb_enfants = household("aide_logement_nb_enfants", period)
+    def formula(menage, period, parameters):
+        monoparentale = menage("famille_monoparentale", period)
+        nb_adultes = menage("aide_logement_nb_adultes", period)
+        nb_enfants = menage("aide_logement_nb_enfants", period)
 
         forfait_familial = parameters(period).benefits.aide_logement.forfait_familial
         forfait_individuel = forfait_familial.forfait_individuel
@@ -157,9 +157,9 @@ class aide_logement_solde_revenu(Variable):
     definition_period = MONTH
     label = "Solde de revenu pour le calcul de l'aide au logement"
 
-    def formula(household, period):
-        base_ressources = household("aide_logement_base_ressources", period)
-        forfait_familial = household("aide_logement_forfait_familial", period)
+    def formula(menage, period):
+        base_ressources = menage("aide_logement_base_ressources", period)
+        forfait_familial = menage("aide_logement_forfait_familial", period)
 
         return base_ressources - forfait_familial
 
@@ -170,19 +170,19 @@ class aide_logement_supplement_loyer_sr_negatif(Variable):
     definition_period = MONTH
     label = "Supplément de loyer pour le calcul de l'aide au logement"
 
-    def formula(household, period, parameters):
+    def formula(menage, period, parameters):
         # Clarification nécessaire
-        loyer_base = household("aide_logement_loyer", period)
-        loyer_reference = household("loyer_mensuel_reference", period)
-        retraite = household("aide_logement_cas_particulier_retraite", period)
+        loyer_base = menage("aide_logement_loyer", period)
+        loyer_reference = menage("loyer_mensuel_reference", period)
+        retraite = menage("aide_logement_cas_particulier_retraite", period)
         loyer = where(retraite, loyer_reference, loyer_base)
-        aide_logement_neutralisation_loyer = household(
+        aide_logement_neutralisation_loyer = menage(
             "aide_logement_neutralisation_loyer", period
         )
 
-        charges = household("charges_locatives", period)
+        charges = menage("charges_locatives", period)
 
-        typologie = household("typologie_logement", period)
+        typologie = menage("typologie_logement", period)
         p = parameters(
             period
         ).benefits.aide_logement.supplement_loyer.solde_revenu_negatif_pourcentage[
@@ -204,20 +204,20 @@ class aide_logement_supplement_loyer_sr_bas_positif(Variable):
     definition_period = MONTH
     label = "Supplément de loyer pour le calcul de l'aide au logement"
 
-    def formula(household, period, parameters):
+    def formula(menage, period, parameters):
         # Clarification nécessaire
-        loyer_base = household("aide_logement_loyer", period)
-        loyer_reference = household("loyer_mensuel_reference", period)
-        retraite = household("aide_logement_cas_particulier_retraite", period)
+        loyer_base = menage("aide_logement_loyer", period)
+        loyer_reference = menage("loyer_mensuel_reference", period)
+        retraite = menage("aide_logement_cas_particulier_retraite", period)
         loyer = where(retraite, loyer_reference, loyer_base)
 
-        charges = household("charges_locatives", period)
-        loyer_reference = household("loyer_mensuel_reference", period)
-        aide_logement_neutralisation_loyer = household(
+        charges = menage("charges_locatives", period)
+        loyer_reference = menage("loyer_mensuel_reference", period)
+        aide_logement_neutralisation_loyer = menage(
             "aide_logement_neutralisation_loyer", period
         )
 
-        typologie = household("typologie_logement", period)
+        typologie = menage("typologie_logement", period)
 
         pa = parameters(
             period
@@ -243,12 +243,12 @@ class aide_logement_supplement_loyer(Variable):
     definition_period = MONTH
     label = "Supplément de loyer pour le calcul de l'aide au logement"
 
-    def formula(household, period, parameters):
-        solde_revenu = household("aide_logement_solde_revenu", period)
-        loyer_reference = household("loyer_mensuel_reference", period)
+    def formula(menage, period, parameters):
+        solde_revenu = menage("aide_logement_solde_revenu", period)
+        loyer_reference = menage("loyer_mensuel_reference", period)
 
-        negatif = household("aide_logement_supplement_loyer_sr_negatif", period)
-        faible = household("aide_logement_supplement_loyer_sr_bas_positif", period)
+        negatif = menage("aide_logement_supplement_loyer_sr_negatif", period)
+        faible = menage("aide_logement_supplement_loyer_sr_bas_positif", period)
 
         plafond_sr = parameters(
             period
@@ -316,9 +316,9 @@ class aide_sociale_et_bourse(Variable):
     definition_period = MONTH
     label = "Base ressources pour le calcul de l'aide au logement"
 
-    def formula(household, period, parameters):
-        aide_sociale = household("aide_sociale", period)
-        bourse = household("bourse", period)
+    def formula(menage, period, parameters):
+        aide_sociale = menage("aide_sociale", period)
+        bourse = menage("bourse", period)
         franchise_aides_et_bourses = parameters(
             period
         ).benefits.aide_logement.base_ressources.franchise_aides_et_bourses
@@ -333,14 +333,14 @@ class aide_logement_base_ressources(Variable):
     definition_period = MONTH
     label = "Base ressources pour le calcul de l'aide au logement"
 
-    def formula(household, period):
+    def formula(menage, period):
         return (
-            household("aide_sociale_et_bourse", period)
-            + household("salaire", period)
-            + household("retraite", period)
-            + household("pension_recue", period)
-            - household("pension_versee", period)
-            + household("autres_revenus", period)
+            menage("aide_sociale_et_bourse", period)
+            + menage("salaire", period)
+            + menage("retraite", period)
+            + menage("pension_recue", period)
+            - menage("pension_versee", period)
+            + menage("autres_revenus", period)
         )
 
 
@@ -350,8 +350,8 @@ class aide_logement_contribution_locataire_sr_negatif(Variable):
     definition_period = MONTH
     label = "Contribution du locataire pour le calcul de l'aide au logement"
 
-    def formula(household, period, parameters):
-        base_ressources = household("aide_logement_base_ressources", period)
+    def formula(menage, period, parameters):
+        base_ressources = menage("aide_logement_base_ressources", period)
 
         contribution_locataire = parameters(
             period
@@ -359,8 +359,8 @@ class aide_logement_contribution_locataire_sr_negatif(Variable):
         minimum = contribution_locataire.montant_minimum
         minimum_aides_bourses = contribution_locataire.montant_minimum_aides_bourses
 
-        aide_sociale = household("aide_sociale", period)
-        bourse = household("bourse", period)
+        aide_sociale = menage("aide_sociale", period)
+        bourse = menage("bourse", period)
         aides_sociales_et_bourses = aide_sociale + bourse
 
         pourcentage_ressources = contribution_locataire.pourcentage_ressources
@@ -375,8 +375,8 @@ class aide_logement_nb_personnes(Variable):
     entity = Household
     definition_period = MONTH
 
-    def formula(household, period):
-        return household("aide_logement_nb_adultes", period) + household(
+    def formula(menage, period):
+        return menage("aide_logement_nb_adultes", period) + menage(
             "aide_logement_nb_enfants", period
         )
 
@@ -386,9 +386,9 @@ class aide_logement_plafond_contribution(Variable):
     entity = Household
     definition_period = MONTH
 
-    def formula(household, period, parameters):
-        nb_personnes = household("aide_logement_nb_personnes", period)
-        base_ressources = household("aide_logement_base_ressources", period)
+    def formula(menage, period, parameters):
+        nb_personnes = menage("aide_logement_nb_personnes", period)
+        base_ressources = menage("aide_logement_base_ressources", period)
 
         contribution_locataire = parameters(
             period
@@ -426,11 +426,11 @@ class aide_logement_cas_particulier_retraite(Variable):
     entity = Household
     definition_period = MONTH
 
-    def formula(household, period):
-        ret = household("personne_retraitee", period)
-        base_ressources = household("aide_logement_base_ressources", period)
-        nb_adultes = household("aide_logement_nb_adultes", period)
-        nb_enfs = household("aide_logement_nb_enfants", period)
+    def formula(menage, period):
+        ret = menage("personne_retraitee", period)
+        base_ressources = menage("aide_logement_base_ressources", period)
+        nb_adultes = menage("aide_logement_nb_adultes", period)
+        nb_enfs = menage("aide_logement_nb_enfants", period)
 
         c1 = (nb_adultes == 1) * (nb_enfs == 0) * (base_ressources <= 90000)
         c2 = (nb_adultes > 1) * (base_ressources <= 110000)
@@ -444,16 +444,16 @@ class aide_logement_contribution_minimale_montant_base(Variable):
     entity = Household
     definition_period = MONTH
 
-    def formula(household, period, parameters):
-        base_ressources = household("aide_logement_base_ressources", period)
-        solde_revenu = household("aide_logement_solde_revenu", period)
+    def formula(menage, period, parameters):
+        base_ressources = menage("aide_logement_base_ressources", period)
+        solde_revenu = menage("aide_logement_solde_revenu", period)
 
         contribution_locataire = parameters(
             period
         ).benefits.aide_logement.contribution_locataire
         pourcentage_ressources = contribution_locataire.pourcentage_ressources
 
-        return pourcentage_ressources * base_ressources + solde_revenu * household(
+        return pourcentage_ressources * base_ressources + solde_revenu * menage(
             "aide_logement_coef_error", period
         )
 
@@ -463,8 +463,8 @@ class aide_logement_contribution_minimale_montant_retraite(Variable):
     entity = Household
     definition_period = MONTH
 
-    def formula(household, period, parameters):
-        base_ressources = household("aide_logement_base_ressources", period)
+    def formula(menage, period, parameters):
+        base_ressources = menage("aide_logement_base_ressources", period)
         plafond = parameters(
             period
         ).benefits.aide_logement.base_ressources.franchise_aides_et_bourses
@@ -475,8 +475,8 @@ class aide_logement_contribution_minimale_montant_retraite(Variable):
         minimum = contribution_locataire.montant_minimum
         minimum_aides_bourses = contribution_locataire.montant_minimum_aides_bourses
 
-        aide_sociale = household("aide_sociale", period)
-        bourse = household("bourse", period)
+        aide_sociale = menage("aide_sociale", period)
+        bourse = menage("bourse", period)
         aides_sociales_et_bourses = aide_sociale + bourse
 
         return (
@@ -490,14 +490,14 @@ class aide_logement_contribution_minimale(Variable):
     entity = Household
     definition_period = MONTH
 
-    def formula(household, period):
-        montant_base = household(
+    def formula(menage, period):
+        montant_base = menage(
             "aide_logement_contribution_minimale_montant_base", period
         )
-        montant_retraite = household(
+        montant_retraite = menage(
             "aide_logement_contribution_minimale_montant_retraite", period
         )
-        retraite = household("aide_logement_cas_particulier_retraite", period)
+        retraite = menage("aide_logement_cas_particulier_retraite", period)
 
         return where(retraite, min_(montant_retraite, montant_base), montant_base)
 
@@ -508,9 +508,9 @@ class aide_logement_contribution_locataire_sr_positif(Variable):
     definition_period = MONTH
     label = "Contribution du locataire pour le calcul de l'aide au logement"
 
-    def formula(household, period):
-        clm = household("aide_logement_contribution_minimale", period)
-        pc = household("aide_logement_plafond_contribution", period)
+    def formula(menage, period):
+        clm = menage("aide_logement_contribution_minimale", period)
+        pc = menage("aide_logement_plafond_contribution", period)
         return min_(clm, pc)
 
 
@@ -520,11 +520,11 @@ class aide_logement_contribution_locataire(Variable):
     definition_period = MONTH
     label = "Contribution du locataire pour le calcul de l'aide au logement"
 
-    def formula(household, period):
-        solde_revenu = household("aide_logement_solde_revenu", period)
+    def formula(menage, period):
+        solde_revenu = menage("aide_logement_solde_revenu", period)
 
-        negatif = household("aide_logement_contribution_locataire_sr_negatif", period)
-        positif = household("aide_logement_contribution_locataire_sr_positif", period)
+        negatif = menage("aide_logement_contribution_locataire_sr_negatif", period)
+        positif = menage("aide_logement_contribution_locataire_sr_positif", period)
 
         return select([solde_revenu <= 0], [negatif], default=positif)
 
@@ -535,12 +535,12 @@ class aide_logement_montant(Variable):
     definition_period = MONTH
     label = "Aide au logement"
 
-    def formula(household, period, parameters):
+    def formula(menage, period, parameters):
         seuil_paiement = parameters(period).benefits.aide_logement.seuil_paiement
 
-        loyer = household("aide_logement_loyer", period)
-        supplement_loyer = household("aide_logement_supplement_loyer", period)
-        contribution = household("aide_logement_contribution_locataire", period)
+        loyer = menage("aide_logement_loyer", period)
+        supplement_loyer = menage("aide_logement_supplement_loyer", period)
+        contribution = menage("aide_logement_contribution_locataire", period)
         montant = loyer + supplement_loyer - contribution
 
         return (montant >= seuil_paiement) * montant
@@ -552,12 +552,12 @@ class aide_logement(Variable):
     definition_period = MONTH
     label = "Aide au logement"
 
-    def formula(household, period):
-        montant = household("aide_logement_montant", period)
-        loyer = household("loyer", period)
-        loyer_mensuel_plafond = household("loyer_mensuel_plafond", period)
+    def formula(menage, period):
+        montant = menage("aide_logement_montant", period)
+        loyer = menage("loyer", period)
+        loyer_mensuel_plafond = menage("loyer_mensuel_plafond", period)
 
-        typologie_logement = household("typologie_logement", period)
+        typologie_logement = menage("typologie_logement", period)
 
         return where(
             typologie_logement == TypologieLogement.maisonderetraite,

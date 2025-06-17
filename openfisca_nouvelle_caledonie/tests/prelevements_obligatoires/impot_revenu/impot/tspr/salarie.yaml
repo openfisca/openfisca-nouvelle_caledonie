@@ -8,8 +8,6 @@
     persons:
       individu_0:
         salaire_imposable: 10_000_000
-    menage:
-      personne_de_reference: individu_0
   output:
     revenus_categoriels_tspr: 10_000_000 - 800_000 - 1_800_000
     impot_brut: 1_711_000
