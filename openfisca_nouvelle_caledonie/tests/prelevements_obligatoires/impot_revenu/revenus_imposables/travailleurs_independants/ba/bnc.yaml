@@ -5,7 +5,7 @@
     foyer_fiscal:
       declarants:
       - individu_0
-    persons:
+    individus:
       individu_0:
         bnc_recettes_ht: 100_000
   output:

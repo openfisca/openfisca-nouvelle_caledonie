@@ -5,7 +5,7 @@
     foyer_fiscal:
       declarants:
       - individu_0
-    persons:
+    individus:
       individu_0:
         salaire_imposable: 10_000_000
   output:
@@ -20,7 +20,7 @@
       declarants:
       - individu_0
       - individu_1
-    persons:
+    individus:
       individu_0:
         salaire_imposable: 10_000_000
         statut_marital: marie
@@ -42,7 +42,7 @@
       - individu_1
       enfants_a_charge:
       - enfant_0
-    persons:
+    individus:
       individu_0:
         salaire_imposable: 10_000_000
         statut_marital: marie
@@ -66,7 +66,7 @@
       - individu_1
       enfants_accueillis:
       - enfant_0
-    persons:
+    individus:
       individu_0:
         salaire_imposable: 10_000_000
         statut_marital: marie
@@ -87,7 +87,7 @@
       declarants:
       - individu_0
       - individu_1
-    persons:
+    individus:
       individu_0:
         salaire_imposable: 10_000_000
         statut_marital: marie
@@ -108,7 +108,7 @@
       - individu_1
       enfants_a_charge:
       - enfant_0
-    persons:
+    individus:
       individu_0:
         salaire_imposable: 10_000_000
         statut_marital: marie
