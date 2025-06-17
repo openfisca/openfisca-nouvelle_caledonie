@@ -1,7 +1,7 @@
 """Bénéfices industriels et commerciaux (BIC)."""
 
 from openfisca_core.model_api import *
-from openfisca_nouvelle_caledonie.entities import Person as Individu
+from openfisca_nouvelle_caledonie.entities import Individu
 
 
 class bic_vente_fabrication_transformation_ca_ht(Variable):

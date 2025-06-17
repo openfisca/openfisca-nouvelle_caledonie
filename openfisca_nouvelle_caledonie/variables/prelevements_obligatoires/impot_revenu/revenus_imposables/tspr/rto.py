@@ -1,7 +1,7 @@
 """Rentes viagères à titre onéreux."""
 
 from openfisca_core.model_api import *
-from openfisca_nouvelle_caledonie.entities import FoyerFiscal, Person as Individu
+from openfisca_nouvelle_caledonie.entities import FoyerFiscal, Individu
 
 
 class rentes_viageres_a_titre_onereux_moins_de_50_ans(Variable):
