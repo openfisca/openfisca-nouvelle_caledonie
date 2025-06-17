@@ -5,7 +5,7 @@
     foyer_fiscal:
       declarants:
       - individu_0
-    persons:
+    individus:
       individu_0:
         bic_vente_fabrication_transformation_ca_ht: 10_000_000
   output:
@@ -19,7 +19,7 @@
     foyer_fiscal:
       declarants:
       - individu_0
-    persons:
+    individus:
       individu_0:
         bic_vente_fabrication_transformation_ca_ht: 10_000_000
         cotisations_retraite_exploitant: 5_000_000
@@ -34,7 +34,7 @@
     foyer_fiscal:
       declarants:
       - individu_0
-    persons:
+    individus:
       individu_0:
         bic_vente_fabrication_transformation_ca_ht: 10_000_000
         cotisations_retraite_exploitant: 500_000
@@ -49,7 +49,7 @@
     foyer_fiscal:
       declarants:
       - individu_0
-    persons:
+    individus:
       individu_0:
         bic_vente_fabrication_transformation_ca_ht: 10_000_000
         cotisations_retraite_exploitant: 50_000

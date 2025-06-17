@@ -5,7 +5,7 @@
     foyer_fiscal:
       declarants:
       - individu_0
-    persons:
+    individus:
       individu_0:
         chiffre_d_daffaires_agricole_ht_imposable: 10_000_000
   output:

@@ -47,8 +47,8 @@ Menage = build_entity(
 )
 
 Individu = build_entity(
-    key="person",
-    plural="persons",
+    key="individu",
+    plural="individus",
     label="An individual. The minimal entity on which legislation can be applied.",
     doc="""
     Variables like 'salary' and 'income_tax' are usually defined for the entity

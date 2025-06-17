@@ -5,7 +5,7 @@
     foyer_fiscal:
       declarants:
       - declarant
-    persons:
+    individus:
       declarant:
         statut_marital: celibataire
   output:
@@ -20,7 +20,7 @@
       declarants:
       - declarant
       - conjoint
-    persons:
+    individus:
       declarant:
         statut_marital: marie
       conjoint:
@@ -36,7 +36,7 @@
       declarants:
       - declarant
       - conjoint
-    persons:
+    individus:
       declarant:
         statut_marital: pacse
       conjoint:
@@ -53,7 +53,7 @@
       declarants:
       - declarant
       - conjoint
-    persons:
+    individus:
       declarant:
         statut_marital: marie
         ancien_combattant: true
@@ -73,7 +73,7 @@
       - conjoint
       enfants_a_charge:
       - enfant
-    persons:
+    individus:
       declarant:
         statut_marital: marie
       conjoint:
@@ -95,7 +95,7 @@
       enfants_a_charge:
       - riri
       - fifi
-    persons:
+    individus:
       declarant:
         statut_marital: marie
       conjoint:
@@ -119,7 +119,7 @@
       enfants_a_charge:
       - riri
       - fifi
-    persons:
+    individus:
       declarant:
         statut_marital: marie
       conjoint:
@@ -141,7 +141,7 @@
       - declarant
       enfants_a_charge:
       - enfant
-    persons:
+    individus:
       declarant:
         statut_marital: separe
       enfant:
@@ -160,7 +160,7 @@
       enfants_a_charge:
       - riri
       - fifi
-    persons:
+    individus:
       declarant:
         statut_marital: divorce
       riri:
@@ -182,7 +182,7 @@
       - declarant
       ascendants_a_charge:
       - ascendant
-    persons:
+    individus:
       declarant:
         statut_marital: celibataire
       ascendant:
@@ -200,7 +200,7 @@
         - conjoint
       ascendants_a_charge:
         - ascendant
-    persons:
+    individus:
       declarant:
         statut_marital: pacse
       conjoint:
@@ -220,7 +220,7 @@
         - conjoint
       ascendants_a_charge:
         - ascendant
-    persons:
+    individus:
       declarant:
         statut_marital: pacse
       conjoint:
@@ -241,7 +241,7 @@
         - conjoint
       ascendants_a_charge:
         - ascendant
-    persons:
+    individus:
       declarant:
         statut_marital: pacse
       conjoint:
@@ -263,7 +263,7 @@
         - conjoint
       enfants_a_charge:
         - enfant
-    persons:
+    individus:
       declarant:
         statut_marital: pacse
       conjoint:
@@ -283,7 +283,7 @@
         - declarant
       enfants_a_charge:
         - enfant
-    persons:
+    individus:
       declarant:
         statut_marital: separe
       enfant:
@@ -299,7 +299,7 @@
     foyer_fiscal:
       declarants:
         - declarant
-    persons:
+    individus:
       declarant:
         statut_marital: veuf
   output:
@@ -314,7 +314,7 @@
         - declarant
       enfants_a_charge:
         - enfant
-    persons:
+    individus:
       declarant:
         statut_marital: veuf
       enfant:
@@ -331,7 +331,7 @@
         - declarant
       enfants_a_charge:
         - enfant
-    persons:
+    individus:
       declarant:
         statut_marital: veuf
         taux_invalidite: .80
@@ -349,7 +349,7 @@
         - declarant
       enfants_a_charge:
         - enfant
-    persons:
+    individus:
       declarant:
         statut_marital: veuf
       enfant:
@@ -368,7 +368,7 @@
       enfants_a_charge:
         - riri
         - fifi
-    persons:
+    individus:
       declarant:
         statut_marital: veuf
       riri:
@@ -389,7 +389,7 @@
       enfants_a_charge:
         - riri
         - fifi
-    persons:
+    individus:
       declarant:
         statut_marital: veuf
       riri:
@@ -410,7 +410,7 @@
         - declarant
       enfants_a_charge:
         - enfant
-    persons:
+    individus:
       declarant:
         statut_marital: veuf
       enfant:
@@ -428,7 +428,7 @@
         - declarant
       enfants_a_charge:
         - enfant
-    persons:
+    individus:
       declarant:
         statut_marital: veuf
       enfant:
@@ -446,7 +446,7 @@
         - declarant
       ascendants_a_charge:
         - ascendant
-    persons:
+    individus:
       declarant:
         statut_marital: veuf
       ascendant:

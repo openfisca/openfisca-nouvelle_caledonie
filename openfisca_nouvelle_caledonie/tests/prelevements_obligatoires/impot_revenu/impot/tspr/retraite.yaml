@@ -5,7 +5,7 @@
     foyer_fiscal:
       declarants:
       - individu_0
-    persons:
+    individus:
       individu_0:
         pension_retraite_rente_imposables: 10_000_000
   output:
@@ -21,7 +21,7 @@
       declarants:
       - individu_0
       - individu_1
-    persons:
+    individus:
       individu_0:
         pension_retraite_rente_imposables: 10_000_000
         statut_marital: marie
