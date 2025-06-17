@@ -2,12 +2,12 @@
 
 from openfisca_core.entities import build_entity
 
-Household = build_entity(
+Menage = build_entity(
     key="menage",
     plural="menages",
     label="All the people in a family or group who live together in the same place.",
     doc="""
-    Household is an example of a group entity.
+    Menage is an example of a group entity.
     A group entity contains one or more individual·s.
     Each individual in a group entity has a role (e.g. parent or children).
     Some roles can only be held by a limited number of individuals (e.g. a
@@ -16,13 +16,13 @@ Household = build_entity(
 
     Example:
         Housing variables (e.g. housing_tax') are usually defined for a group
-        entity such as 'Household'.
+        entity such as 'Menage'.
 
     Usage:
         Check the number of individuals of a specific role (e.g. check if there
-        is a 'second_parent' with menage.nb_persons(Household.SECOND_PARENT)).
+        is a 'second_parent' with menage.nb_persons(Menage.SECOND_PARENT)).
         Calculate a variable applied to each individual of the group entity
-        (e.g. calculate the 'salary' of each member of the 'Household' with:
+        (e.g. calculate the 'salary' of each member of the 'Menage' with:
             salaries = menage.members("salary", period = MONTH)
             sum_salaries = menage.sum(salaries)).
 
@@ -58,8 +58,8 @@ Person = build_entity(
         Calculate a variable applied to a 'Person' (e.g. access the 'salary' of
         a specific month with person("salary", "2017-05")).
         Check the role of a 'Person' in a group entity (e.g. check if a the
-        'Person' is a 'first_parent' in a 'Household' entity with
-        person.has_role(Household.FIRST_PARENT)).
+        'Person' is a 'first_parent' in a 'Menage' entity with
+        person.has_role(Menage.FIRST_PARENT)).
 
     For more information, see: https://openfisca.org/doc/coding-the-legislation/50_entities.html
     """,
@@ -102,4 +102,4 @@ FoyerFiscal = build_entity(
 )
 
 
-entities = [FoyerFiscal, Household, Person]
+entities = [FoyerFiscal, Menage, Person]
