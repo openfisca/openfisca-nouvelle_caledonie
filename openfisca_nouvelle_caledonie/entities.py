@@ -46,19 +46,19 @@ Menage = build_entity(
     ],
 )
 
-Person = build_entity(
+Individu = build_entity(
     key="person",
     plural="persons",
     label="An individual. The minimal entity on which legislation can be applied.",
     doc="""
     Variables like 'salary' and 'income_tax' are usually defined for the entity
-    'Person'.
+    'Individu'.
 
     Usage:
-        Calculate a variable applied to a 'Person' (e.g. access the 'salary' of
-        a specific month with person("salary", "2017-05")).
-        Check the role of a 'Person' in a group entity (e.g. check if a the
-        'Person' is a 'first_parent' in a 'Menage' entity with
+        Calculate a variable applied to a 'Individu' (e.g. access the 'salary' of
+        a specific month with individu("salary", "2017-05")).
+        Check the role of a 'Individu' in a group entity (e.g. check if a the
+        'Individu' is a 'first_parent' in a 'Menage' entity with
         person.has_role(Menage.FIRST_PARENT)).
 
     For more information, see: https://openfisca.org/doc/coding-the-legislation/50_entities.html
@@ -102,4 +102,4 @@ FoyerFiscal = build_entity(
 )
 
 
-entities = [FoyerFiscal, Menage, Person]
+entities = [FoyerFiscal, Menage, Individu]

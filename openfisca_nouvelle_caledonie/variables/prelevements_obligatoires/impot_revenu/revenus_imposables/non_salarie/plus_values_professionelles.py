@@ -1,7 +1,7 @@
 """Plus-values professionnelles."""
 
 from openfisca_core.model_api import *
-from openfisca_nouvelle_caledonie.entities import FoyerFiscal, Person as Individu
+from openfisca_nouvelle_caledonie.entities import FoyerFiscal, Individu
 
 
 class plus_values_professionnelles_a_taux_reduit(Variable):
