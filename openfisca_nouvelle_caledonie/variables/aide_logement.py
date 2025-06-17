@@ -4,7 +4,7 @@ from openfisca_core.indexed_enums import Enum
 from openfisca_core.model_api import max_, min_, select, where
 from openfisca_core.periods import MONTH
 from openfisca_core.variables import Variable
-from openfisca_nouvelle_caledonie.entities import Household
+from openfisca_nouvelle_caledonie.entities import Menage
 
 
 class TypologieLogement(Enum):
@@ -22,28 +22,28 @@ class typologie_logement(Variable):
     value_type = Enum
     possible_values = TypologieLogement
     default_value = TypologieLogement.chambre
-    entity = Household
+    entity = Menage
     definition_period = MONTH
     label = "Legal housing situation of the menage concerning their main residence"
 
 
 class loyer(Variable):
     value_type = float
-    entity = Household
+    entity = Menage
     definition_period = MONTH
     label = "Loyer de base hors charges"
 
 
 class charges_locatives(Variable):
     value_type = float
-    entity = Household
+    entity = Menage
     definition_period = MONTH
     label = "Charges locatives"
 
 
 class aide_logement_loyer(Variable):
     value_type = float
-    entity = Household
+    entity = Menage
     definition_period = MONTH
     label = "Loyer mensuel de base"
 
@@ -64,7 +64,7 @@ class aide_logement_loyer(Variable):
 
 class loyer_mensuel_reference(Variable):
     value_type = float
-    entity = Household
+    entity = Menage
     definition_period = MONTH
     label = "Loyer mensuel de référence"
 
@@ -77,7 +77,7 @@ class loyer_mensuel_reference(Variable):
 
 class loyer_mensuel_plafond(Variable):
     value_type = float
-    entity = Household
+    entity = Menage
     definition_period = MONTH
     label = "Loyer mensuel de référence"
 
@@ -103,7 +103,7 @@ class loyer_mensuel_plafond(Variable):
 
 class famille_monoparentale(Variable):
     value_type = bool
-    entity = Household
+    entity = Menage
     definition_period = MONTH
 
     def formula(menage, period):
@@ -115,19 +115,19 @@ class famille_monoparentale(Variable):
 class aide_logement_nb_adultes(Variable):
     value_type = int
     default_value = 1
-    entity = Household
+    entity = Menage
     definition_period = MONTH
 
 
 class aide_logement_nb_enfants(Variable):
     value_type = float
-    entity = Household
+    entity = Menage
     definition_period = MONTH
 
 
 class aide_logement_forfait_familial(Variable):
     value_type = float
-    entity = Household
+    entity = Menage
     definition_period = MONTH
     label = "Solde de revenu pour le calcul de l'aide au logement"
 
@@ -153,7 +153,7 @@ class aide_logement_forfait_familial(Variable):
 
 class aide_logement_solde_revenu(Variable):
     value_type = float
-    entity = Household
+    entity = Menage
     definition_period = MONTH
     label = "Solde de revenu pour le calcul de l'aide au logement"
 
@@ -166,7 +166,7 @@ class aide_logement_solde_revenu(Variable):
 
 class aide_logement_supplement_loyer_sr_negatif(Variable):
     value_type = float
-    entity = Household
+    entity = Menage
     definition_period = MONTH
     label = "Supplément de loyer pour le calcul de l'aide au logement"
 
@@ -200,7 +200,7 @@ class aide_logement_supplement_loyer_sr_negatif(Variable):
 
 class aide_logement_supplement_loyer_sr_bas_positif(Variable):
     value_type = float
-    entity = Household
+    entity = Menage
     definition_period = MONTH
     label = "Supplément de loyer pour le calcul de l'aide au logement"
 
@@ -239,7 +239,7 @@ class aide_logement_supplement_loyer_sr_bas_positif(Variable):
 
 class aide_logement_supplement_loyer(Variable):
     value_type = float
-    entity = Household
+    entity = Menage
     definition_period = MONTH
     label = "Supplément de loyer pour le calcul de l'aide au logement"
 
@@ -263,56 +263,56 @@ class aide_logement_supplement_loyer(Variable):
 
 class aide_sociale(Variable):
     value_type = float
-    entity = Household
+    entity = Menage
     definition_period = MONTH
     label = "Base ressources pour le calcul de l'aide au logement"
 
 
 class bourse(Variable):
     value_type = float
-    entity = Household
+    entity = Menage
     definition_period = MONTH
     label = "Base ressources pour le calcul de l'aide au logement"
 
 
 class salaire(Variable):
     value_type = float
-    entity = Household
+    entity = Menage
     definition_period = MONTH
     label = "Base ressources pour le calcul de l'aide au logement"
 
 
 class retraite(Variable):
     value_type = float
-    entity = Household
+    entity = Menage
     definition_period = MONTH
     label = "Base ressources pour le calcul de l'aide au logement"
 
 
 class pension_recue(Variable):
     value_type = float
-    entity = Household
+    entity = Menage
     definition_period = MONTH
     label = "Base ressources pour le calcul de l'aide au logement"
 
 
 class pension_versee(Variable):
     value_type = float
-    entity = Household
+    entity = Menage
     definition_period = MONTH
     label = "Base ressources pour le calcul de l'aide au logement"
 
 
 class autres_revenus(Variable):
     value_type = float
-    entity = Household
+    entity = Menage
     definition_period = MONTH
     label = "Base ressources pour le calcul de l'aide au logement"
 
 
 class aide_sociale_et_bourse(Variable):
     value_type = float
-    entity = Household
+    entity = Menage
     definition_period = MONTH
     label = "Base ressources pour le calcul de l'aide au logement"
 
@@ -329,7 +329,7 @@ class aide_sociale_et_bourse(Variable):
 
 class aide_logement_base_ressources(Variable):
     value_type = float
-    entity = Household
+    entity = Menage
     definition_period = MONTH
     label = "Base ressources pour le calcul de l'aide au logement"
 
@@ -346,7 +346,7 @@ class aide_logement_base_ressources(Variable):
 
 class aide_logement_contribution_locataire_sr_negatif(Variable):
     value_type = float
-    entity = Household
+    entity = Menage
     definition_period = MONTH
     label = "Contribution du locataire pour le calcul de l'aide au logement"
 
@@ -372,7 +372,7 @@ class aide_logement_contribution_locataire_sr_negatif(Variable):
 
 class aide_logement_nb_personnes(Variable):
     value_type = int
-    entity = Household
+    entity = Menage
     definition_period = MONTH
 
     def formula(menage, period):
@@ -383,7 +383,7 @@ class aide_logement_nb_personnes(Variable):
 
 class aide_logement_plafond_contribution(Variable):
     value_type = float
-    entity = Household
+    entity = Menage
     definition_period = MONTH
 
     def formula(menage, period, parameters):
@@ -402,14 +402,14 @@ class aide_logement_plafond_contribution(Variable):
 
 class personne_retraitee(Variable):
     value_type = bool
-    entity = Household
+    entity = Menage
     definition_period = MONTH
 
 
 # Clarification nécessaire
 class aide_logement_coef_error(Variable):
     value_type = float
-    entity = Household
+    entity = Menage
     definition_period = MONTH
     default_value = 1
 
@@ -417,13 +417,13 @@ class aide_logement_coef_error(Variable):
 # Clarification nécessaire
 class aide_logement_neutralisation_loyer(Variable):
     value_type = bool
-    entity = Household
+    entity = Menage
     definition_period = MONTH
 
 
 class aide_logement_cas_particulier_retraite(Variable):
     value_type = bool
-    entity = Household
+    entity = Menage
     definition_period = MONTH
 
     def formula(menage, period):
@@ -441,7 +441,7 @@ class aide_logement_cas_particulier_retraite(Variable):
 
 class aide_logement_contribution_minimale_montant_base(Variable):
     value_type = float
-    entity = Household
+    entity = Menage
     definition_period = MONTH
 
     def formula(menage, period, parameters):
@@ -460,7 +460,7 @@ class aide_logement_contribution_minimale_montant_base(Variable):
 
 class aide_logement_contribution_minimale_montant_retraite(Variable):
     value_type = float
-    entity = Household
+    entity = Menage
     definition_period = MONTH
 
     def formula(menage, period, parameters):
@@ -487,7 +487,7 @@ class aide_logement_contribution_minimale_montant_retraite(Variable):
 
 class aide_logement_contribution_minimale(Variable):
     value_type = float
-    entity = Household
+    entity = Menage
     definition_period = MONTH
 
     def formula(menage, period):
@@ -504,7 +504,7 @@ class aide_logement_contribution_minimale(Variable):
 
 class aide_logement_contribution_locataire_sr_positif(Variable):
     value_type = float
-    entity = Household
+    entity = Menage
     definition_period = MONTH
     label = "Contribution du locataire pour le calcul de l'aide au logement"
 
@@ -516,7 +516,7 @@ class aide_logement_contribution_locataire_sr_positif(Variable):
 
 class aide_logement_contribution_locataire(Variable):
     value_type = float
-    entity = Household
+    entity = Menage
     definition_period = MONTH
     label = "Contribution du locataire pour le calcul de l'aide au logement"
 
@@ -531,7 +531,7 @@ class aide_logement_contribution_locataire(Variable):
 
 class aide_logement_montant(Variable):
     value_type = float
-    entity = Household
+    entity = Menage
     definition_period = MONTH
     label = "Aide au logement"
 
@@ -548,7 +548,7 @@ class aide_logement_montant(Variable):
 
 class aide_logement(Variable):
     value_type = float
-    entity = Household
+    entity = Menage
     definition_period = MONTH
     label = "Aide au logement"
 
