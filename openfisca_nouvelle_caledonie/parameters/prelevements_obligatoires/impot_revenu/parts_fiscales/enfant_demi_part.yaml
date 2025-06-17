@@ -1,6 +1,6 @@
 description: nombre de parts fiscales pour un enfant demi-part
 values:
-  2024-01-01:
+  2017-01-01:
     value: 0.5
 metadata:
   short_label: Parts fiscales pour un enfant demi-part
