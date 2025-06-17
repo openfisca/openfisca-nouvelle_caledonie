@@ -1,6 +1,16 @@
 # Changelog
 
-## 13.1.2 [#46](https://github.com/openfisca/openfisca-nouvelle_caledonie/pull/46)
+### 13.1.3 [#49](https://github.com/openfisca/openfisca-nouvelle_caledonie/pull/49)
+
+* Amélioration technique.
+* Périodes concernées : toutes.
+* Zones impactées : `entities.py`.
+* Détails :
+  - Renomme Household en Menage
+  - Renomme Person en Individu
+  - Quelques corrections de paramètres
+
+### 13.1.2 [#46](https://github.com/openfisca/openfisca-nouvelle_caledonie/pull/46)
 
 * Changement mineur.
 * Périodes concernées : toutes.
@@ -8,7 +18,7 @@
 * Détails :
   - Corrige entrée erronée dans les metadata
 
-## 13.1.1 [#45](https://github.com/openfisca/openfisca-nouvelle_caledonie/pull/45)
+### 13.1.1 [#45](https://github.com/openfisca/openfisca-nouvelle_caledonie/pull/45)
 
 * Changement mineur.
 * Périodes concernées : toutes.
