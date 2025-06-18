@@ -72,6 +72,85 @@ class ancien_combattant(Variable):
     definition_period = YEAR
 
 
+class enfants_a_charge_en_nc(Variable):
+    value_type = float
+    default_value = 0
+    entity = FoyerFiscal
+    label = "Nombre d'enfants à charge en NC hors cas particuliers dans le foyer fiscal"
+    definition_period = YEAR
+
+    def formula(foyer_fiscal, period):
+        return (
+            foyer_fiscal.nb_persons(role=FoyerFiscal.ENFANT_A_CHARGE)
+            - foyer_fiscal("enfants_handicapes", period)
+            - foyer_fiscal("etudiants_hors_nc", period)
+            - foyer_fiscal("enfants_en_garde_alternee", period)
+            - foyer_fiscal("enfants_en_garde_alternee_handicapes", period)
+        )
+
+
+class enfants_en_garde_alternee(Variable):
+    value_type = float
+    default_value = 0
+    entity = FoyerFiscal
+    label = "Nombre d'enfants en garde alternée dans le foyer fiscal"
+    definition_period = YEAR
+
+    def formula(foyer_fiscal, period):
+        return foyer_fiscal.sum(
+            1 * (
+                foyer_fiscal.members("enfant_en_garde_alternee", period)
+                * not_(foyer_fiscal.members("handicape_cejh", period))
+                ),
+            role=FoyerFiscal.ENFANT_A_CHARGE,
+        )
+
+
+class enfants_en_garde_alternee_handicapes(Variable):
+    value_type = float
+    default_value = 0
+    entity = FoyerFiscal
+    label = "Nombre d'enfants en garde alternée handicapés dans le foyer fiscal"
+    definition_period = YEAR
+
+    def formula(foyer_fiscal, period):
+        return foyer_fiscal.sum(
+            1 * (
+                foyer_fiscal.members("enfant_en_garde_alternee", period)
+                * foyer_fiscal.members("handicape_cejh", period)
+                ),
+            role=FoyerFiscal.ENFANT_A_CHARGE,
+        )
+
+
+class enfants_handicapes(Variable):
+    value_type = float
+    default_value = 0
+    entity = FoyerFiscal
+    label = "Nombre d'enfants handicapés dans le foyer fiscal (hors étudiants hors NC)"
+    definition_period = YEAR
+
+    def formula(foyer_fiscal, period):
+        return foyer_fiscal.sum(
+            1 * (foyer_fiscal.members("handicape_cejh", period) * not_(foyer_fiscal.members("etudiant_hors_nc", period))),
+            role=FoyerFiscal.ENFANT_A_CHARGE,
+            )
+
+
+class etudiants_hors_nc(Variable):
+    value_type = int
+    default_value = 0
+    entity = FoyerFiscal
+    label = "Nombre d'étudiants hors de la Nouvelle Calédonie l'année considérée"
+    definition_period = YEAR
+
+    def formula(foyer_fiscal, period):
+        return foyer_fiscal.sum(
+            1 * foyer_fiscal.members("etudiant_hors_nc", period),
+            role=FoyerFiscal.ENFANT_A_CHARGE,
+        )
+
+
 class parts_fiscales(Variable):
     value_type = float
     entity = FoyerFiscal
@@ -121,32 +200,18 @@ class parts_fiscales(Variable):
         )
         parts_de_base += parts_additionnelles
         # `enfant` represents whether each member of the foyer fiscal has the role ENFANT_A_CHARGE.
-        enfant = foyer_fiscal.members.has_role(FoyerFiscal.ENFANT_A_CHARGE)
-        enfant_en_garde_alternee_i = enfant * foyer_fiscal.members(
-            "enfant_en_garde_alternee", period
-        )
-        etudiant_hors_nc_i = enfant * foyer_fiscal.members("etudiant_hors_nc", period)
-        handicape_cejh_i = enfant * foyer_fiscal.members("handicape_cejh", period)
-        invalidite_i = enfant * (foyer_fiscal.members("taux_invalidite", period) > 0.5)
+        enfants_en_garde_alternee = foyer_fiscal('enfants_en_garde_alternee', period)
 
-        enfants_parts_entiere_i = etudiant_hors_nc_i + handicape_cejh_i + invalidite_i
+        etudiants_hors_nc = foyer_fiscal("etudiants_hors_nc", period)
+        enfants_handicapes = foyer_fiscal("enfants_handicapes", period)
         parts_enfants = (
-            foyer_fiscal.sum(  # TODO: Erreur dans le calcul des parts garde alternée
-                (
-                    parts_fiscales.enfant_part_entiere
-                    * (enfants_parts_entiere_i)
-                    * (
-                        1 * not_(enfant_en_garde_alternee_i)
-                        + 0.5 * enfant_en_garde_alternee_i
-                    )
-                    + parts_fiscales.enfant_demi_part
-                    * not_(enfants_parts_entiere_i)
-                    * (
-                        1 * not_(enfant_en_garde_alternee_i)
-                        + 0.5 * enfant_en_garde_alternee_i
-                    )
-                ),
-                role=FoyerFiscal.ENFANT_A_CHARGE,
+            parts_fiscales.enfant_part_entiere * (
+                etudiants_hors_nc
+                + enfants_handicapes
+            )
+            + parts_fiscales.enfant_demi_part * (
+                0.5 * enfants_en_garde_alternee
+                + 1 * foyer_fiscal("enfants_a_charge_en_nc", period)
             )
         )
         parts_ascendants = (

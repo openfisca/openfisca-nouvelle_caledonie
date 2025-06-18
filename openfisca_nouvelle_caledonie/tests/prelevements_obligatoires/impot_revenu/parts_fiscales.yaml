@@ -126,7 +126,7 @@
         statut_marital: marie
       riri:
         statut_marital: celibataire
-        taux_invalidite: .80
+        handicape_cejh: true
       fifi:
         statut_marital: celibataire
   output:
@@ -169,7 +169,7 @@
       fifi:
         statut_marital: celibataire
         enfant_en_garde_alternee: true
-        taux_invalidite: .80
+        handicape_cejh: true
   output:
     parts_fiscales: 1.75
 
@@ -354,7 +354,7 @@
         statut_marital: veuf
       enfant:
         statut_marital: celibataire
-        taux_invalidite: .80
+        handicape_cejh: true
   output:
     parts_fiscales: 2.5
 
@@ -375,7 +375,7 @@
         statut_marital: celibataire
       fifi:
         statut_marital: celibataire
-        taux_invalidite: .80
+        handicape_cejh: true
   output:
     parts_fiscales: 3
 
@@ -397,7 +397,7 @@
         etudiant_hors_nc: true
       fifi:
         statut_marital: celibataire
-        taux_invalidite: .80
+        handicape_cejh: true
   output:
     parts_fiscales: 3.5
 
@@ -432,7 +432,7 @@
       declarant:
         statut_marital: veuf
       enfant:
-        taux_invalidite: .80
+        handicape_cejh: true
         enfant_en_garde_alternee: true
   output:
     parts_fiscales: 2
