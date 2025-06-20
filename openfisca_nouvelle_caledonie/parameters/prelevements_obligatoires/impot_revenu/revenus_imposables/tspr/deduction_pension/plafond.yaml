@@ -6,6 +6,3 @@ metadata:
   short_label: Plafond
   label_en: Ceiling of the pension allowance
   unit: currency
-  reference:
-    2008-01-01:
-      title: TODO (et corriger date)

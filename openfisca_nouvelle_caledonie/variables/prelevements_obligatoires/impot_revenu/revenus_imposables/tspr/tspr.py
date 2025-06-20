@@ -29,7 +29,7 @@ class revenus_categoriels_tspr(Variable):
         )
 
 
-class revenus_bruts_salaires_epnsions(Variable):
+class revenus_bruts_salaires_pensions(Variable):
     value_type = float
     entity = FoyerFiscal
     label = "Revenus bruts salaires et pensions"
