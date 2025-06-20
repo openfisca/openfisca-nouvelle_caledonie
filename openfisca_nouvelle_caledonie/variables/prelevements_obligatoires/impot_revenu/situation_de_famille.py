@@ -31,6 +31,20 @@ class statut_marital(Variable):
             deux_adultes, TypesStatutMarital.pacse, TypesStatutMarital.celibataire
         )
 
+class anciens_combattants(Variable):
+    value_type = int
+    default_value = 0
+    entity = FoyerFiscal
+    label = "Nombre d'anciens combattants dans le foyer fiscal"
+    definition_period = YEAR
+
+    def formula(foyer_fiscal, period):
+        _ = period
+        return foyer_fiscal.sum(
+            foyer_fiscal.members("ancien_combattant", period),
+            role=FoyerFiscal.DECLARANT,
+        )
+
 
 class ascendants_a_charge(Variable):
     value_type = int
@@ -177,6 +191,21 @@ class etudiants_hors_nc_ou_enfants_handicapes(Variable):
         )
 
 
+class invalides(Variable):
+    value_type = int
+    default_value = 0
+    entity = FoyerFiscal
+    label = "Nombre d'invalides dans le foyer fiscal"
+    definition_period = YEAR
+
+    def formula(foyer_fiscal, period):
+        _ = period
+        return foyer_fiscal.sum(
+            foyer_fiscal.members("taux_invalidite", period) > 0.5,
+            role=FoyerFiscal.DECLARANT
+        )
+
+
 class parts_fiscales(Variable):
     value_type = float
     entity = FoyerFiscal
@@ -212,33 +241,35 @@ class parts_fiscales(Variable):
                 parts_fiscales.veuf_avec_pac,
             ],
         )
-        parts_additionnelles = parts_fiscales.ancien_combattant * (
-            foyer_fiscal.declarant_principal("ancien_combattant", period)
-        ) + parts_fiscales.handicape * (
-            1
-            * (
-                foyer_fiscal.declarant_principal("taux_invalidite", period) > 0.5
-            )  # TODO: parameters
-            + 1
-            * (
-                foyer_fiscal.conjoint("taux_invalidite", period) > 0.5
-            )  # TODO: parameters
+        parts_additionnelles = (
+            parts_fiscales.ancien_combattant * foyer_fiscal("anciens_combattants", period)
+            + parts_fiscales.invalide * foyer_fiscal("invalides", period)
         )
+
         parts_de_base += parts_additionnelles
         # `enfant` represents whether each member of the foyer fiscal has the role ENFANT_A_CHARGE.
         enfants_en_garde_alternee = foyer_fiscal('enfants_en_garde_alternee', period)
+        enfants_en_garde_alternee_handicapes = foyer_fiscal('enfants_en_garde_alternee_handicapes', period)
 
         etudiants_hors_nc_ou_enfants_handicapes = foyer_fiscal("etudiants_hors_nc_ou_enfants_handicapes", period)
         parts_enfants = (
             parts_fiscales.enfant_part_entiere * etudiants_hors_nc_ou_enfants_handicapes
             + parts_fiscales.enfant_demi_part * (
                 0.5 * enfants_en_garde_alternee
-                + 1 * foyer_fiscal("enfants_a_charge_en_nc", period)
+                + 1 * (
+                    foyer_fiscal("enfants_a_charge_en_nc", period)
+                    + enfants_en_garde_alternee_handicapes
+                )
             )
         )
         parts_ascendants = foyer_fiscal('ascendants_a_charge', period) * parts_fiscales.ascendant_a_charge
 
-        return parts_de_base + parts_enfants + parts_ascendants
+        resident = foyer_fiscal("resident", period)
+        return where(
+            resident,
+            parts_de_base + parts_enfants + parts_ascendants,
+            0,
+        )
 
 
 class parts_fiscales_reduites(Variable):
