@@ -106,13 +106,14 @@ class enfants_a_charge_en_nc(Variable):
     definition_period = YEAR
 
     def formula(foyer_fiscal, period):
-        return (
+        return max_(
             foyer_fiscal.nb_persons(role=FoyerFiscal.ENFANT_A_CHARGE)
             - foyer_fiscal("enfants_handicapes", period)
             - foyer_fiscal("etudiants_hors_nc", period)
             - foyer_fiscal("enfants_en_garde_alternee", period)
-            - foyer_fiscal("enfants_en_garde_alternee_handicapes", period)
-        )
+            - foyer_fiscal("enfants_en_garde_alternee_handicapes", period),
+            0
+            )
 
 
 class enfants_en_garde_alternee(Variable):
