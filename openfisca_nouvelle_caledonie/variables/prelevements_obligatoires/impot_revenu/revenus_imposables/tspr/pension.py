@@ -60,8 +60,12 @@ class pension_imposable_apres_deduction_et_abattement(Variable):
         )
 
         deduction_pension = tspr.deduction_pension
-        montant_deduction_pension = max_(pension_imposable * deduction_pension.taux, deduction_pension.minimum)
+        montant_deduction_pension = min_(
+            pension_imposable * deduction_pension.taux,
+            deduction_pension.plafond,
+            )
         pension_apres_deduction = max_(pension_imposable - montant_deduction_pension, 0)
+
         pension_apres_abattement = foyer_fiscal.sum(
             max_(
                 (

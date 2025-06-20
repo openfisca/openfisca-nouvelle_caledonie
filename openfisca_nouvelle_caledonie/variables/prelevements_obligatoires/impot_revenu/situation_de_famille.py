@@ -206,6 +206,20 @@ class invalides(Variable):
             role=FoyerFiscal.DECLARANT
         )
 
+class veuf_avec_pac(Variable):
+    value_type = bool
+    entity = FoyerFiscal
+    label = "Veuf avec un enfant à charge"
+    definition_period = YEAR
+
+    def formula(foyer_fiscal, period):
+        _ = period
+        veuf = statut_marital == TypesStatutMarital.veuf
+        nombre_de_pac = foyer_fiscal.nb_persons(
+            role=FoyerFiscal.ENFANT_A_CHARGE
+        ) + foyer_fiscal.nb_persons(role=FoyerFiscal.ASCENDANT_A_CHARGE)
+        return veuf & (nombre_de_pac > 0)
+
 
 class parts_fiscales(Variable):
     value_type = float
@@ -223,18 +237,15 @@ class parts_fiscales(Variable):
             (statut_marital == TypesStatutMarital.celibataire)
             | (statut_marital == TypesStatutMarital.divorce)
         ) | (statut_marital == TypesStatutMarital.separe)
-        veuf = statut_marital == TypesStatutMarital.veuf
         marie_ou_pacse = (statut_marital == TypesStatutMarital.marie) | (
             statut_marital == TypesStatutMarital.pacse
         )
-        nombre_de_pac = foyer_fiscal.nb_persons(
-            role=FoyerFiscal.ENFANT_A_CHARGE
-        ) + foyer_fiscal.nb_persons(role=FoyerFiscal.ASCENDANT_A_CHARGE)
+        veuf_avec_pac = foyer_fiscal("veuf_avec_pac", period)
         parts_de_base = select(
             [
-                celibataire_ou_divorce | (veuf & (nombre_de_pac == 0)),
+                celibataire_ou_divorce | not_(veuf_avec_pac),
                 marie_ou_pacse,
-                veuf & (nombre_de_pac > 0),
+                veuf_avec_pac,
             ],
             [
                 parts_fiscales.celibataire_divorce_ou_veuf_sans_pac,

@@ -175,8 +175,12 @@ class salaire_imposable_apres_deduction_et_abattement(Variable):
             ),
             frais_professionnels_forfaitaire.plafond,
         )
+        deduction = max_(
+            foyer_fiscal.members("frais_reels", period),
+            deduction_forfaitaire,
+            )
         salaire_apres_deduction = max_(
-            salaire_percu_net_de_cotisation - deduction_forfaitaire, 0
+            salaire_percu_net_de_cotisation - deduction, 0
         )
 
         return foyer_fiscal.sum(

@@ -7,7 +7,7 @@ from openfisca_nouvelle_caledonie.entities import FoyerFiscal
 
 
 class revenu_brut_global(Variable):
-    value_type = float
+    value_type = int
     entity = FoyerFiscal
     label = "Revenu brut global"
     definition_period = YEAR
@@ -16,7 +16,7 @@ class revenu_brut_global(Variable):
         revenus_categoriels_tspr = foyer_fiscal(
             "revenus_categoriels_tspr", period
         )  #     // pension    #     // "REVENUS_FONCIERS" est egal a "AA"
-        revenu_categoriel_foncier = foyer_fiscal("revenus_fonciers_soumis_ir", period)
+        revenu_categoriel_foncier = foyer_fiscal("revenu_categoriel_foncier", period)
         revenu_categoriel_capital = foyer_fiscal("revenu_categoriel_capital", period)
         revenus_categoriels_non_salarie = foyer_fiscal(
             "revenu_categoriel_non_salarie", period
@@ -342,7 +342,7 @@ class taux_moyen_imposition_non_resident(Variable):
 
 
 class impot_net(Variable):
-    value_type = float
+    value_type = int
     entity = FoyerFiscal
     label = "Impot net"
     definition_period = YEAR
@@ -354,4 +354,4 @@ class impot_net(Variable):
             "plus_values_professionnelles", period
         )
 
-        return impot_apres_reductions - credits_impot + plus_values_professionnelles
+        return round_(impot_apres_reductions - credits_impot + plus_values_professionnelles)
