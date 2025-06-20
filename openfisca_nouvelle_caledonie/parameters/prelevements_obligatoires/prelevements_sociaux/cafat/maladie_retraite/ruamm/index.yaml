@@ -4,5 +4,5 @@ metadata:
   short_label_en: Health-maternity-disability-death
   label_en: Contributions for health-maternity, disability and death
   order:
-  - cotisation_employeur
-  - cotisation_salarie
+  - employeur
+  - salarie

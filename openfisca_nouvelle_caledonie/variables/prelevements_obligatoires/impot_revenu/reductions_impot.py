@@ -42,7 +42,7 @@ class reduction_impot_redistributive(Variable):
             where(
                 revenu_brut_global >= 6_080_000 * parts_fiscales_redistributives,
                 6_100_000 * parts_fiscales_redistributives - revenu_brut_global,
-                min(
+                min_(
                     0.01 * parts_fiscales_redistributives * revenu_brut_global,
                     20_000 * parts_fiscales_redistributives,
                 ),

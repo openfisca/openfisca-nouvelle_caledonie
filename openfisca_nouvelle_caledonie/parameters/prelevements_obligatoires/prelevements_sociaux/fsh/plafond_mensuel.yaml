@@ -1,0 +1,24 @@
+description: Plafond de cotisation au Fonds Social de l’Habitat (FSH)
+values:
+  2025-01-01:
+    value: 329_700
+  2023-01-01:
+    value: 324_300
+  2022-01-01:
+    value: 308_900
+  2019-01-01:
+    value: 306_900
+  2018-01-01:
+    value: 303_600
+  2015-01-01:
+    value: 299_500
+  2014-01-01:
+    value: 297_100
+  2013-01-01:
+    value: 294_900
+  2012-01-01:
+    value: 290_600
+metadata:
+  unit: currency
+documentation: |
+    Source https://www.cafat.nc/employeurs-changement-debut-annee/

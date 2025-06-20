@@ -1,7 +1,7 @@
 """Bénéfices non commerciaux (BNC)."""
 
 from openfisca_core.model_api import *
-from openfisca_nouvelle_caledonie.entities import Person as Individu
+from openfisca_nouvelle_caledonie.entities import Individu
 from openfisca_nouvelle_caledonie.variables.prelevements_obligatoires.impot_revenu.revenus_imposables.non_salarie import (
     get_multiple_and_plafond_cafat_cotisation,
 )

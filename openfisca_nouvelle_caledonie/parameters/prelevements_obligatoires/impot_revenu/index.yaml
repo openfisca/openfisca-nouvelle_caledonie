@@ -6,6 +6,9 @@ metadata:
   order:
   - revenus_imposables
   - charges_deductibles
+  - parts_fiscales
   - bareme
-  # - reductions
-  # - credits
+  - reductions
+  - credits
+  - taux_forfaitaire_non_resident
+  - taux_plafond

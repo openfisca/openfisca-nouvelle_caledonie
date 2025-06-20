@@ -5,11 +5,9 @@
     foyer_fiscal:
       declarants:
       - individu_0
-    persons:
+    individus:
       individu_0:
         salaire_imposable: 100_000
-    menage:
-      personne_de_reference: individu_0
   output:
     revenus_categoriels_tspr: 50_000 * (1 - 0.2)
 
@@ -21,11 +19,9 @@
     foyer_fiscal:
       declarants:
       - individu_0
-    persons:
+    individus:
       individu_0:
         salaire_imposable: 1_000_000
-    menage:
-      personne_de_reference: individu_0
   output:
     revenus_categoriels_tspr: 900_000 * (1 - 0.2)
 
@@ -37,11 +33,9 @@
     foyer_fiscal:
       declarants:
       - individu_0
-    persons:
+    individus:
       individu_0:
         salaire_imposable: 10_000_000
-    menage:
-      personne_de_reference: individu_0
   output:
     revenus_categoriels_tspr: 10_000_000 - 800_000 - 1_800_000
 
@@ -54,7 +48,7 @@
       declarants:
       - individu_0
       - individu_1
-    persons:
+    individus:
       individu_0:
         salaire_imposable: 10_000_000
       individu_1:

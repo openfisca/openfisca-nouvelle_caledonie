@@ -88,7 +88,6 @@ class impot_brut(Variable):
     definition_period = YEAR
 
     def formula_2016(foyer_fiscal, period, parameters):
-
         # from tmp/engine/rules/_2008/impots/ImpotBrutUtil2008.java
         tauxPart1 = 8 / 100
 
@@ -111,17 +110,27 @@ class impot_brut(Variable):
         ) / parts_fiscales
 
         revenu_par_part_reduite = (
-                max_(revenu_net_global_imposable, 0) + revenu_non_imposable
-            ) / parts_fiscales_reduites
+            max_(revenu_net_global_imposable, 0) + revenu_non_imposable
+        ) / parts_fiscales_reduites
 
         bareme = parameters(period).prelevements_obligatoires.impot_revenu.bareme
 
         impot_brut_complet = bareme.calc(revenu_par_part) * parts_fiscales
-        impot_brut_reduit = bareme.calc(revenu_par_part_reduite) * parts_fiscales_reduites
+        impot_brut_reduit = (
+            bareme.calc(revenu_par_part_reduite) * parts_fiscales_reduites
+        )
 
         # Au final, l'impôt brut est une fraction du résultat précédent
-        revenu_total = where(revenu_net_global_imposable > 0, revenu_net_global_imposable + revenu_non_imposable, 1)
-        fraction = where(revenu_net_global_imposable > 0, revenu_net_global_imposable / revenu_total, 1)
+        revenu_total = where(
+            revenu_net_global_imposable > 0,
+            revenu_net_global_imposable + revenu_non_imposable,
+            1,
+        )
+        fraction = where(
+            revenu_net_global_imposable > 0,
+            revenu_net_global_imposable / revenu_total,
+            1,
+        )
 
         impot_brut_complet = where(impot_brut_complet > 0, impot_brut_complet, 0)
         impot_brut_complet = where(
@@ -137,7 +146,11 @@ class impot_brut(Variable):
             impot_brut_reduit * fraction,
         )
 
-        impot_brut = max_(impot_brut_complet, impot_brut_reduit - ((parts_fiscales - parts_fiscales_reduites) * 2 * 300000))  # TODO: parameters
+        impot_brut = max_(
+            impot_brut_complet,
+            impot_brut_reduit
+            - ((parts_fiscales - parts_fiscales_reduites) * 2 * 300000),
+        )  # TODO: parameters
 
         # L'impôt brut est plafonné à 50% des revenus
         taux_plafond = parameters(
@@ -208,8 +221,16 @@ class impot_brut(Variable):
         impot_brut = bareme.calc(revenu_par_part) * parts_fiscales
 
         # Au final, l'impôt brut est une fraction du résultat précédent
-        revenu_total = where(revenu_net_global_imposable > 0, revenu_net_global_imposable + revenu_non_imposable, 1)
-        fraction = where(revenu_net_global_imposable > 0, revenu_net_global_imposable / revenu_total, 1)
+        revenu_total = where(
+            revenu_net_global_imposable > 0,
+            revenu_net_global_imposable + revenu_non_imposable,
+            1,
+        )
+        fraction = where(
+            revenu_net_global_imposable > 0,
+            revenu_net_global_imposable / revenu_total,
+            1,
+        )
 
         impot_brut = where(impot_brut > 0, impot_brut, 0)
         impot_brut = where(

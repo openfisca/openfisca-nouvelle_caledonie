@@ -1,6 +1,6 @@
 description: nombre de parts fiscales pour un couple marié ou pacsé
 values:
-  2024-01-01:
+  2017-01-01:
     value: 2
 metadata:
   short_label: Parts fiscales pour un couple marié ou pacsé

@@ -1,0 +1,9 @@
+description: Cotisation au fond social de l'habitat (FSH)
+metadata:
+  short_label: Cotisation FSH
+  label_en: FSH contribution
+  order:
+  - employeur
+  - plafond_mensuel
+documentation: |
+  Cette contribution est affectée au Fonds social de l’habitat, l’un des trois bailleurs sociaux de Nouvelle-Calédonie, depuis sa fondation en 1964.

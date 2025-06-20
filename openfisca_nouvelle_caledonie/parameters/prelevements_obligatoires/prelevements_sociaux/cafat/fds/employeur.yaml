@@ -1,0 +1,24 @@
+description: Cotisation employeur au financement de la formation professionnelle
+brackets:
+- threshold:
+    2017-01-01:
+      value: 0
+  rate:
+    2017-01-01:
+      value: 0.0075
+- threshold:
+    2017-01-01:
+      value: 1
+  rate:
+    2017-01-01:
+      value: 0
+metadata:
+  short_label: Cotisation employeur
+  short_label_en: Employer's contribution
+  label_en: Employer's professional training contribution
+  rate_unit: /1
+  threshold_unit: plafond_CAFAT_autres_regimes
+  reference:
+    2017-01-01:
+      title: Loi du pays 2017-6 du 21 mars 2017 relative au congé pour permanence syndicale et à la contribution patronale pour le financement du dialogue social
+      href: https://juridoc.gouv.nc/juridoc/jdwebe.nsf/joncentry?openpage&ap=2017&page=3807

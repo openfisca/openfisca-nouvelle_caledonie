@@ -1,6 +1,6 @@
 description: Nombre de parts fiscales pour un célibataire, un divorcé ou un veuf sans personne à charge
 values:
-  2024-01-01:
+  2017-01-01:
     value: 1
 metadata:
   short_label: Parts fiscales célibataire ou divorcé ou veuf sans personne à charge

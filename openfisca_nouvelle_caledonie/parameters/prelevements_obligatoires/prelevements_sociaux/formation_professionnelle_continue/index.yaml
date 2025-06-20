@@ -1,0 +1,9 @@
+description: Cotisation pour le financement de la formation professionnelle continue pour les entreprise de plus de 10 salariés
+metadata:
+  short_label: Cotisation formation professionnelle continue
+  short_label_en: Continuing professional training contribution
+  label_en: Contribution for the financing of continuing professional training for companies with more than 10 employees
+  order:
+  - employeur
+documentation: |
+  Cette cotisation assise sur la totalité du salaire ne concerne que les entreprises de plus de 10 salariés, qui ont l'obligation de dépenser 0,7 % de la masse salariale brute dans la formation des salariés, en interne ou via des intervenants, ou dans le financement du FIAF.

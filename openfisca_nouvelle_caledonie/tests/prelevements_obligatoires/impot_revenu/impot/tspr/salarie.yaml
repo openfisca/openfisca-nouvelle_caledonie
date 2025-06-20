@@ -5,11 +5,9 @@
     foyer_fiscal:
       declarants:
       - individu_0
-    persons:
+    individus:
       individu_0:
         salaire_imposable: 10_000_000
-    menage:
-      personne_de_reference: individu_0
   output:
     revenus_categoriels_tspr: 10_000_000 - 800_000 - 1_800_000
     impot_brut: 1_711_000
@@ -22,7 +20,7 @@
       declarants:
       - individu_0
       - individu_1
-    persons:
+    individus:
       individu_0:
         salaire_imposable: 10_000_000
         statut_marital: marie
@@ -44,7 +42,7 @@
       - individu_1
       enfants_a_charge:
       - enfant_0
-    persons:
+    individus:
       individu_0:
         salaire_imposable: 10_000_000
         statut_marital: marie
@@ -68,7 +66,7 @@
       - individu_1
       enfants_accueillis:
       - enfant_0
-    persons:
+    individus:
       individu_0:
         salaire_imposable: 10_000_000
         statut_marital: marie
@@ -89,7 +87,7 @@
       declarants:
       - individu_0
       - individu_1
-    persons:
+    individus:
       individu_0:
         salaire_imposable: 10_000_000
         statut_marital: marie
@@ -110,7 +108,7 @@
       - individu_1
       enfants_a_charge:
       - enfant_0
-    persons:
+    individus:
       individu_0:
         salaire_imposable: 10_000_000
         statut_marital: marie

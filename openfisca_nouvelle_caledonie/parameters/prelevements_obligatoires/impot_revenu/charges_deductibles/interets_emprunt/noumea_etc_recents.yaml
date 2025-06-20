@@ -1,6 +1,6 @@
 description: Plafond de la déduction pour intérêts d'emprunt
 values:
-  2024-01-01:
+  2023-01-01:
     value: 1_000_000
 metadata:
   short_label: Plafond déduction intérêts d'emprunt
