@@ -1,6 +1,6 @@
 from openfisca_core.model_api import *
 
-DEFAULT_ROUND_BASE_DECIMALS = 2
+DEFAULT_ROUND_BASE_DECIMALS = 0
 
 cotisations_employeur_by_categorie_salarie = {
     "prive_cadre": [
