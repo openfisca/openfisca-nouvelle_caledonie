@@ -22,6 +22,8 @@ class charges_deductibles(Variable):
             + foyer_fiscal("deduction_travaux_immobiliers", period)
             + foyer_fiscal("pensions_alimentaires", period)
             + foyer_fiscal("retenue_cotisations_sociales", period)
+            + foyer_fiscal("deduction_frais_garde_enfants", period)
+            + foyer_fiscal("deduction_primes_assurance_vie", period)
         )
 
 
