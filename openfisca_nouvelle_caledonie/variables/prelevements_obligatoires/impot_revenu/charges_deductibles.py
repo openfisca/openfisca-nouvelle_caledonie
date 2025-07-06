@@ -75,7 +75,6 @@ class interets_emprunt_date_du_pret(Variable):
     entity = FoyerFiscal
     label = "Date du prêt souscrit pour votre résidence principale"
     definition_period = YEAR
-    cerfa_field = "XP"
     # TODO: VEFA ? Condiiton XI
 
 

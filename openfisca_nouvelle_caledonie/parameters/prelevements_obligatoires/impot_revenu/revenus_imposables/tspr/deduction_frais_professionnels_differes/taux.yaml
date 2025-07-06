@@ -1,0 +1,8 @@
+description: Taux de la déduction pour frais professionnels forfaitaire
+values:
+  2008-01-01:
+    value: .1
+metadata:
+  short_label: Taux
+  label_en: Rate of the flat-rate deduction for professional expenses
+  unit: /1

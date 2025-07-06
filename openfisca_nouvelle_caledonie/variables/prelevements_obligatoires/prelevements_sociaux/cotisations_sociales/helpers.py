@@ -123,11 +123,11 @@ def apply_bareme_for_relevant_type_sal(
             ):
                 bareme = categorie_salarie_baremes[bareme_name]
             else:
+                continue
                 msg = f"{bareme_name} not in {bareme_by_categorie_salarie._name} for {categorie_salarie_type.name}"
                 raise KeyError(
                     msg
                 )
-                continue
 
 
             yield bareme.calc(

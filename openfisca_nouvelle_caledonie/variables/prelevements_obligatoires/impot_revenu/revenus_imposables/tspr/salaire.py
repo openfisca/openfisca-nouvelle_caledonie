@@ -208,6 +208,27 @@ class deduction_frais_professionnels(Variable):
         )
 
 
+class deduction_frais_professionnels_salaire_differe(Variable):
+    unit = "currency"
+    value_type = float
+    entity = Individu
+    label = "Déduction des frais professionnels des salaires différés"
+    definition_period = YEAR
+
+    def formula(individu, period, parameters):
+        deduction_frais_professionnels_differes = parameters(
+            period
+        ).prelevements_obligatoires.impot_revenu.revenus_imposables.tspr.deduction_frais_professionnels_differes
+
+        salaires_imposes_selon_le_quotient = individu(
+            "salaires_imposes_selon_le_quotient", period
+        )
+        return min_(
+                salaires_imposes_selon_le_quotient * deduction_frais_professionnels_differes.taux,
+                deduction_frais_professionnels_differes.plafond,
+            )
+
+
 class abattement_sur_salaire(Variable):
     unit = "currency"
     value_type = float

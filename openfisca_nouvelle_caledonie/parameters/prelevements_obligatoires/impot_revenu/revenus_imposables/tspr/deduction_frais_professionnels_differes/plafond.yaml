@@ -1,0 +1,8 @@
+description: Plafond de la déduction pour frais professionnels différés
+values:
+  2008-01-01:
+    value: 800_000
+metadata:
+  short_label: Plafond
+  label_en: Ceiling of the deduction for deferred professional expenses
+  unit: currency
