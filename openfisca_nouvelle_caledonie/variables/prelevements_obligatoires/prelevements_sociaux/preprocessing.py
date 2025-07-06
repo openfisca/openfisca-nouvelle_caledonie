@@ -1,3 +1,5 @@
+"""Preprocessing of the legislation parameters for cotisations sociales in Nouvelle-Calédonie."""
+
 import logging
 
 from openfisca_core.model_api import *

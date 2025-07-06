@@ -1,3 +1,5 @@
+"""Cotisations sociales du régime unifié des allocations familiales, malades et maternité (RUAMM)."""
+
 from openfisca_core.model_api import *
 from openfisca_nouvelle_caledonie.entities import Individu
 from openfisca_nouvelle_caledonie.variables.prelevements_obligatoires.prelevements_sociaux.cotisations_sociales.helpers import (

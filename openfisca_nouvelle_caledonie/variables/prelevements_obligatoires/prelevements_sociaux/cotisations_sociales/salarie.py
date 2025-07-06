@@ -1,3 +1,5 @@
+"""Cotisations sociales pour les salariés en Nouvelle-Calédonie."""
+
 from openfisca_core.model_api import *
 from openfisca_nouvelle_caledonie.entities import Individu
 
@@ -51,7 +53,7 @@ class assiette_cotisations_sociales(Variable):
     set_input = set_input_divide_by_period
     unit = "currency"
 
-    def formula(individu, period, parameters):
+    def formula(individu, period):
         salaire_de_base = individu("salaire_de_base", period)
         categorie_salarie = individu("categorie_salarie", period)
         return (
@@ -67,7 +69,7 @@ class cotisations_employeur(Variable):
     definition_period = MONTH
     calculate_output = calculate_output_add
 
-    def formula(individu, period, parameters):
+    def formula(individu, period):
         # CAFAT
         accident_du_travail = individu("accident_du_travail", period)
         chomage = individu("chomage_employeur", period)
@@ -122,7 +124,7 @@ class cotisations_salariales(Variable):
     definition_period = MONTH
     calculate_output = calculate_output_add
 
-    def formula(individu, period, parameters):
+    def formula(individu, period):
         # CAFAT
         retraite = individu("retraite_salarie", period, options=[ADD])
         chomage = individu("chomage_salarie", period, options=[ADD])
@@ -166,7 +168,7 @@ class salaire_net(Variable):
     set_input = set_input_divide_by_period
     definition_period = MONTH
 
-    def formula(individu, period, parameters):
+    def formula(individu, period):
         salaire_imposable = individu("salaire_de_base", period)
         cotisations_salariales = individu("cotisations_salariales", period)
         ccs = individu("ccs", period)

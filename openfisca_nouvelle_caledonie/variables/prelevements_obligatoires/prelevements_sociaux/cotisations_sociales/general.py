@@ -1,3 +1,5 @@
+"""Variables liés aux marché du travail en Nouvelle-Calédonie."""
+
 from functools import partial
 
 from numpy import busday_count as original_busday_count, datetime64, timedelta64
@@ -12,7 +14,7 @@ class plafond_fsh(Variable):
     label = "Plafond applicable aux cotisations FSH"
     definition_period = MONTH
     set_input = set_input_divide_by_period
-    # TODO gérer les plafonds mensuel, trimestriel, annuel
+
 
     def formula(individu, period, parameters):
         plafond_temps_plein = parameters(
@@ -67,7 +69,7 @@ class plafond_cafat_autres_regimes(Variable):
     label = "Plafond applicable aux cotisations CAFAT autres régimes"
     definition_period = MONTH
     set_input = set_input_divide_by_period
-    # TODO gérer les plafonds mensuel, trimestriel, annuel
+
 
     def formula(individu, period, parameters):
         plafond_temps_plein = parameters(
@@ -122,7 +124,7 @@ class plafond_retraite(Variable):
     label = "Plafond applicable aux cotisations retraite"
     definition_period = MONTH
     set_input = set_input_divide_by_period
-    # TODO gérer les plafonds mensuel, trimestriel, annuel
+
 
     def formula(individu, period, parameters):
         plafond_temps_plein = parameters(
@@ -177,7 +179,7 @@ class plafond_securite_sociale(Variable):
     label = "Plafond de la sécurite sociale"
     definition_period = MONTH
     set_input = set_input_divide_by_period
-    # TODO gérer les plafonds mensuel, trimestriel, annuel
+
 
     def formula(individu, period, parameters):
         plafond_temps_plein = parameters(
@@ -293,7 +295,7 @@ class nombre_jours_calendaires(Variable):
     default_value = 30
     set_input = set_input_divide_by_period
 
-    def formula(individu, period, parameters):
+    def formula(individu, period):
         contrat_de_travail_debut = individu("contrat_de_travail_debut", period)
         contrat_de_travail_fin = individu("contrat_de_travail_fin", period)
 

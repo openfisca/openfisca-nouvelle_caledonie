@@ -1,3 +1,5 @@
+"""Cotisations sociales pour les régimes complémentaires de retraite du secteur privé en Nouvelle-Calédonie."""
+
 from openfisca_core.model_api import *
 from openfisca_nouvelle_caledonie.entities import Individu
 from openfisca_nouvelle_caledonie.variables.prelevements_obligatoires.prelevements_sociaux.cotisations_sociales.helpers import (

@@ -1,3 +1,5 @@
+"""Helpers for the calculation of social contributions in Nouvelle-Calédonie."""
+
 from openfisca_core.model_api import *
 
 DEFAULT_ROUND_BASE_DECIMALS = 0
@@ -147,6 +149,16 @@ def apply_bareme(
     bareme_name=None,
     variable_name=None,
 ):
+    """Apply the specified bareme to the individual's contribution.
+
+    Args:
+        individu (Population): _description_
+        period (Period): _description_
+        parameters (Parameters): _description_
+        cotisation_type (str, optional): _description_. Defaults to None.
+        bareme_name (str, optional): _Bareme name_. Defaults to None.
+        variable_name (str, optional): _Variable name_. Defaults to None.
+    """
     cotisation_mode_recouvrement = individu(
         "cotisation_sociale_mode_recouvrement", period
     )
@@ -203,6 +215,7 @@ def apply_bareme(
 def compute_cotisation(
     individu, period, parameters, cotisation_type=None, bareme_name=None
 ):
+    """Compute the contribution for the individual based on the specified parameters."""
     assert cotisation_type is not None
     if cotisation_type == "employeur":
         bareme_by_type_sal_name = parameters(period).cotsoc.cotisations_employeur
@@ -241,6 +254,7 @@ def compute_cotisation(
 def compute_cotisation_annuelle(
     individu, period, parameters, cotisation_type=None, bareme_name=None
 ):
+    """Compute the annual contribution for the individual based on the specified parameters."""
     if period.start.month < 12:
         return 0
     if period.start.month == 12:
@@ -262,6 +276,7 @@ def compute_cotisation_anticipee(
     bareme_name=None,
     variable_name=None,
 ):
+    """Compute the anticipated contribution for the individual based on the specified parameters."""
     if period.start.month < 12:
         return compute_cotisation(
             individu,
