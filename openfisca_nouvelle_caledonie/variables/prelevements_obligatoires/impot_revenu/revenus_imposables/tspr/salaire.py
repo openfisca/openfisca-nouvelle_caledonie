@@ -48,6 +48,19 @@ class salaire_imposable(Variable):
     definition_period = YEAR
 
 
+class salaire_imposable_rectifie(Variable):
+    value_type = float
+    unit = "currency"
+    cerfa_field = {
+        0: "NM",
+        1: "NN",
+        2: "NO",
+    }
+    entity = Individu
+    label = "Salaires imposables rectifiés"
+    definition_period = YEAR
+
+
 class salaire_percu(Variable):
     value_type = float
     unit = "currency"
@@ -56,8 +69,10 @@ class salaire_percu(Variable):
     definition_period = YEAR
 
     def formula(individu, period):
-        return max_(individu("salaire_imposable", period), 0)  # TODO: add NM, NN, NO
-
+        return max_(
+                individu("salaire_imposable", period) + individu("salaire_imposable_rectifie", period),
+                0
+            )
 
 class frais_reels(Variable):
     cerfa_field = {
@@ -182,19 +197,13 @@ class salaire_imposable_apres_deduction_et_abattement(Variable):
         salaire_apres_deduction = max_(
             salaire_percu_net_de_cotisation - deduction, 0
         )
-
-        return foyer_fiscal.sum(
-            max_(
-                (
-                    salaire_apres_deduction
-                    - min_(
-                        salaire_apres_deduction * tspr.abattement.taux,
-                        tspr.abattement.plafond,
-                    )
-                ),
-                0,
-            )
+        abattement = where(
+            foyer_fiscal.members("salaire_imposable_rectifie", period) > 0,
+            0,
+            min_(salaire_apres_deduction * tspr.abattement.taux, tspr.abattement.plafond)
         )
+
+        return foyer_fiscal.sum(max_(salaire_apres_deduction - abattement, 0))
 
 
 # Revenus de la déclaration complémentaire

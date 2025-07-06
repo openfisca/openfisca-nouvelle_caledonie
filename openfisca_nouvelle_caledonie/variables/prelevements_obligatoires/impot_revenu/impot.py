@@ -32,7 +32,7 @@ class revenu_brut_global(Variable):
 
 
 class revenu_non_imposable(Variable):
-    value_type = float
+    value_type = int
     entity = FoyerFiscal
     label = "Revenu non imposable"
     definition_period = YEAR
@@ -63,7 +63,7 @@ class abattement_enfants_accueillis(Variable):
 
 
 class revenu_net_global_imposable(Variable):
-    value_type = float
+    value_type = int
     entity = FoyerFiscal
     label = "Revenu net global imposable"
     definition_period = YEAR
@@ -82,7 +82,7 @@ class revenu_net_global_imposable(Variable):
 
 
 class impot_brut(Variable):
-    value_type = float
+    value_type = int
     entity = FoyerFiscal
     label = "Impot brut"
     definition_period = YEAR
@@ -105,13 +105,13 @@ class impot_brut(Variable):
 
         parts_fiscales_reduites = foyer_fiscal("parts_fiscales_reduites", period)
 
-        revenu_par_part = (
+        revenu_par_part = floor((
             max_(revenu_net_global_imposable, 0) + revenu_non_imposable
-        ) / parts_fiscales
+        ) / parts_fiscales)
 
-        revenu_par_part_reduite = (
+        revenu_par_part_reduite = floor((
             max_(revenu_net_global_imposable, 0) + revenu_non_imposable
-        ) / parts_fiscales_reduites
+        ) / parts_fiscales_reduites)
 
         bareme = parameters(period).prelevements_obligatoires.impot_revenu.bareme
 
@@ -190,11 +190,11 @@ class impot_brut(Variable):
         # Résultat pour les non résidents
         impot_brut_non_resident = part1 + part2
 
-        return where(
+        return floor(where(
             foyer_fiscal("resident", period),
             impot_brut_resident,
             impot_brut_non_resident,
-        )
+        ))
 
     def formula_2008(foyer_fiscal, period, parameters):
         # from tmp/engine/rules/_2008/impots/ImpotBrutUtil2008.java
@@ -212,9 +212,10 @@ class impot_brut(Variable):
             "revenu_net_global_imposable", period
         )
 
-        revenu_par_part = (
-            max_(revenu_net_global_imposable, 0) + revenu_non_imposable
-        ) / parts_fiscales
+        revenu_par_part = floor(
+            (max_(revenu_net_global_imposable, 0) + revenu_non_imposable)
+            / parts_fiscales
+        )
 
         bareme = parameters(period).prelevements_obligatoires.impot_revenu.bareme
 
@@ -278,11 +279,11 @@ class impot_brut(Variable):
         # Résultat pour les non résidents
         impot_brut_non_resident = part1 + part2
 
-        return where(
+        return floor(where(
             foyer_fiscal("resident", period),
             impot_brut_resident,
             impot_brut_non_resident,
-        )
+        ))
 
 
 #  Permet de recalculer l'impôt supplémentaire dû à un salaire différé ou à une pension différée. Il se base sur la calcul de l'impôt brut
@@ -294,7 +295,7 @@ class impot_brut(Variable):
 
 
 class imputations(Variable):
-    value_type = float
+    value_type = int
     entity = FoyerFiscal
     label = "Imputations"
     definition_period = YEAR
@@ -318,12 +319,14 @@ class impot_apres_reductions(Variable):
         impot_apres_imputations = max_(
             impot_brut - foyer_fiscal("imputations", period), 0
         )
-        reductions_palfonnees = min_(
-            impot_apres_imputations - 5_000,
-            foyer_fiscal("reductions_impot", period),
-        )
-
-        return max_(impot_brut - reductions_palfonnees, 0)
+        reductions_palfonnees = max_(
+            min_(
+                impot_apres_imputations - 5_000,
+                foyer_fiscal("reductions_impot", period),
+            ),
+            0
+            )
+        return max_(impot_apres_imputations - reductions_palfonnees, 0)
 
 
 class resident(Variable):
@@ -354,4 +357,26 @@ class impot_net(Variable):
             "plus_values_professionnelles", period
         )
 
-        return round_(impot_apres_reductions - credits_impot + plus_values_professionnelles)
+        return floor(impot_apres_reductions - credits_impot + plus_values_professionnelles)
+
+
+class penalites(Variable):
+    value_type = int
+    entity = FoyerFiscal
+    label = "Pénalités"
+    definition_period = YEAR
+
+    # TODO: faut-il faire une formule avec 10% de pénalité
+
+
+class impot_et_ccs_apres_penalites(Variable):
+    value_type = int
+    entity = FoyerFiscal
+    label = "Impot + CCS net des pénalités"
+    definition_period = YEAR
+
+    def formula(foyer_fiscal, period):
+        impot_net = foyer_fiscal("impot_net", period)
+        ccs_revenu_du_capital = foyer_fiscal("ccs_revenu_du_capital", period)
+        penalites = foyer_fiscal("penalites", period)
+        return round_(impot_net + penalites + ccs_revenu_du_capital)

@@ -22,7 +22,7 @@ class bic_vente_fabrication_transformation_achats(Variable):
     value_type = float
     cerfa_field = {
         0: "ED",
-        1: "ED",
+        1: "EE",
         2: "EF",
     }
     entity = Individu
@@ -61,7 +61,7 @@ class bic_services_achats(Variable):
     value_type = float
     cerfa_field = {
         0: "FD",
-        1: "FD",
+        1: "FE",
         2: "FF",
     }
     entity = Individu

@@ -14,16 +14,17 @@ class charges_deductibles(Variable):
     def formula(foyer_fiscal, period):
         # TODO: vérifier si la formule est correcte
         return (
-            foyer_fiscal("csg_deductible", period)
+            foyer_fiscal("ccs_deductible", period)
             + foyer_fiscal("deduction_depenses_internat_transport_interurbain", period)
+            + foyer_fiscal("deduction_frais_garde_enfants", period)
+            + foyer_fiscal("deduction_immeubles_historiques", period)
             + foyer_fiscal("deduction_interets_emprunt", period)
+            + foyer_fiscal("deduction_primes_assurance_vie", period)
             + foyer_fiscal("deduction_services_a_la_personne", period)
             + foyer_fiscal("deduction_travaux_immobiliers_equipements_verts", period)
             + foyer_fiscal("deduction_travaux_immobiliers", period)
             + foyer_fiscal("pensions_alimentaires", period)
             + foyer_fiscal("retenue_cotisations_sociales", period)
-            + foyer_fiscal("deduction_frais_garde_enfants", period)
-            + foyer_fiscal("deduction_primes_assurance_vie", period)
         )
 
 
@@ -372,7 +373,7 @@ class deduction_primes_assurance_vie(Variable):
         return max_(min_(foyer_fiscal("primes_assurance_vie", period), plafond), 0)
 
 
-class csg_deductible(Variable):
+class ccs_deductible(Variable):
     unit = "currency"
     value_type = float
     entity = FoyerFiscal
@@ -401,7 +402,7 @@ class deduction_immeubles_historiques(Variable):
         plafond = parameters(
             period
         ).prelevements_obligatoires.impot_revenu.charges_deductibles.immeubles_historiques
-        return max_(min_(foyer_fiscal("immeubles_hitoriques", period), plafond), 0)
+        return max_(min_(foyer_fiscal("immeubles_historiques", period), plafond), 0)
 
 
 class deductions_reintegrees(Variable):

@@ -320,6 +320,7 @@
       enfant:
         statut_marital: celibataire
   output:
+    veuf_avec_pac: true
     parts_fiscales: 2
 
 - name: Veuf invalide avec 1 enfant à charge

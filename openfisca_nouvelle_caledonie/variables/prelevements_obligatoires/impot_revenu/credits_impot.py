@@ -1,4 +1,4 @@
-"""Réductions d'impots."""
+"""Crédits d'impots."""
 
 import numpy as np
 
@@ -7,16 +7,7 @@ from openfisca_nouvelle_caledonie.entities import FoyerFiscal
 
 # Cadre 14 Autres réductions et crédits d'impôt
 
-## Crédits et réductions d'impôts des entreprises
-
-
-class dons_organismes_aide_pme(Variable):
-    unit = "currency"
-    value_type = float
-    entity = FoyerFiscal
-    cerfa_field = "YH"
-    label = "Dons en faveur des organismes venant en aide aux PME"
-    definition_period = YEAR
+## Crédits d'impôts des entreprises
 
 
 class depenses_exportation(Variable):

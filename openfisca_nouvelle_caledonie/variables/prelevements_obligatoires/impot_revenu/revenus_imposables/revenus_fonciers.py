@@ -56,6 +56,8 @@ class revenu_categoriel_foncier(Variable):
     definition_period = YEAR
 
     def formula(foyer_fiscal, period):
-        return foyer_fiscal("revenus_fonciers_soumis_ir", period) - foyer_fiscal(
-            "deficits_fonciers", period
-        )
+        return max_(
+            foyer_fiscal("revenus_fonciers_soumis_ir", period)
+            - foyer_fiscal("deficits_fonciers", period),
+            0,
+            )

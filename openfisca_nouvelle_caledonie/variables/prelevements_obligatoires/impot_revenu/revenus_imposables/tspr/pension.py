@@ -44,6 +44,20 @@ class pension_retraite_rente_imposables(Variable):
     definition_period = YEAR
 
 
+class pension_retraite_rente_imposables_rectifiees(Variable):
+    unit = "currency"
+    value_type = float
+    cerfa_field = {
+        0: "PP",
+        1: "PQ",
+        2: "PR",
+    }
+    entity = Individu
+    label = "Pensions, retraites et rentes au sens strict imposables (rentes à titre onéreux exclues)"
+    definition_period = YEAR
+
+
+
 class pension_imposable_apres_deduction_et_abattement(Variable):
     value_type = float
     entity = FoyerFiscal
@@ -55,8 +69,12 @@ class pension_imposable_apres_deduction_et_abattement(Variable):
             period
         ).prelevements_obligatoires.impot_revenu.revenus_imposables.tspr
 
-        pension_imposable = foyer_fiscal.members(
-            "pension_retraite_rente_imposables", period
+        pension_imposable = max_(
+            foyer_fiscal.members(
+            "pension_retraite_rente_imposables", period)
+            + foyer_fiscal.members(
+            "pension_retraite_rente_imposables_rectifiees", period),
+            0,
         )
 
         deduction_pension = tspr.deduction_pension
@@ -65,19 +83,13 @@ class pension_imposable_apres_deduction_et_abattement(Variable):
             deduction_pension.plafond,
             )
         pension_apres_deduction = max_(pension_imposable - montant_deduction_pension, 0)
-
-        pension_apres_abattement = foyer_fiscal.sum(
-            max_(
-                (
-                    pension_apres_deduction
-                    - min_(
-                        pension_apres_deduction * tspr.abattement.taux,
-                        tspr.abattement.plafond,
-                    )
-                ),
-                0,
+        abatemment = where(
+            foyer_fiscal.members("pension_retraite_rente_imposables_rectifiees", period) > 0,
+            0,
+            min_(pension_apres_deduction * tspr.abattement.taux, tspr.abattement.plafond),
             )
-        )
+
+        pension_apres_abattement = foyer_fiscal.sum(max_(pension_apres_deduction - abatemment, 0))
         # Abattement spécial sur les pensions pour les non-résidents
         pension_apres_abattement_non_resident = foyer_fiscal.sum(
             pension_imposable

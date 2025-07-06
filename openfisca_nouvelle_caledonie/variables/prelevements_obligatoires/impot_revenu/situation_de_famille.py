@@ -159,7 +159,10 @@ class enfants_handicapes(Variable):
 
     def formula(foyer_fiscal, period):
         return foyer_fiscal.sum(
-            1 * (foyer_fiscal.members("handicape_cejh", period) * not_(foyer_fiscal.members("etudiant_hors_nc", period))),
+            1 * (foyer_fiscal.members("handicape_cejh", period)
+                 * not_(foyer_fiscal.members("etudiant_hors_nc", period))
+                 * not_(foyer_fiscal.members("enfant_en_garde_alternee", period))
+                 ),
             role=FoyerFiscal.ENFANT_A_CHARGE,
             )
 
@@ -214,7 +217,8 @@ class veuf_avec_pac(Variable):
 
     def formula(foyer_fiscal, period):
         _ = period
-        veuf = statut_marital == TypesStatutMarital.veuf
+        statut_marital = foyer_fiscal.declarant_principal("statut_marital", period)
+        veuf = (statut_marital == TypesStatutMarital.veuf)
         nombre_de_pac = foyer_fiscal.nb_persons(
             role=FoyerFiscal.ENFANT_A_CHARGE
         ) + foyer_fiscal.nb_persons(role=FoyerFiscal.ASCENDANT_A_CHARGE)
@@ -241,9 +245,14 @@ class parts_fiscales(Variable):
             statut_marital == TypesStatutMarital.pacse
         )
         veuf_avec_pac = foyer_fiscal("veuf_avec_pac", period)
+        veuf = statut_marital == TypesStatutMarital.veuf
+        nombre_de_pac = foyer_fiscal.nb_persons(
+            role=FoyerFiscal.ENFANT_A_CHARGE
+        ) + foyer_fiscal.nb_persons(role=FoyerFiscal.ASCENDANT_A_CHARGE)
+
         parts_de_base = select(
             [
-                celibataire_ou_divorce | not_(veuf_avec_pac),
+                celibataire_ou_divorce | (veuf & (nombre_de_pac == 0)),
                 marie_ou_pacse,
                 veuf_avec_pac,
             ],
@@ -287,33 +296,63 @@ class parts_fiscales(Variable):
 class parts_fiscales_reduites(Variable):
     value_type = float
     entity = FoyerFiscal
-    label = "Nombre de parts"
+    label = "Nombre de parts fiscales réduites"
     definition_period = YEAR
 
     def formula_2015(foyer_fiscal, period, parameters):
-        # Réforme de l'impôt 2016 sur les revenus 2015
-        statut_marital = foyer_fiscal.declarant_principal("statut_marital", period)
         parts_fiscales = parameters(
             period
         ).prelevements_obligatoires.impot_revenu.parts_fiscales
-        celibataire_ou_divorce = (
-            (statut_marital == TypesStatutMarital.celibataire)
-            | (statut_marital == TypesStatutMarital.divorce)
-        ) | (statut_marital == TypesStatutMarital.separe)
-        veuf = statut_marital == TypesStatutMarital.veuf
-        marie_ou_pacse = (statut_marital == TypesStatutMarital.marie) | (
-            statut_marital == TypesStatutMarital.pacse
+        veuf_avec_pac = foyer_fiscal("veuf_avec_pac", period) * (parts_fiscales.veuf_avec_pac - 1)
+        parts_additionnelles = (
+            parts_fiscales.ancien_combattant * foyer_fiscal("anciens_combattants", period)
+            + parts_fiscales.invalide * foyer_fiscal("invalides", period)
         )
-        return select(
-            [
-                celibataire_ou_divorce | veuf,
-                marie_ou_pacse,
-            ],
-            [
-                parts_fiscales.celibataire_divorce_ou_veuf_sans_pac,
-                parts_fiscales.marie_ou_pacse,
-            ],
+
+        # `enfant` represents whether each member of the foyer fiscal has the role ENFANT_A_CHARGE.
+        enfants_en_garde_alternee = foyer_fiscal('enfants_en_garde_alternee', period)
+        enfants_en_garde_alternee_handicapes = foyer_fiscal('enfants_en_garde_alternee_handicapes', period)
+
+        etudiants_hors_nc_ou_enfants_handicapes = foyer_fiscal("etudiants_hors_nc_ou_enfants_handicapes", period)
+        parts_enfants = (
+            parts_fiscales.enfant_part_entiere * etudiants_hors_nc_ou_enfants_handicapes
+            + parts_fiscales.enfant_demi_part * (
+                0.5 * enfants_en_garde_alternee
+                + 1 * (
+                    foyer_fiscal("enfants_a_charge_en_nc", period)
+                    + enfants_en_garde_alternee_handicapes
+                )
+            )
         )
+        parts_ascendants = foyer_fiscal('ascendants_a_charge', period) * parts_fiscales.ascendant_a_charge
+
+        return foyer_fiscal("parts_fiscales", period) - veuf_avec_pac - parts_additionnelles - parts_enfants - parts_ascendants
+
+
+    # def formula_2015(foyer_fiscal, period, parameters):  TODO: Meilleure formule à conserver
+    #     # Réforme de l'impôt 2016 sur les revenus 2015
+    #     statut_marital = foyer_fiscal.declarant_principal("statut_marital", period)
+    #     parts_fiscales = parameters(
+    #         period
+    #     ).prelevements_obligatoires.impot_revenu.parts_fiscales
+    #     celibataire_ou_divorce = (
+    #         (statut_marital == TypesStatutMarital.celibataire)
+    #         | (statut_marital == TypesStatutMarital.divorce)
+    #     ) | (statut_marital == TypesStatutMarital.separe)
+    #     veuf = statut_marital == TypesStatutMarital.veuf
+    #     marie_ou_pacse = (statut_marital == TypesStatutMarital.marie) | (
+    #         statut_marital == TypesStatutMarital.pacse
+    #     )
+    #     return select(
+    #         [
+    #             celibataire_ou_divorce | veuf,
+    #             marie_ou_pacse,
+    #         ],
+    #         [
+    #             parts_fiscales.celibataire_divorce_ou_veuf_sans_pac,
+    #             parts_fiscales.marie_ou_pacse,
+    #         ],
+    #     )
 
 
 class enfants_accueillis(Variable):
