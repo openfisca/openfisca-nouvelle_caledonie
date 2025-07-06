@@ -11,9 +11,11 @@ class revenus_categoriels_tspr(Variable):
     definition_period = YEAR
 
     def formula(foyer_fiscal, period):
-        salaire_imposable_apres_deduction_et_abattement = foyer_fiscal.sum(foyer_fiscal.members(
-            "salaire_imposable_apres_deduction_et_abattement", period
-        ))
+        salaire_imposable_apres_deduction_et_abattement = foyer_fiscal.sum(
+            foyer_fiscal.members(
+                "salaire_imposable_apres_deduction_et_abattement", period
+            )
+        )
         indemnites = foyer_fiscal("indemnites", period)
         pension_imposable_apres_deduction_et_abattement = foyer_fiscal(
             "pension_imposable_apres_deduction_et_abattement", period

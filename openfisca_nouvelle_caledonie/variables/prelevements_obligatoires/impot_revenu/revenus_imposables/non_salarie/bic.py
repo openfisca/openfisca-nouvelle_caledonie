@@ -99,23 +99,26 @@ class bic_forfait(Variable):
             (
                 individu("bic_vente_fabrication_transformation_ca_ht", period)
                 - individu("bic_vente_fabrication_transformation_achats", period)
-                - individu("bic_vente_fabrication_transformation_salaires_et_sous_traitance", period)
-                ),
-            0
-            )
+                - individu(
+                    "bic_vente_fabrication_transformation_salaires_et_sous_traitance",
+                    period,
+                )
+            ),
+            0,
+        )
         bic_services = max_(
             (
                 individu("bic_services_ca_ht", period)
                 - individu("bic_services_achats", period)
                 - individu("bic_services_salaires_et_sous_traitance", period)
-                ),
-            0
-            )
+            ),
+            0,
+        )
         return max_(
             0,
             (bic_vente + bic_services) * abattement
             - individu("cotisations_non_salarie", period),
-            )
+        )
 
 
 # Régime réel simplifié (Cadre 10 de la déclaration complémentaire)

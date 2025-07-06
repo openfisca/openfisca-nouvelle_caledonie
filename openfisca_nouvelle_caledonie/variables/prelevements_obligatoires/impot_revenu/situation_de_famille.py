@@ -31,6 +31,7 @@ class statut_marital(Variable):
             deux_adultes, TypesStatutMarital.pacse, TypesStatutMarital.celibataire
         )
 
+
 class anciens_combattants(Variable):
     value_type = int
     default_value = 0
@@ -112,8 +113,8 @@ class enfants_a_charge_en_nc(Variable):
             - foyer_fiscal("etudiants_hors_nc", period)
             - foyer_fiscal("enfants_en_garde_alternee", period)
             - foyer_fiscal("enfants_en_garde_alternee_handicapes", period),
-            0
-            )
+            0,
+        )
 
 
 class enfants_en_garde_alternee(Variable):
@@ -125,10 +126,11 @@ class enfants_en_garde_alternee(Variable):
 
     def formula(foyer_fiscal, period):
         return foyer_fiscal.sum(
-            1 * (
+            1
+            * (
                 foyer_fiscal.members("enfant_en_garde_alternee", period)
                 * not_(foyer_fiscal.members("handicape_cejh", period))
-                ),
+            ),
             role=FoyerFiscal.ENFANT_A_CHARGE,
         )
 
@@ -142,10 +144,11 @@ class enfants_en_garde_alternee_handicapes(Variable):
 
     def formula(foyer_fiscal, period):
         return foyer_fiscal.sum(
-            1 * (
+            1
+            * (
                 foyer_fiscal.members("enfant_en_garde_alternee", period)
                 * foyer_fiscal.members("handicape_cejh", period)
-                ),
+            ),
             role=FoyerFiscal.ENFANT_A_CHARGE,
         )
 
@@ -159,12 +162,14 @@ class enfants_handicapes(Variable):
 
     def formula(foyer_fiscal, period):
         return foyer_fiscal.sum(
-            1 * (foyer_fiscal.members("handicape_cejh", period)
-                 * not_(foyer_fiscal.members("etudiant_hors_nc", period))
-                 * not_(foyer_fiscal.members("enfant_en_garde_alternee", period))
-                 ),
+            1
+            * (
+                foyer_fiscal.members("handicape_cejh", period)
+                * not_(foyer_fiscal.members("etudiant_hors_nc", period))
+                * not_(foyer_fiscal.members("enfant_en_garde_alternee", period))
+            ),
             role=FoyerFiscal.ENFANT_A_CHARGE,
-            )
+        )
 
 
 class etudiants_hors_nc(Variable):
@@ -189,9 +194,8 @@ class etudiants_hors_nc_ou_enfants_handicapes(Variable):
     definition_period = YEAR
 
     def formula(foyer_fiscal, period):
-        return (
-            foyer_fiscal("etudiants_hors_nc", period)
-            + foyer_fiscal("enfants_handicapes", period)
+        return foyer_fiscal("etudiants_hors_nc", period) + foyer_fiscal(
+            "enfants_handicapes", period
         )
 
 
@@ -206,8 +210,9 @@ class invalides(Variable):
         _ = period
         return foyer_fiscal.sum(
             foyer_fiscal.members("taux_invalidite", period) > 0.5,
-            role=FoyerFiscal.DECLARANT
+            role=FoyerFiscal.DECLARANT,
         )
+
 
 class veuf_avec_pac(Variable):
     value_type = bool
@@ -218,7 +223,7 @@ class veuf_avec_pac(Variable):
     def formula(foyer_fiscal, period):
         _ = period
         statut_marital = foyer_fiscal.declarant_principal("statut_marital", period)
-        veuf = (statut_marital == TypesStatutMarital.veuf)
+        veuf = statut_marital == TypesStatutMarital.veuf
         nombre_de_pac = foyer_fiscal.nb_persons(
             role=FoyerFiscal.ENFANT_A_CHARGE
         ) + foyer_fiscal.nb_persons(role=FoyerFiscal.ASCENDANT_A_CHARGE)
@@ -262,28 +267,36 @@ class parts_fiscales(Variable):
                 parts_fiscales.veuf_avec_pac,
             ],
         )
-        parts_additionnelles = (
-            parts_fiscales.ancien_combattant * foyer_fiscal("anciens_combattants", period)
-            + parts_fiscales.invalide * foyer_fiscal("invalides", period)
-        )
+        parts_additionnelles = parts_fiscales.ancien_combattant * foyer_fiscal(
+            "anciens_combattants", period
+        ) + parts_fiscales.invalide * foyer_fiscal("invalides", period)
 
         parts_de_base += parts_additionnelles
         # `enfant` represents whether each member of the foyer fiscal has the role ENFANT_A_CHARGE.
-        enfants_en_garde_alternee = foyer_fiscal('enfants_en_garde_alternee', period)
-        enfants_en_garde_alternee_handicapes = foyer_fiscal('enfants_en_garde_alternee_handicapes', period)
+        enfants_en_garde_alternee = foyer_fiscal("enfants_en_garde_alternee", period)
+        enfants_en_garde_alternee_handicapes = foyer_fiscal(
+            "enfants_en_garde_alternee_handicapes", period
+        )
 
-        etudiants_hors_nc_ou_enfants_handicapes = foyer_fiscal("etudiants_hors_nc_ou_enfants_handicapes", period)
+        etudiants_hors_nc_ou_enfants_handicapes = foyer_fiscal(
+            "etudiants_hors_nc_ou_enfants_handicapes", period
+        )
         parts_enfants = (
             parts_fiscales.enfant_part_entiere * etudiants_hors_nc_ou_enfants_handicapes
-            + parts_fiscales.enfant_demi_part * (
+            + parts_fiscales.enfant_demi_part
+            * (
                 0.5 * enfants_en_garde_alternee
-                + 1 * (
+                + 1
+                * (
                     foyer_fiscal("enfants_a_charge_en_nc", period)
                     + enfants_en_garde_alternee_handicapes
                 )
             )
         )
-        parts_ascendants = foyer_fiscal('ascendants_a_charge', period) * parts_fiscales.ascendant_a_charge
+        parts_ascendants = (
+            foyer_fiscal("ascendants_a_charge", period)
+            * parts_fiscales.ascendant_a_charge
+        )
 
         resident = foyer_fiscal("resident", period)
         return where(
@@ -303,31 +316,46 @@ class parts_fiscales_reduites(Variable):
         parts_fiscales = parameters(
             period
         ).prelevements_obligatoires.impot_revenu.parts_fiscales
-        veuf_avec_pac = foyer_fiscal("veuf_avec_pac", period) * (parts_fiscales.veuf_avec_pac - 1)
-        parts_additionnelles = (
-            parts_fiscales.ancien_combattant * foyer_fiscal("anciens_combattants", period)
-            + parts_fiscales.invalide * foyer_fiscal("invalides", period)
+        veuf_avec_pac = foyer_fiscal("veuf_avec_pac", period) * (
+            parts_fiscales.veuf_avec_pac - 1
         )
+        parts_additionnelles = parts_fiscales.ancien_combattant * foyer_fiscal(
+            "anciens_combattants", period
+        ) + parts_fiscales.invalide * foyer_fiscal("invalides", period)
 
         # `enfant` represents whether each member of the foyer fiscal has the role ENFANT_A_CHARGE.
-        enfants_en_garde_alternee = foyer_fiscal('enfants_en_garde_alternee', period)
-        enfants_en_garde_alternee_handicapes = foyer_fiscal('enfants_en_garde_alternee_handicapes', period)
+        enfants_en_garde_alternee = foyer_fiscal("enfants_en_garde_alternee", period)
+        enfants_en_garde_alternee_handicapes = foyer_fiscal(
+            "enfants_en_garde_alternee_handicapes", period
+        )
 
-        etudiants_hors_nc_ou_enfants_handicapes = foyer_fiscal("etudiants_hors_nc_ou_enfants_handicapes", period)
+        etudiants_hors_nc_ou_enfants_handicapes = foyer_fiscal(
+            "etudiants_hors_nc_ou_enfants_handicapes", period
+        )
         parts_enfants = (
             parts_fiscales.enfant_part_entiere * etudiants_hors_nc_ou_enfants_handicapes
-            + parts_fiscales.enfant_demi_part * (
+            + parts_fiscales.enfant_demi_part
+            * (
                 0.5 * enfants_en_garde_alternee
-                + 1 * (
+                + 1
+                * (
                     foyer_fiscal("enfants_a_charge_en_nc", period)
                     + enfants_en_garde_alternee_handicapes
                 )
             )
         )
-        parts_ascendants = foyer_fiscal('ascendants_a_charge', period) * parts_fiscales.ascendant_a_charge
+        parts_ascendants = (
+            foyer_fiscal("ascendants_a_charge", period)
+            * parts_fiscales.ascendant_a_charge
+        )
 
-        return foyer_fiscal("parts_fiscales", period) - veuf_avec_pac - parts_additionnelles - parts_enfants - parts_ascendants
-
+        return (
+            foyer_fiscal("parts_fiscales", period)
+            - veuf_avec_pac
+            - parts_additionnelles
+            - parts_enfants
+            - parts_ascendants
+        )
 
     # def formula_2015(foyer_fiscal, period, parameters):  TODO: Meilleure formule à conserver
     #     # Réforme de l'impôt 2016 sur les revenus 2015

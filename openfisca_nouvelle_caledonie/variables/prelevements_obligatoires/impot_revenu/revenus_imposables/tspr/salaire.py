@@ -70,9 +70,11 @@ class salaire_percu(Variable):
 
     def formula(individu, period):
         return max_(
-                individu("salaire_imposable", period) + individu("salaire_imposable_rectifie", period),
-                0
-            )
+            individu("salaire_imposable", period)
+            + individu("salaire_imposable_rectifie", period),
+            0,
+        )
+
 
 class frais_reels(Variable):
     cerfa_field = {
@@ -187,7 +189,9 @@ class deduction_frais_professionnels(Variable):
             period
         ).prelevements_obligatoires.impot_revenu.revenus_imposables.tspr
 
-        salaire_percu_net_de_cotisation = individu("salaire_percu_net_de_cotisation", period)
+        salaire_percu_net_de_cotisation = individu(
+            "salaire_percu_net_de_cotisation", period
+        )
         frais_professionnels_forfaitaire = (
             tspr.deduction_frais_professionnels_forfaitaire
         )  # 10%
@@ -201,7 +205,7 @@ class deduction_frais_professionnels(Variable):
         return max_(
             individu("frais_reels", period),
             deduction_forfaitaire,
-            )
+        )
 
 
 class abattement_sur_salaire(Variable):
@@ -217,14 +221,16 @@ class abattement_sur_salaire(Variable):
         ).prelevements_obligatoires.impot_revenu.revenus_imposables.tspr
 
         deduction = individu("deduction_frais_professionnels", period)
-        salaire_percu_net_de_cotisation = individu("salaire_percu_net_de_cotisation", period)
-        salaire_apres_deduction = max_(
-            salaire_percu_net_de_cotisation - deduction, 0
+        salaire_percu_net_de_cotisation = individu(
+            "salaire_percu_net_de_cotisation", period
         )
+        salaire_apres_deduction = max_(salaire_percu_net_de_cotisation - deduction, 0)
         return where(
             individu("salaire_imposable_rectifie", period) > 0,
             0,
-            min_(salaire_apres_deduction * tspr.abattement.taux, tspr.abattement.plafond)
+            min_(
+                salaire_apres_deduction * tspr.abattement.taux, tspr.abattement.plafond
+            ),
         )
 
 
@@ -243,7 +249,7 @@ class reliquat_abattement_sur_salaire(Variable):
         return where(
             individu("salaire_imposable_rectifie", period) > 0,
             0,
-            max_(tspr.abattement.plafond - abattement_sur_salaire, 0)
+            max_(tspr.abattement.plafond - abattement_sur_salaire, 0),
         )
 
 
@@ -255,7 +261,9 @@ class salaire_imposable_apres_deduction_et_abattement(Variable):
 
     def formula(individu, period):
         # salaires_percus - retenue_cotisations - deduction_salaires - abattement_salaires
-        salaire_percu_net_de_cotisation = individu("salaire_percu_net_de_cotisation", period)
+        salaire_percu_net_de_cotisation = individu(
+            "salaire_percu_net_de_cotisation", period
+        )
         deduction = individu("deduction_frais_professionnels", period)
         abattement = individu("abattement_sur_salaire", period)
 
@@ -314,10 +322,12 @@ class indemnites(Variable):
         # 20 % de l'indemnité brute dans la limote du reste de l'abattement sur salaire
         return foyer_fiscal.sum(
             max_(
-                foyer_fiscal.members("indemnites_elus_municipaux", period) - min_(
-                    foyer_fiscal.members("indemnites_elus_municipaux", period) * .2,  # TODO: parameters
-                    foyer_fiscal.members("reliquat_abattement_sur_salaire", period)
-                    ),
-                0
-                )
+                foyer_fiscal.members("indemnites_elus_municipaux", period)
+                - min_(
+                    foyer_fiscal.members("indemnites_elus_municipaux", period)
+                    * 0.2,  # TODO: parameters
+                    foyer_fiscal.members("reliquat_abattement_sur_salaire", period),
+                ),
+                0,
             )
+        )

@@ -1,7 +1,8 @@
 """Réductions d'impots."""
 
-from openfisca_core.model_api import *
 from numpy import ceil
+
+from openfisca_core.model_api import *
 from openfisca_nouvelle_caledonie.entities import FoyerFiscal
 
 
@@ -21,7 +22,10 @@ class reductions_impot(Variable):
             + foyer_fiscal("reduction_investissement_locatif", period)
             + foyer_fiscal("reduction_dons_courses_hippiques", period)
             + foyer_fiscal("reduction_versements_promotion_exportation", period)
-            + foyer_fiscal("reduction_souscription_via_plateforme_de_financement_participatif", period)
+            + foyer_fiscal(
+                "reduction_souscription_via_plateforme_de_financement_participatif",
+                period,
+            )
             + foyer_fiscal("reduction_dons_organismes_aide_pme", period)
             - foyer_fiscal("reduction_impots_reintegrees", period)
         )
@@ -43,7 +47,7 @@ class reduction_impot_redistributive(Variable):
         resident = foyer_fiscal("resident", period)
         condtion = resident & (
             foyer_fiscal("revenu_brut_global", period)
-            <= 6100000 * parts_fiscales_redistributives   # TODO: parameters
+            <= 6100000 * parts_fiscales_redistributives  # TODO: parameters
         )
         revenu_brut_global = foyer_fiscal("revenu_brut_global", period)
         reduction = where(
@@ -89,11 +93,10 @@ class reduction_prestation_compensatoire(Variable):
 
     def formula(foyer_fiscal, period):
         resident = foyer_fiscal("resident", period)
-        reduction = min_(ceil(foyer_fiscal("prestation_compensatoire", period) * .25), 1_000_000)  # TODO: parameters
-        return where(
-            resident,
-            reduction,
-            0)
+        reduction = min_(
+            ceil(foyer_fiscal("prestation_compensatoire", period) * 0.25), 1_000_000
+        )  # TODO: parameters
+        return where(resident, reduction, 0)
 
 
 class mecenat(Variable):
@@ -113,24 +116,24 @@ class reduction_mecenat(Variable):
     definition_period = YEAR
 
     def formula_2024(foyer_fiscal, period):
-        plafond = ceil(foyer_fiscal("revenu_net_global_imposable", period) * .15)  # TODO: parameters
-        reduction = ceil(min_(foyer_fiscal("mecenat", period), plafond) * .75)  # TODO: parameters
+        plafond = ceil(
+            foyer_fiscal("revenu_net_global_imposable", period) * 0.15
+        )  # TODO: parameters
+        reduction = ceil(
+            min_(foyer_fiscal("mecenat", period), plafond) * 0.75
+        )  # TODO: parameters
         resident = foyer_fiscal("resident", period)
-        return where(
-            resident,
-            reduction,
-            0
-        )
+        return where(resident, reduction, 0)
 
     def formula_2023(foyer_fiscal, period):
-        plafond = ceil(foyer_fiscal("revenu_net_global_imposable", period) * .15)  # TODO: parameters et retirer lles formules inutilies
-        reduction = ceil(min_(foyer_fiscal("mecenat", period), plafond) * .8)  # TODO: parameters
+        plafond = ceil(
+            foyer_fiscal("revenu_net_global_imposable", period) * 0.15
+        )  # TODO: parameters et retirer lles formules inutilies
+        reduction = ceil(
+            min_(foyer_fiscal("mecenat", period), plafond) * 0.8
+        )  # TODO: parameters
         resident = foyer_fiscal("resident", period)
-        return where(
-            resident,
-            reduction,
-            0
-        )
+        return where(resident, reduction, 0)
 
 
 class cotisations_syndicales(Variable):
@@ -150,12 +153,9 @@ class reduction_cotisations_syndicales(Variable):
     definition_period = YEAR
 
     def formula(foyer_fiscal, period):
-        plafond = ceil(foyer_fiscal("revenus_bruts_salaires_pensions", period) * .01)
+        plafond = ceil(foyer_fiscal("revenus_bruts_salaires_pensions", period) * 0.01)
         return ceil(
-            min_(
-                foyer_fiscal("cotisations_syndicales", period),
-                plafond
-            ) * 0.66
+            min_(foyer_fiscal("cotisations_syndicales", period), plafond) * 0.66
         )  # TODO: parameters
 
 
@@ -177,11 +177,15 @@ class reduction_dons_courses_hippiques(Variable):
 
     def formula(foyer_fiscal, period):
         return ceil(
-            0.5 * min_(
-                ceil(foyer_fiscal("revenu_net_global_imposable", period) * .15),  # TODO: parameters
-                foyer_fiscal("dons_courses_hippiques", period)
+            0.5
+            * min_(
+                ceil(
+                    foyer_fiscal("revenu_net_global_imposable", period) * 0.15
+                ),  # TODO: parameters
+                foyer_fiscal("dons_courses_hippiques", period),
             )
         )
+
 
 class versements_promotion_exportation(Variable):
     unit = "currency"
@@ -201,9 +205,12 @@ class reduction_versements_promotion_exportation(Variable):
 
     def formula(foyer_fiscal, period):
         reduction = ceil(
-            0.5 * min_(
-                ceil(foyer_fiscal("revenu_net_global_imposable", period) * .15),  # TODO: parameters
-                foyer_fiscal("versements_promotion_exportation", period)
+            0.5
+            * min_(
+                ceil(
+                    foyer_fiscal("revenu_net_global_imposable", period) * 0.15
+                ),  # TODO: parameters
+                foyer_fiscal("versements_promotion_exportation", period),
             )
         )
         resident = foyer_fiscal("resident", period)
@@ -228,15 +235,20 @@ class reduction_souscription_via_plateforme_de_financement_participatif(Variable
 
     def formula(foyer_fiscal, period):
         reduction = ceil(
-            0.5 * min_(
+            0.5
+            * min_(
                 3_000_000,  # TODO: parameters
-                foyer_fiscal("souscription_via_plateforme_de_financement_participatif", period)
+                foyer_fiscal(
+                    "souscription_via_plateforme_de_financement_participatif", period
+                ),
             )
         )
         resident = foyer_fiscal("resident", period)
         return where(resident, reduction, 0)
 
+
 # Réductions d'impôts pour investissement locatif
+
 
 class investissement_immeuble_neuf_habitation_principale(Variable):
     unit = "currency"
@@ -264,12 +276,11 @@ class reduction_investissement_locatif(Variable):
     definition_period = YEAR
 
     def formula(foyer_fiscal, period):
-        montant_investi = (
-            foyer_fiscal("investissement_immeuble_neuf_habitation_principale", period)
-            + foyer_fiscal(
-                "investissement_immeubles_neufs_acquis_loues_nus_habitation_principale",
-                period,
-            )
+        montant_investi = foyer_fiscal(
+            "investissement_immeuble_neuf_habitation_principale", period
+        ) + foyer_fiscal(
+            "investissement_immeubles_neufs_acquis_loues_nus_habitation_principale",
+            period,
         )
         reduction = min_(ceil(montant_investi), 5_400_000)
         resident = foyer_fiscal("resident", period)
@@ -292,12 +303,18 @@ class reduction_dons_organismes_aide_pme(Variable):
     unit = "currency"
     value_type = int
     entity = FoyerFiscal
-    label = "Réduction d'impôt pour dons en faveur des organismes venant en aide aux PME"
+    label = (
+        "Réduction d'impôt pour dons en faveur des organismes venant en aide aux PME"
+    )
     definition_period = YEAR
 
     def formula(foyer_fiscal, period):
-        plafond = ceil(foyer_fiscal("revenu_net_global_imposable", period) * .15)  # TODO: parameters
-        reduction = ceil(min_(foyer_fiscal("dons_organismes_aide_pme", period), plafond) * .75)  # TODO: parameters
+        plafond = ceil(
+            foyer_fiscal("revenu_net_global_imposable", period) * 0.15
+        )  # TODO: parameters
+        reduction = ceil(
+            min_(foyer_fiscal("dons_organismes_aide_pme", period), plafond) * 0.75
+        )  # TODO: parameters
         resident = foyer_fiscal("resident", period)
         return where(resident, reduction, 0)
 

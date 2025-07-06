@@ -49,6 +49,7 @@ class revenu_categoriel_foncier(Variable):
     Il s'agit du revenu catégoriel foncier net, c'est-à-dire le revenu brut moins les
     déficits.
     """
+
     value_type = float
     unit = "currency"
     entity = FoyerFiscal
@@ -60,4 +61,4 @@ class revenu_categoriel_foncier(Variable):
             foyer_fiscal("revenus_fonciers_soumis_ir", period)
             - foyer_fiscal("deficits_fonciers", period),
             0,
-            )
+        )

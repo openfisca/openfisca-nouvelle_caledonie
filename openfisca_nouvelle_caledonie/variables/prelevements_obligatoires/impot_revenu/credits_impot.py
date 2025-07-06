@@ -180,7 +180,10 @@ class credits_impot(Variable):
                     foyer_fiscal("solde_investissements_agrees_noumea_etc", period)
                     * retenue
                 )
-                / (solde_investissements_agrees + 1 * (solde_investissements_agrees == 0))
+                / (
+                    solde_investissements_agrees
+                    + 1 * (solde_investissements_agrees == 0)
+                )
             ),
             0,
         )
@@ -189,7 +192,10 @@ class credits_impot(Variable):
             solde_investissement_plafonnes > 0,
             np.ceil(
                 (foyer_fiscal("solde_investissements_agrees_autres", period) * retenue)
-                / (solde_investissements_agrees + 1 * (solde_investissements_agrees == 0))
+                / (
+                    solde_investissements_agrees
+                    + 1 * (solde_investissements_agrees == 0)
+                )
             ),
             0,
         )
@@ -212,7 +218,10 @@ class credits_impot(Variable):
             (
                 foyer_fiscal("investissements_agrees_noumea_etc", period)
                 * report_solde_investissements_agrees_net
-                / (solde_investissements_agrees + 1 * (solde_investissements_agrees == 0))
+                / (
+                    solde_investissements_agrees
+                    + 1 * (solde_investissements_agrees == 0)
+                )
             ),
             0,
         )
@@ -223,7 +232,10 @@ class credits_impot(Variable):
             (
                 foyer_fiscal("solde_investissements_agrees_autres", period)
                 * report_solde_investissements_agrees_net
-                / (solde_investissements_agrees + 1 * (solde_investissements_agrees == 0))
+                / (
+                    solde_investissements_agrees
+                    + 1 * (solde_investissements_agrees == 0)
+                )
             ),
             0,
         )
@@ -248,7 +260,10 @@ class credits_impot(Variable):
                 (
                     foyer_fiscal("investissements_agrees_noumea_etc", period)
                     * reliquet_credits_investissement_restants_plafonnes
-                    / (credits_investissement_restants + 1 * (credits_investissement_restants == 0))
+                    / (
+                        credits_investissement_restants
+                        + 1 * (credits_investissement_restants == 0)
+                    )
                 ),
                 0,
             )
@@ -261,7 +276,10 @@ class credits_impot(Variable):
                 (
                     foyer_fiscal("investissements_agrees_autres", period)
                     * reliquet_credits_investissement_restants_plafonnes
-                    / (credits_investissement_restants + 1 * (credits_investissement_restants == 0))
+                    / (
+                        credits_investissement_restants
+                        + 1 * (credits_investissement_restants == 0)
+                    )
                 ),
                 0,
             )
@@ -274,7 +292,10 @@ class credits_impot(Variable):
                 (
                     foyer_fiscal("investissements_agrees_mixtes", period)
                     * reliquet_credits_investissement_restants_plafonnes
-                    / (credits_investissement_restants + 1 * (credits_investissement_restants == 0))
+                    / (
+                        credits_investissement_restants
+                        + 1 * (credits_investissement_restants == 0)
+                    )
                 ),
                 0,
             )
@@ -326,7 +347,10 @@ class credits_impot(Variable):
                     foyer_fiscal("solde_investissements_agrees_noumea_etc", period)
                     * retenue
                 )
-                / (solde_investissements_agrees + 1 * (solde_investissements_agrees == 0))
+                / (
+                    solde_investissements_agrees
+                    + 1 * (solde_investissements_agrees == 0)
+                )
             ),
             0,
         )

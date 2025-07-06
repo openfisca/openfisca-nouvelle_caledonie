@@ -1,7 +1,6 @@
 """Revenus d'activité."""
 
 from openfisca_core.model_api import *
-
 from openfisca_nouvelle_caledonie.entities import Individu
 
 

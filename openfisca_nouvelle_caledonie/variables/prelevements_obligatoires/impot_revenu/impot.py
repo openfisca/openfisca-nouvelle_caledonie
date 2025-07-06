@@ -190,11 +190,13 @@ class impot_brut(Variable):
         # Résultat pour les non résidents
         impot_brut_non_resident = part1 + part2
 
-        return floor(where(
-            foyer_fiscal("resident", period),
-            impot_brut_resident,
-            impot_brut_non_resident,
-        ))
+        return floor(
+            where(
+                foyer_fiscal("resident", period),
+                impot_brut_resident,
+                impot_brut_non_resident,
+            )
+        )
 
     def formula_2008(foyer_fiscal, period, parameters):
         # from tmp/engine/rules/_2008/impots/ImpotBrutUtil2008.java
@@ -279,11 +281,13 @@ class impot_brut(Variable):
         # Résultat pour les non résidents
         impot_brut_non_resident = part1 + part2
 
-        return floor(where(
-            foyer_fiscal("resident", period),
-            impot_brut_resident,
-            impot_brut_non_resident,
-        ))
+        return floor(
+            where(
+                foyer_fiscal("resident", period),
+                impot_brut_resident,
+                impot_brut_non_resident,
+            )
+        )
 
 
 #  Permet de recalculer l'impôt supplémentaire dû à un salaire différé ou à une pension différée. Il se base sur la calcul de l'impôt brut
@@ -324,8 +328,8 @@ class impot_apres_reductions(Variable):
                 impot_apres_imputations - 5_000,
                 foyer_fiscal("reductions_impot", period),
             ),
-            0
-            )
+            0,
+        )
         return max_(impot_apres_imputations - reductions_palfonnees, 0)
 
 
@@ -357,7 +361,9 @@ class impot_net(Variable):
             "plus_values_professionnelles", period
         )
 
-        return floor(impot_apres_reductions - credits_impot + plus_values_professionnelles)
+        return floor(
+            impot_apres_reductions - credits_impot + plus_values_professionnelles
+        )
 
 
 class penalites(Variable):

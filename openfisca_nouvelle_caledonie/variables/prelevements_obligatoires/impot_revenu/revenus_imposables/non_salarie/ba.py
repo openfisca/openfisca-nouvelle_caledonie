@@ -50,15 +50,13 @@ class benefices_agricoles_regime_forfaitaire(Variable):
         multiple, plafond_cafat = get_multiple_and_plafond_cafat_cotisation(
             period, parameters
         )
-        return (
-            max_(
-                0,
-                individu("chiffre_d_daffaires_agricole_ht_imposable", period) / diviseur
-                - min_(
-                    individu("reste_cotisations_apres_bic_avant_ba", period),
-                    multiple * plafond_cafat,
-                ),
-            )
+        return max_(
+            0,
+            individu("chiffre_d_daffaires_agricole_ht_imposable", period) / diviseur
+            - min_(
+                individu("reste_cotisations_apres_bic_avant_ba", period),
+                multiple * plafond_cafat,
+            ),
         )
 
 
@@ -91,6 +89,7 @@ class deficits_agricoles_regime_reel(Variable):
 
 class ba(Variable):
     """Bénéfices agricoles (BA) imposables."""
+
     unit = "currency"
     value_type = float
     entity = Individu
@@ -98,7 +97,8 @@ class ba(Variable):
     definition_period = YEAR
 
     def formula(individu, period):
-        return (
-            individu("benefices_agricoles_regime_forfaitaire", period)
-            + max_(individu("benefices_agricoles_regime_reel", period) - individu("deficits_agricoles_regime_reel", period), 0)
+        return individu("benefices_agricoles_regime_forfaitaire", period) + max_(
+            individu("benefices_agricoles_regime_reel", period)
+            - individu("deficits_agricoles_regime_reel", period),
+            0,
         )
