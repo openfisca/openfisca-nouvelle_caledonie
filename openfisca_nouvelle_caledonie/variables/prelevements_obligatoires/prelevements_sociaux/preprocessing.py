@@ -1,4 +1,3 @@
-import copy
 import logging
 
 from openfisca_core.model_api import *
@@ -13,21 +12,16 @@ def build_cotisations_employeur(parameters):
     """Construit le dictionnaire de barèmes des cotisations employeur à partir des paramètres de parameters."""
     # TODO: contribution patronale de prévoyance complémentaire
     cotisations_employeur = ParameterNode(
-        "cotisations_employeur", data=dict(description="Cotisations sociales employeur")
+        "cotisations_employeur", data={"description": "Cotisations sociales employeur"}
     )  # Génère cotisations_employeur
 
     # Raccourcis
     prelevements_sociaux = parameters.prelevements_obligatoires.prelevements_sociaux
     cafat = prelevements_sociaux.cafat
-    accident_travail = cafat.autres_regimes.accident_travail
     chomage = cafat.autres_regimes.chomage
     prestations_familiales = cafat.autres_regimes.prestations_familiales
     fds = cafat.fds
     fiaf = cafat.fiaf
-    formation_professionnelle = prelevements_sociaux.formation_professionnelle
-    formation_professionnelle_continue = (
-        prelevements_sociaux.formation_professionnelle_continue
-    )
     fsh = prelevements_sociaux.fsh
     retraite = cafat.maladie_retraite.retraite
     ruamm = cafat.maladie_retraite.ruamm
@@ -40,10 +34,10 @@ def build_cotisations_employeur(parameters):
     # Initialisation Cadre
     prive_cadre = ParameterNode(
         "prive_cadre",
-        data=dict(
-            description="Cotisations employeur pour salarié cadre",
-            metadata=dict(order=[]),
-        ),
+        data={
+            "description": "Cotisations employeur pour salarié cadre",
+            "metadata": {"order": []},
+        },
     )
     cotisations_employeur.add_child("prive_cadre", prive_cadre)
 
@@ -78,10 +72,10 @@ def build_cotisations_employeur(parameters):
     # Initialisation Non Cadre
     prive_non_cadre = ParameterNode(
         "prive_non_cadre",
-        data=dict(
-            description="Cotisations employeur pour salarié non cadre",
-            metadata=dict(order=[]),
-        ),
+        data={
+            "description": "Cotisations employeur pour salarié non cadre",
+            "metadata": {"order": []},
+        },
     )
 
     cotisations_employeur.add_child("prive_non_cadre", prive_non_cadre)
@@ -116,11 +110,9 @@ def build_cotisations_employeur(parameters):
 
 
 def build_cotisations_salarie(parameters):
-    """
-    Construit le dictionnaire de barèmes des cotisations salariales
-    """
+    """Construit le dictionnaire de barèmes des cotisations salariales."""
     cotisations_salarie = ParameterNode(
-        "cotisations_salarie", data=dict(description="Cotisations sociales salariales")
+        "cotisations_salarie", data={"description": "Cotisations sociales salariales"}
     )  # Génère cotisations_salarie
 
     prelevements_sociaux = parameters.prelevements_obligatoires.prelevements_sociaux
@@ -137,10 +129,10 @@ def build_cotisations_salarie(parameters):
     # Cadre
     prive_cadre = ParameterNode(
         "prive_cadre",
-        data=dict(
-            description="Cotisations salariales pour salarié cadre",
-            metadata=dict(order=[]),
-        ),
+        data={
+            "description": "Cotisations salariales pour salarié cadre",
+            "metadata": {"order": []},
+        },
     )
     cotisations_salarie.add_child("prive_cadre", prive_cadre)
 
@@ -164,10 +156,10 @@ def build_cotisations_salarie(parameters):
     # Initialisation
     prive_non_cadre = ParameterNode(
         "prive_non_cadre",
-        data=dict(
-            description="Cotisations salariales pour salarié non cadre",
-            metadata=dict(order=[]),
-        ),
+        data={
+            "description": "Cotisations salariales pour salarié non cadre",
+            "metadata": {"order": []},
+        },
     )
 
     cotisations_salarie.add_child("prive_non_cadre", prive_non_cadre)
@@ -194,13 +186,11 @@ def build_cotisations_salarie(parameters):
 
 
 def preprocess_parameters(parameters):
-    """
-    Preprocess the legislation parameters to build the cotisations sociales taxscales (barèmes)
-    """
+    """Preprocess the legislation parameters to build the cotisations sociales taxscales (barèmes)."""
     cotisations_employeur = build_cotisations_employeur(parameters)
     cotisations_salarie = build_cotisations_salarie(parameters)
 
-    cotsoc = ParameterNode("cotsoc", data=dict(description="Cotisations sociales"))
+    cotsoc = ParameterNode("cotsoc", data={"description": "Cotisations sociales"})
     parameters.add_child("cotsoc", cotsoc)
     cotsoc.add_child("cotisations_employeur", cotisations_employeur)
     cotsoc.add_child("cotisations_salarie", cotisations_salarie)

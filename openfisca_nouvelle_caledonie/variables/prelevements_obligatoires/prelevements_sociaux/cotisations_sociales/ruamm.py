@@ -13,7 +13,7 @@ class ruamm_employeur(Variable):
     set_input = set_input_divide_by_period
 
     def formula(individu, period, parameters):
-        cotisation = apply_bareme(
+        return apply_bareme(
             individu,
             period,
             parameters,
@@ -21,7 +21,6 @@ class ruamm_employeur(Variable):
             bareme_name="ruamm",
             variable_name="ruamm_employeur",
         )
-        return cotisation
 
 
 class ruamm_salarie(Variable):
@@ -32,7 +31,7 @@ class ruamm_salarie(Variable):
     set_input = set_input_divide_by_period
 
     def formula(individu, period, parameters):
-        cotisation = apply_bareme(
+        return apply_bareme(
             individu,
             period,
             parameters,
@@ -40,4 +39,3 @@ class ruamm_salarie(Variable):
             bareme_name="ruamm",
             variable_name="ruamm_salarie",
         )
-        return cotisation

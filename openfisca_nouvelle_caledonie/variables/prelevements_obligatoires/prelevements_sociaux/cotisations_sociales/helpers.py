@@ -105,18 +105,16 @@ def apply_bareme_for_relevant_type_sal(
                     cotisations_salarie_by_categorie_salarie
                 )
             else:
+                msg = "cotisations_employeur nor cotisations_salarie not found"
                 raise NameError(
-                    "cotisations_employeur nor cotisations_salarie not found"
+                    msg
                 )
 
             try:
                 categorie_salarie_baremes = bareme_by_categorie_salarie[
                     categorie_salarie_type.name
                 ]
-            except KeyError as e:
-                print(
-                    f"KeyError: {e} in {bareme_by_categorie_salarie._name} for {categorie_salarie_type.name}"
-                )
+            except KeyError:
                 continue
 
             if (
@@ -125,12 +123,12 @@ def apply_bareme_for_relevant_type_sal(
             ):
                 bareme = categorie_salarie_baremes[bareme_name]
             else:
-                KeyError(
-                    f"{bareme_name} not in {bareme_by_categorie_salarie._name} for {categorie_salarie_type.name}"
+                msg = f"{bareme_name} not in {bareme_by_categorie_salarie._name} for {categorie_salarie_type.name}"
+                raise KeyError(
+                    msg
                 )
                 continue
 
-            print(f"computing {bareme_name} for {categorie_salarie_type.name}")
 
             yield bareme.calc(
                 base * (categorie_salarie == categorie_salarie_type),
@@ -155,7 +153,7 @@ def apply_bareme(
     TypesCotisationSocialeModeRecouvrement = (
         cotisation_mode_recouvrement.possible_values
     )
-    cotisation = (
+    return (
         (
             # anticipé (mensuel avec recouvrement en fin d'année)
             cotisation_mode_recouvrement
@@ -200,7 +198,6 @@ def apply_bareme(
             )
         )
     )
-    return cotisation
 
 
 def compute_cotisation(
@@ -232,14 +229,13 @@ def compute_cotisation(
 
     categorie_salarie = individu("categorie_salarie", period.first_month)
 
-    cotisation = apply_bareme_for_relevant_type_sal(
+    return apply_bareme_for_relevant_type_sal(
         bareme_by_categorie_salarie=bareme_by_type_sal_name,
         bareme_name=bareme_name,
         base=assiette_cotisations_sociales,
         plafond=plafond,
         categorie_salarie=categorie_salarie,
     )
-    return cotisation
 
 
 def compute_cotisation_annuelle(
@@ -255,6 +251,7 @@ def compute_cotisation_annuelle(
             cotisation_type=cotisation_type,
             bareme_name=bareme_name,
         )
+    return None
 
 
 def compute_cotisation_anticipee(
@@ -298,3 +295,4 @@ def compute_cotisation_anticipee(
             )
             - cumul
         )
+    return None

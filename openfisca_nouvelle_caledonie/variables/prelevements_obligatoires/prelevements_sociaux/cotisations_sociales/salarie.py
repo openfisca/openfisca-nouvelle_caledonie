@@ -162,14 +162,11 @@ class cotisations_salariales(Variable):
 class salaire_net(Variable):
     value_type = float
     entity = Individu
-    label = "Salaires nets d'après définition INSEE"
+    label = "Salaires nets"
     set_input = set_input_divide_by_period
     definition_period = MONTH
 
     def formula(individu, period, parameters):
-        """
-        Calcul du salaire net d'après définition INSEE
-        """
         salaire_imposable = individu("salaire_de_base", period)
         cotisations_salariales = individu("cotisations_salariales", period)
         ccs = individu("ccs", period)

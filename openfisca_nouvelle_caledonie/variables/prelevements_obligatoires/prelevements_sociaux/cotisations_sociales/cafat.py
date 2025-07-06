@@ -39,7 +39,7 @@ class chomage_employeur(Variable):
     set_input = set_input_divide_by_period
 
     def formula(individu, period, parameters):
-        cotisation = apply_bareme(
+        return apply_bareme(
             individu,
             period,
             parameters,
@@ -47,7 +47,6 @@ class chomage_employeur(Variable):
             bareme_name="chomage",
             variable_name="chomage_employeur",
         )
-        return cotisation
 
 
 class chomage_salarie(Variable):
@@ -58,7 +57,7 @@ class chomage_salarie(Variable):
     set_input = set_input_divide_by_period
 
     def formula(individu, period, parameters):
-        cotisation = apply_bareme(
+        return apply_bareme(
             individu,
             period,
             parameters,
@@ -66,7 +65,6 @@ class chomage_salarie(Variable):
             bareme_name="chomage",
             variable_name="chomage_salarie",
         )
-        return cotisation
 
 
 class fds(Variable):
@@ -77,7 +75,7 @@ class fds(Variable):
     set_input = set_input_divide_by_period
 
     def formula(individu, period, parameters):
-        cotisation = apply_bareme(
+        return apply_bareme(
             individu,
             period,
             parameters,
@@ -85,7 +83,6 @@ class fds(Variable):
             bareme_name="fds",
             variable_name="fds",
         )
-        return cotisation
 
 
 class fiaf(Variable):
@@ -96,7 +93,7 @@ class fiaf(Variable):
     set_input = set_input_divide_by_period
 
     def formula(individu, period, parameters):
-        cotisation = apply_bareme(
+        return apply_bareme(
             individu,
             period,
             parameters,
@@ -104,7 +101,6 @@ class fiaf(Variable):
             bareme_name="fiaf",
             variable_name="fiaf",
         )
-        return cotisation
 
 
 class fsh(Variable):
@@ -115,7 +111,7 @@ class fsh(Variable):
     set_input = set_input_divide_by_period
 
     def formula(individu, period, parameters):
-        cotisation = apply_bareme(
+        return apply_bareme(
             individu,
             period,
             parameters,
@@ -123,7 +119,6 @@ class fsh(Variable):
             bareme_name="fsh",
             variable_name="fsh",
         )
-        return cotisation
 
 
 class prestations_familiales(Variable):
@@ -134,7 +129,7 @@ class prestations_familiales(Variable):
     set_input = set_input_divide_by_period
 
     def formula(individu, period, parameters):
-        cotisation = apply_bareme(
+        return apply_bareme(
             individu,
             period,
             parameters,
@@ -142,7 +137,6 @@ class prestations_familiales(Variable):
             bareme_name="prestations_familiales",
             variable_name="prestations_familiales_employeur",
         )
-        return cotisation
 
 
 class retraite_employeur(Variable):
@@ -153,7 +147,7 @@ class retraite_employeur(Variable):
     set_input = set_input_divide_by_period
 
     def formula(individu, period, parameters):
-        cotisation = apply_bareme(
+        return apply_bareme(
             individu,
             period,
             parameters,
@@ -161,7 +155,6 @@ class retraite_employeur(Variable):
             bareme_name="retraite",
             variable_name="retraite_employeur",
         )
-        return cotisation
 
 
 class retraite_salarie(Variable):
@@ -172,7 +165,7 @@ class retraite_salarie(Variable):
     set_input = set_input_divide_by_period
 
     def formula(individu, period, parameters):
-        cotisation = apply_bareme(
+        return apply_bareme(
             individu,
             period,
             parameters,
@@ -180,4 +173,3 @@ class retraite_salarie(Variable):
             bareme_name="retraite",
             variable_name="retraite_salarie",
         )
-        return cotisation

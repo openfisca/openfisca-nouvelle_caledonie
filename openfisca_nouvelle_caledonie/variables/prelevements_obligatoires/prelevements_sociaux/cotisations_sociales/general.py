@@ -1,6 +1,6 @@
 from functools import partial
 
-from numpy import busday_count as original_busday_count, datetime64, timedelta64, where
+from numpy import busday_count as original_busday_count, datetime64, timedelta64
 
 from openfisca_core.model_api import *
 from openfisca_nouvelle_caledonie.entities import Individu
@@ -34,9 +34,8 @@ class plafond_fsh(Variable):
         # "Ce rapport ne peut pas conduire à un résultat supérieur à la valeur mensuelle du plafond de sécurité sociale."
         # Source : https://boss.gouv.fr/portail/accueil/regles-dassujettissement/assiette-generale.html#titre-chapitre-6---le-plafond-de-la-se-section-2---determination-de-las-a-principe-de-lajustement-a-due-2-salaries-a-temps-partiel
         # §810
-        plafond = min_(plafond, plafond_temps_plein)
+        return min_(plafond, plafond_temps_plein)
 
-        return plafond
 
     # def formula_2023_09(individu, period, parameters):
     #     plafond_temps_plein = parameters(period).prelevements_obligatoires.prelevements_sociaux.fsh.plafond_mensuel
@@ -90,9 +89,8 @@ class plafond_cafat_autres_regimes(Variable):
         # "Ce rapport ne peut pas conduire à un résultat supérieur à la valeur mensuelle du plafond de sécurité sociale."
         # Source : https://boss.gouv.fr/portail/accueil/regles-dassujettissement/assiette-generale.html#titre-chapitre-6---le-plafond-de-la-se-section-2---determination-de-las-a-principe-de-lajustement-a-due-2-salaries-a-temps-partiel
         # §810
-        plafond = min_(plafond, plafond_temps_plein)
+        return min_(plafond, plafond_temps_plein)
 
-        return plafond
 
     # def formula_2023_09(individu, period, parameters):
     #     plafond_temps_plein = parameters(period).prelevements_obligatoires.prelevements_sociaux.pss.plafond_securite_sociale_mensuel
@@ -146,9 +144,8 @@ class plafond_retraite(Variable):
         # "Ce rapport ne peut pas conduire à un résultat supérieur à la valeur mensuelle du plafond de sécurité sociale."
         # Source : https://boss.gouv.fr/portail/accueil/regles-dassujettissement/assiette-generale.html#titre-chapitre-6---le-plafond-de-la-se-section-2---determination-de-las-a-principe-de-lajustement-a-due-2-salaries-a-temps-partiel
         # §810
-        plafond = min_(plafond, plafond_temps_plein)
+        return min_(plafond, plafond_temps_plein)
 
-        return plafond
 
     # def formula_2023_09(individu, period, parameters):
     #     plafond_temps_plein = parameters(period).prelevements_obligatoires.prelevements_sociaux.pss.plafond_securite_sociale_mensuel
@@ -202,9 +199,8 @@ class plafond_securite_sociale(Variable):
         # "Ce rapport ne peut pas conduire à un résultat supérieur à la valeur mensuelle du plafond de sécurité sociale."
         # Source : https://boss.gouv.fr/portail/accueil/regles-dassujettissement/assiette-generale.html#titre-chapitre-6---le-plafond-de-la-se-section-2---determination-de-las-a-principe-de-lajustement-a-due-2-salaries-a-temps-partiel
         # §810
-        plafond = min_(plafond, plafond_temps_plein)
+        return min_(plafond, plafond_temps_plein)
 
-        return plafond
 
     # def formula_2023_09(individu, period, parameters):
     #     plafond_temps_plein = parameters(period).prelevements_obligatoires.prelevements_sociaux.pss.plafond_securite_sociale_mensuel
@@ -304,7 +300,7 @@ class nombre_jours_calendaires(Variable):
         busday_count = partial(original_busday_count, weekmask="1" * 7)
         debut_mois = datetime64(period.start.offset("first-of", "month"))
         fin_mois = datetime64(period.start.offset("last-of", "month"))
-        jours_travailles = max_(
+        return max_(
             busday_count(
                 max_(contrat_de_travail_debut, debut_mois),
                 min_(contrat_de_travail_fin, fin_mois) + timedelta64(1, "D"),
@@ -312,7 +308,6 @@ class nombre_jours_calendaires(Variable):
             0,
         )
 
-        return jours_travailles
 
 
 class contrat_de_travail_debut(Variable):

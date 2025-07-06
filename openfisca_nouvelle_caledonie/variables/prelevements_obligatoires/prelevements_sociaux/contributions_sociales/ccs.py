@@ -18,12 +18,11 @@ class ccs(Variable):
             individu.empty_array()
         )  # TODO: Implement this variable
         revenus_epargne_patrimoine = individu.empty_array()  # TODO: A implémenter si besoin mais cela semble prélevé en même temps que l'IR
-        contribution = (
+        return (
             ccs.activite.calc(revenus_d_activite)
             + ccs.remplacement.calc(revenus_de_remplacement)
             + ccs.epargne_patrimoine.calc(revenus_epargne_patrimoine)
         )
-        return contribution
 
 
 class ccs_revenu_du_capital_base(Variable):

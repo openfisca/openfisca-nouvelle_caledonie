@@ -19,7 +19,7 @@ class agff_salarie(Variable):
     # AGFF: Association pour la gestion du fonds de financement (sous-entendu des départs entre 60 et 65 ans)
 
     def formula(individu, period, parameters):
-        cotisation = apply_bareme(
+        return apply_bareme(
             individu,
             period,
             parameters,
@@ -27,7 +27,6 @@ class agff_salarie(Variable):
             bareme_name="agff",
             variable_name="agff_salarie",
         )
-        return cotisation
 
 
 class agff_employeur(Variable):
@@ -190,7 +189,7 @@ class agirc_arrco_salarie(Variable):
     set_input = set_input_divide_by_period
 
     def formula_2019_01_01(individu, period, parameters):
-        cotisation = apply_bareme(
+        return apply_bareme(
             individu,
             period,
             parameters,
@@ -198,7 +197,6 @@ class agirc_arrco_salarie(Variable):
             bareme_name="agirc_arrco",
             variable_name="agirc_arrco_salarie",
         )
-        return cotisation
 
 
 class agirc_arrco_employeur(Variable):
@@ -209,7 +207,7 @@ class agirc_arrco_employeur(Variable):
     set_input = set_input_divide_by_period
 
     def formula_2019_01_01(individu, period, parameters):
-        cotisation = apply_bareme(
+        return apply_bareme(
             individu,
             period,
             parameters,
@@ -217,7 +215,6 @@ class agirc_arrco_employeur(Variable):
             bareme_name="agirc_arrco",
             variable_name="agirc_arrco_employeur",
         )
-        return cotisation
 
 
 class arrco_salarie(Variable):
@@ -315,7 +312,7 @@ class contribution_equilibre_general_salarie(Variable):
     set_input = set_input_divide_by_period
 
     def formula_2019_01_01(individu, period, parameters):
-        cotisation = apply_bareme(
+        return apply_bareme(
             individu,
             period,
             parameters,
@@ -323,7 +320,6 @@ class contribution_equilibre_general_salarie(Variable):
             bareme_name="ceg",
             variable_name="contribution_equilibre_general_salarie",
         )
-        return cotisation
 
 
 class contribution_equilibre_general_employeur(Variable):
@@ -334,7 +330,7 @@ class contribution_equilibre_general_employeur(Variable):
     set_input = set_input_divide_by_period
 
     def formula_2019_01_01(individu, period, parameters):
-        cotisation = apply_bareme(
+        return apply_bareme(
             individu,
             period,
             parameters,
@@ -342,7 +338,6 @@ class contribution_equilibre_general_employeur(Variable):
             bareme_name="ceg",
             variable_name="contribution_equilibre_general_employeur",
         )
-        return cotisation
 
 
 class contribution_equilibre_technique_salarie(Variable):
