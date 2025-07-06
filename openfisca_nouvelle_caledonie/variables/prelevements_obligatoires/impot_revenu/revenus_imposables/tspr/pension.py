@@ -91,15 +91,19 @@ class pension_imposable_apres_deduction_et_abattement(Variable):
 
         pension_apres_abattement = foyer_fiscal.sum(max_(pension_apres_deduction - abatemment, 0))
         # Abattement spécial sur les pensions pour les non-résidents
-        pension_apres_abattement_non_resident = foyer_fiscal.sum(
-            pension_imposable
-            - min_(pension_imposable, deduction_pension.plafond_non_resident)
-        )
-
+        pension_apres_abattements_non_resident = foyer_fiscal.sum(
+            max_(
+                (
+                    pension_apres_deduction
+                    - abatemment
+                    - min_(pension_imposable, deduction_pension.plafond_non_resident)  # Abattement spécial non résident
+                    ),
+                0)
+            )
         return where(
             foyer_fiscal("resident", period),
             pension_apres_abattement,
-            pension_apres_abattement_non_resident,
+            pension_apres_abattements_non_resident,
         )
 
 

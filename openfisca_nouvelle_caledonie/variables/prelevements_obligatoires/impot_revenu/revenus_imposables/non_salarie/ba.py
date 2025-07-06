@@ -34,11 +34,11 @@ class chiffre_d_daffaires_agricole_ht_exonere(Variable):
     definition_period = YEAR
 
 
-class ba(Variable):
+class benefices_agricoles_regime_forfaitaire(Variable):
     unit = "currency"
     value_type = float
     entity = Individu
-    label = "Bénéfices agricoles"
+    label = "Bénéfices agricoles au régime forfaitaire"
     definition_period = YEAR
 
     def formula(individu, period, parameters):
@@ -53,13 +53,12 @@ class ba(Variable):
         return (
             max_(
                 0,
-                individu("chiffre_d_daffaires_agricole_ht_imposable", period)
+                individu("chiffre_d_daffaires_agricole_ht_imposable", period) / diviseur
                 - min_(
                     individu("reste_cotisations_apres_bic_avant_ba", period),
                     multiple * plafond_cafat,
                 ),
             )
-            / diviseur
         )
 
 
@@ -88,3 +87,18 @@ class deficits_agricoles_regime_reel(Variable):
     entity = Individu
     label = "Déficits agricoles du régime réel simplifié"
     definition_period = YEAR
+
+
+class ba(Variable):
+    """Bénéfices agricoles (BA) imposables."""
+    unit = "currency"
+    value_type = float
+    entity = Individu
+    label = "Bénéfices agricoles (BA) imposables"
+    definition_period = YEAR
+
+    def formula(individu, period):
+        return (
+            individu("benefices_agricoles_regime_forfaitaire", period)
+            + max_(individu("benefices_agricoles_regime_reel", period) - individu("deficits_agricoles_regime_reel", period), 0)
+        )

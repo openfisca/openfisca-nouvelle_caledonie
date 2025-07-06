@@ -105,16 +105,16 @@ class impot_brut(Variable):
 
         parts_fiscales_reduites = foyer_fiscal("parts_fiscales_reduites", period)
 
-        revenu_par_part = floor((
-            max_(revenu_net_global_imposable, 0) + revenu_non_imposable
-        ) / parts_fiscales)
-
-        revenu_par_part_reduite = floor((
-            max_(revenu_net_global_imposable, 0) + revenu_non_imposable
-        ) / parts_fiscales_reduites)
+        revenu_par_part = (parts_fiscales > 0) * floor(
+            (max_(revenu_net_global_imposable, 0) + revenu_non_imposable)
+            / (parts_fiscales + (parts_fiscales == 0))
+        )
+        revenu_par_part_reduite = (parts_fiscales_reduites > 0) * floor(
+            (max_(revenu_net_global_imposable, 0) + revenu_non_imposable)
+            / (parts_fiscales_reduites + (parts_fiscales_reduites == 0))
+        )
 
         bareme = parameters(period).prelevements_obligatoires.impot_revenu.bareme
-
         impot_brut_complet = bareme.calc(revenu_par_part) * parts_fiscales
         impot_brut_reduit = (
             bareme.calc(revenu_par_part_reduite) * parts_fiscales_reduites
@@ -204,7 +204,7 @@ class impot_brut(Variable):
             "taux_moyen_imposition_non_resident", period
         )
 
-        # Calcul de l'impôt brut pour les résidents
+        # Calcul de l'impôt brut pour les résidents (qui par définition on des parts fiscales non nulles)
 
         parts_fiscales = foyer_fiscal("parts_fiscales", period)
         revenu_non_imposable = foyer_fiscal("revenu_non_imposable", period)
@@ -212,9 +212,9 @@ class impot_brut(Variable):
             "revenu_net_global_imposable", period
         )
 
-        revenu_par_part = floor(
+        revenu_par_part = (parts_fiscales > 0) * floor(
             (max_(revenu_net_global_imposable, 0) + revenu_non_imposable)
-            / parts_fiscales
+            / (parts_fiscales + (parts_fiscales == 0))
         )
 
         bareme = parameters(period).prelevements_obligatoires.impot_revenu.bareme
