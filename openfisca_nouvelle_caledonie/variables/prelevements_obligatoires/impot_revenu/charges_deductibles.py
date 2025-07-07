@@ -23,7 +23,7 @@ class charges_deductibles(Variable):
             + foyer_fiscal("deduction_services_a_la_personne", period)
             + foyer_fiscal("deduction_travaux_immobiliers_equipements_verts", period)
             + foyer_fiscal("deduction_travaux_immobiliers", period)
-            + foyer_fiscal("pensions_alimentaires", period)
+            + foyer_fiscal("deduction_pensions_alimentaires", period)
             + foyer_fiscal("retenue_cotisations_sociales", period)
         )
 
@@ -95,6 +95,24 @@ class interets_emprunt_date_du_pret(Variable):
 # annuités.
 
 
+class interets_emprunt_noumea_etc_anciens(Variable):
+    unit = "currency"
+    value_type = float
+    entity = FoyerFiscal
+    label = "Intérêts d’emprunt pour une résidence à Nouméa (souscrit en 1997 ou 1998) quelle que soit l'objet' du prêt"
+    definition_period = YEAR
+    cerfa_field = "XV"
+
+
+class interets_emprunt_residence_secondaire_anciens(Variable):
+    unit = "currency"
+    value_type = float
+    entity = FoyerFiscal
+    label = "Intérêts d’emprunt pour votre résidence secondaire (souscrit en 1997 ou 1998)"
+    definition_period = YEAR
+    cerfa_field = "XW"
+
+
 class deduction_interets_emprunt(Variable):
     unit = "currency"
     value_type = float
@@ -124,10 +142,16 @@ class deduction_interets_emprunt(Variable):
         interets_emprunt_hors_noumea_etc_et_anciens = foyer_fiscal(
             "interets_emprunt_hors_noumea_etc_et_anciens", period
         )
+
+        autres = (
+            foyer_fiscal("interets_emprunt_noumea_etc_anciens", period)
+            + foyer_fiscal("interets_emprunt_residence_secondaire_anciens", period)
+        )
         return (
             interets_emprunt_noumea_etc_recents
             + interets_emprunt_noumea_etc_moins_recents
             + interets_emprunt_hors_noumea_etc_et_anciens
+            + autres
         )
 
 
@@ -190,6 +214,21 @@ class pensions_alimentaires(Variable):
     label = "Pensions alimentaires versées"
     definition_period = YEAR
     cerfa_field = "XD"
+
+
+class deduction_pensions_alimentaires(Variable):
+    unit = "currency"
+    value_type = float
+    entity = FoyerFiscal
+    label = "Pensions alimentaires retenues"
+    definition_period = YEAR
+
+    def formula(foyer_fiscal, period):
+        return where(
+            foyer_fiscal("resident", period),
+            foyer_fiscal("pensions_alimentaires", period),
+            0,
+        )
 
 
 class frais_garde_enfants(Variable):
