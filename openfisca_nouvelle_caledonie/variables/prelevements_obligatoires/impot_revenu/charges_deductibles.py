@@ -408,7 +408,11 @@ class deduction_primes_assurance_vie(Variable):
         plafond = parameters(
             period
         ).prelevements_obligatoires.impot_revenu.charges_deductibles.assurance_vie
-        return max_(min_(foyer_fiscal("primes_assurance_vie", period), plafond), 0)
+        return where(
+            foyer_fiscal("resident", period),
+            max_(min_(foyer_fiscal("primes_assurance_vie", period), plafond), 0),
+            0,
+        )
 
 
 class ccs_deductible(Variable):

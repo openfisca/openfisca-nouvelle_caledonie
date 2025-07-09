@@ -1,7 +1,0 @@
-description: Déduction pour frais professionnels différés
-metadata:
-  short_label: Déduction pour frais professionnels différés
-  label_en: Deduction for deferred professional expenses
-  order:
-  - taux
-  - plafond

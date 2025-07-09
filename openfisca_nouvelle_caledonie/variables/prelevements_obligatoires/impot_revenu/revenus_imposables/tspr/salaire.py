@@ -216,16 +216,38 @@ class deduction_frais_professionnels_salaire_differe(Variable):
     definition_period = YEAR
 
     def formula(individu, period, parameters):
-        deduction_frais_professionnels_differes = parameters(
+        deduction_frais_professionnels = parameters(
             period
-        ).prelevements_obligatoires.impot_revenu.revenus_imposables.tspr.deduction_frais_professionnels_differes
+        ).prelevements_obligatoires.impot_revenu.revenus_imposables.tspr.deduction_frais_professionnels_forfaitaire
 
         salaires_imposes_selon_le_quotient = individu(
             "salaires_imposes_selon_le_quotient", period
         )
         return min_(
-                salaires_imposes_selon_le_quotient * deduction_frais_professionnels_differes.taux,
-                deduction_frais_professionnels_differes.plafond,
+                salaires_imposes_selon_le_quotient * deduction_frais_professionnels.taux,
+                deduction_frais_professionnels.plafond,
+            )
+
+class abattement_sur_salaire_differe(Variable):
+    unit = "currency"
+    value_type = float
+    entity = Individu
+    label = "Abattement sur les salaires"
+    definition_period = YEAR
+
+    def formula(individu, period, parameters):
+        tspr = parameters(
+            period
+        ).prelevements_obligatoires.impot_revenu.revenus_imposables.tspr
+
+        deduction = individu("deduction_frais_professionnels_salaire_differe", period)
+        salaires_imposes_selon_le_quotient = individu(
+            "salaires_imposes_selon_le_quotient", period
+        )
+
+        salaire_apres_deduction = max_(salaires_imposes_selon_le_quotient - deduction, 0)
+        return min_(
+            salaire_apres_deduction * tspr.abattement.taux, tspr.abattement.plafond
             )
 
 
@@ -302,6 +324,7 @@ class salaires_imposes_selon_le_quotient(Variable):
     cerfa_field = {
         0: "ND",
         1: "NE",
+        2: "NF",
     }
     entity = Individu
     label = "Salaires imposés selon le quotient"
@@ -313,10 +336,41 @@ class annees_de_rappel_salaires(Variable):
     cerfa_field = {
         0: "NG",
         1: "NH",
+        2: "NI",
     }
     entity = Individu
     label = "Années de rappel pour les salaires imposés selon le quotient"
     definition_period = YEAR
+
+
+class salaire_differe_apres_deduction(Variable):
+    unit = "currency"
+    value_type = float
+    entity = Individu
+    label = "Salaire différé après déduction"
+    definition_period = YEAR
+
+    def formula(individu, period):
+        deduction_frais_professionnels_salaire_differe = individu(
+            "deduction_frais_professionnels_salaire_differe", period
+        )
+        abattement_sur_salaire_differe = individu(
+            "abattement_sur_salaire_differe", period
+        )
+        salaires_imposes_selon_le_quotient = individu(
+            "salaires_imposes_selon_le_quotient", period
+        )
+        annees_de_rappel_salaires = individu(
+            "annees_de_rappel_salaires", period
+        )
+        return where(
+            annees_de_rappel_salaires > 0,
+            max_(
+            (salaires_imposes_selon_le_quotient - deduction_frais_professionnels_salaire_differe - abattement_sur_salaire_differe) / (annees_de_rappel_salaires + 1 * (annees_de_rappel_salaires == 0)),
+                0,
+                ),
+            0,
+        )
 
 
 class indemnites_elus_municipaux(Variable):

@@ -136,7 +136,59 @@ class annees_de_rappel_pensions(Variable):
     cerfa_field = {
         0: "PG",
         1: "PH",
+        2: "PI",
     }
     entity = Individu
     label = "Années de rappel pour les salaires pensions selon le quotient"
     definition_period = YEAR
+
+
+class pensions_differes_apres_deduction(Variable):
+    unit = "currency"
+    value_type = float
+    entity = Individu
+    label = "Pensions différées après déduction et abattement"
+    definition_period = YEAR
+
+    def formula(individu, period, parameters):
+        tspr = parameters(
+            period
+        ).prelevements_obligatoires.impot_revenu.revenus_imposables.tspr
+
+        pension_imposable = individu("pensions_imposees_selon_le_quotient", period)
+
+        deduction_pension = tspr.deduction_pension
+        montant_deduction_pension = min_(
+            pension_imposable * deduction_pension.taux,
+            deduction_pension.plafond,
+        )
+        pension_apres_deduction = max_(pension_imposable - montant_deduction_pension, 0)
+        abatemment = min_(
+            pension_apres_deduction * tspr.abattement.taux, tspr.abattement.plafond
+            )
+        annees_de_rappel_pensions = individu("annees_de_rappel_pensions", period)
+
+        pension_apres_abattement = max_(pension_apres_deduction - abatemment, 0)
+
+        # Abattement spécial sur les pensions pour les non-résidents
+
+        pension_apres_abattements_non_resident = max_(
+                (
+                    pension_apres_deduction
+                    - abatemment
+                    - min_(
+                        pension_imposable, deduction_pension.plafond_non_resident
+                    )  # Abattement spécial non résident
+                ),
+                0,
+            )
+
+        return where(
+            annees_de_rappel_pensions > 0,
+            where(
+                individu.foyer_fiscal("resident", period),
+                pension_apres_abattement,
+                pension_apres_abattements_non_resident,
+            ) / (annees_de_rappel_pensions + (annees_de_rappel_pensions == 0)),
+            0
+        )

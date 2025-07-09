@@ -27,7 +27,7 @@ class reductions_impot(Variable):
                 period,
             )
             + foyer_fiscal("reduction_dons_organismes_aide_pme", period)
-            - foyer_fiscal("reduction_impots_reintegrees", period)
+
         )
 
 
@@ -115,7 +115,7 @@ class reduction_mecenat(Variable):
     label = "Réduction d'impôt pour mécénat"
     definition_period = YEAR
 
-    def formula_2024(foyer_fiscal, period):
+    def formula_2023(foyer_fiscal, period):
         plafond = ceil(
             foyer_fiscal("revenu_net_global_imposable", period) * 0.15
         )  # TODO: parameters
@@ -125,7 +125,7 @@ class reduction_mecenat(Variable):
         resident = foyer_fiscal("resident", period)
         return where(resident, reduction, 0)
 
-    def formula_2023(foyer_fiscal, period):
+    def formula_2022(foyer_fiscal, period):
         plafond = ceil(
             foyer_fiscal("revenu_net_global_imposable", period) * 0.15
         )  # TODO: parameters et retirer lles formules inutilies
@@ -320,3 +320,5 @@ class reduction_dons_organismes_aide_pme(Variable):
 
 
 # TODO: cases YE YF nontrouvées dans déclarations
+
+

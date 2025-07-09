@@ -1,0 +1,20 @@
+description: Taux du crédit d'impôt pour le mécénat d'entreprise
+values:
+  2024-01-01:
+    value: 0.8
+  2010-01-01:
+    value: 0.6
+  2008-01-01:
+    value: 0.7
+metadata:
+  short_label: Taux du crédit d'impôt pour le mécénat d'entreprise
+  label_en: Rate of the tax credit for corporate sponsorship
+  unit: /1
+  documentation: |
+    Le mécénat d'entreprise est défini par [l'article Lp. 37-2](https://mobi-juridoc.gouv.nc/JuriDoc/JdMobi.nsf/mobile.codes.article.jqm?openagent&CI&n=0&D2FAC7E0732531704B2575670074B613) du Code des impôts de la Nouvelle-Calédonie.
+    Il s'agit de versements effectués par les entreprises à des organismes d'intérêt général ou à des projets
+    d'intérêt général, dans les domaines de la culture, de l'éducation, de la recherche, de l'environnement,
+    du sport, etc.
+
+    Les versements ouvrent droit à un crédit d'impôt égal à un pourcentage de leur montant dans la limite de 0,5 % du chiffre
+    d'affaires hors taxes de l'entreprise pour l'année précédente.

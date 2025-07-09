@@ -7,6 +7,15 @@ from openfisca_nouvelle_caledonie.entities import FoyerFiscal
 
 # Cadre 14 Autres réductions et crédits d'impôt
 
+class amortissements_excedentaires(Variable):
+    unit = "currency"
+    value_type = float
+    entity = FoyerFiscal
+    cerfa_field = "WE"
+    label = "Amortissements excédentaires (art. 21 IV du code des impôts) et autres amortissements non déductibles"
+    definition_period = YEAR
+
+
 ## Crédits d'impôts des entreprises
 
 
@@ -119,7 +128,7 @@ class credits_impot(Variable):
     label = "Crédits d'impôt"
     definition_period = YEAR
 
-    def formula(foyer_fiscal, period):
+    def formula(foyer_fiscal, period, parameters):
         impot_apres_reductions = foyer_fiscal("impot_apres_reductions", period)
 
         solde_investissements_agrees = foyer_fiscal(
@@ -142,12 +151,12 @@ class credits_impot(Variable):
 
         investissement_productif_industriel = foyer_fiscal(
             "investissement_productif_industriel", period
-        )
+        ) + foyer_fiscal("amortissements_excedentaires", period)
         plaf_50 = where(
             investissement_productif_industriel > 0,
             np.ceil(0.50 * impot_apres_reductions),  # TODO: parameters
             0,
-        )  # TOD0: manque case WE https://github.com/openfisca/openfisca-nouvelle_caledonie/issues/34
+        )
 
         souscription_fcp = foyer_fiscal("souscription_fcp", period)
         plaf_60 = where(
@@ -245,7 +254,7 @@ class credits_impot(Variable):
             foyer_fiscal("investissements_agrees_noumea_etc", period)
             + foyer_fiscal("investissements_agrees_autres", period)
         ) + np.ceil(foyer_fiscal("investissements_agrees_mixtes", period))
-        reliquet_credits_investissement_restants_plafonnes = min_(
+        reliquat_credits_investissement_restants_plafonnes = min_(
             min_(
                 credits_investissement_restants,
                 plaf_70,
@@ -259,7 +268,7 @@ class credits_impot(Variable):
                 foyer_fiscal("investissements_agrees_noumea_etc", period) > 0,
                 (
                     foyer_fiscal("investissements_agrees_noumea_etc", period)
-                    * reliquet_credits_investissement_restants_plafonnes
+                    * reliquat_credits_investissement_restants_plafonnes
                     / (
                         credits_investissement_restants
                         + 1 * (credits_investissement_restants == 0)
@@ -275,7 +284,7 @@ class credits_impot(Variable):
                 foyer_fiscal("investissements_agrees_autres", period) > 0,
                 (
                     foyer_fiscal("investissements_agrees_autres", period)
-                    * reliquet_credits_investissement_restants_plafonnes
+                    * reliquat_credits_investissement_restants_plafonnes
                     / (
                         credits_investissement_restants
                         + 1 * (credits_investissement_restants == 0)
@@ -291,7 +300,7 @@ class credits_impot(Variable):
                 foyer_fiscal("investissements_agrees_mixtes", period) > 0,
                 (
                     foyer_fiscal("investissements_agrees_mixtes", period)
-                    * reliquet_credits_investissement_restants_plafonnes
+                    * reliquat_credits_investissement_restants_plafonnes
                     / (
                         credits_investissement_restants
                         + 1 * (credits_investissement_restants == 0)
@@ -304,7 +313,7 @@ class credits_impot(Variable):
         # retenu_yz
         credit_investissements_agrees_mixtes = where(
             foyer_fiscal("investissements_agrees_mixtes", period) > 0,
-            reliquet_credits_investissement_restants_plafonnes
+            reliquat_credits_investissement_restants_plafonnes
             - credit_investissements_agrees_noumea_etc
             - credit_investissements_agrees_autres,
             credit_investissements_agrees_mixtes,
@@ -317,7 +326,7 @@ class credits_impot(Variable):
                 & (foyer_fiscal("investissements_agrees_mixtes", period) == 0)
             ),
             (
-                reliquet_credits_investissement_restants_plafonnes
+                reliquat_credits_investissement_restants_plafonnes
                 - credit_investissements_agrees_noumea_etc,
             ),
             credit_investissements_agrees_autres,
@@ -339,7 +348,6 @@ class credits_impot(Variable):
         report_investissements_agrees_noumea = report_investissements
 
         # Amortissements excedentaires WE TODO; à vérifer et inclure
-        # credit_we
         _ = where(
             solde_investissement_plafonnes > 0,
             np.ceil(
@@ -355,10 +363,18 @@ class credits_impot(Variable):
             0,
         )
 
-        # RETENUE_WE = min(we, plaf_we
-        # RETENUE_W       = min(RETENUE_WE, plaf_credits)
-        # plaf_credits = plaf_credits - RETEUE_WE
-        # REPORT_WE  we) - plaf_we if we) > plaf_we else
+        credits_amortissements_excedentaires = min_(
+            min_(
+                foyer_fiscal("amortissements_excedentaires", period),
+                plaf_50,
+                ),
+            reliquat_plafond_credits,
+        )
+
+        reliquat_plafond_credits = max_(
+            reliquat_plafond_credits - credits_amortissements_excedentaires,
+            0,
+        )
         # # YW
         # RETENUE_YW = min(yw, plaf_yw)
         # RETENUE_YW = min(RETENUE_YW, plaf_credits)
@@ -430,10 +446,13 @@ class credits_impot(Variable):
         )
 
         # YX
+        mecenat_entreprise = parameters(
+            period
+        ).prelevements_obligatoires.impot_revenu.credits.mecenat_entreprise
         credit_mecenat_entreprise = where(
             foyer_fiscal("resident", period),
             min_(
-                np.ceil(0.80 * foyer_fiscal("mecenat_entreprise", period)),
+                np.ceil(mecenat_entreprise.taux * foyer_fiscal("mecenat_entreprise", period)),
                 impot_apres_reductions - credits_totaux,
             ),
             0,
@@ -468,7 +487,6 @@ class credits_impot(Variable):
             ),
             0,
         )
-
         return (
             credit_solde_noumea_etc
             + credit_solde_autres
@@ -477,7 +495,7 @@ class credits_impot(Variable):
             + credit_investissements_agrees_mixtes
             + credit_investissement_productif_industriel
             + credit_souscription_fcp
-            # + credit_we
+            + credits_amortissements_excedentaires
             + credit_mecenat_entreprise
             + credit_depenses_exportation
             + credit_depenses_recherche_innovation,
