@@ -51,12 +51,15 @@ class abattement_enfants_accueillis(Variable):
     label = "Abattement enfants accueillis"
     definition_period = YEAR
 
-    def formula(foyer_fiscal, period):
+    def formula(foyer_fiscal, period, parameters):
+        abattements = parameters(period).prelevements_obligatoires.impot_revenu.abattements
         return where(
             foyer_fiscal("resident", period),
             (
-                foyer_fiscal("enfants_accueillis", period) * 406_000  # TODO: parameters
-                + foyer_fiscal("enfants_accueillis_handicapes", period) * 540_000
+                foyer_fiscal("enfants_accueillis", period) *
+                abattements.abattement_enfants_accueillis
+                + foyer_fiscal("enfants_accueillis_handicapes", period) *
+                abattements.abattement_enfants_accueillis_handicape
             ),
             0,
         )
@@ -352,24 +355,30 @@ def calcul_impot_brut_resident_2016(foyer_fiscal, period, parameters, rngi = Non
     )
 
     impot_brut_complet = where(impot_brut_complet > 0, impot_brut_complet, 0)
+
+
+    part_minimale = parameters(
+        period
+    ).prelevements_obligatoires.impot_revenu.part_min_revenu_total_imposable
     impot_brut_complet = where(
-        fraction < 0.01,  # TODO: parameters
+        fraction < part_minimale,
         0,
         impot_brut_complet * fraction,
     )
-
     impot_brut_reduit = where(impot_brut_reduit > 0, impot_brut_reduit, 0)
     impot_brut_reduit = where(
-        fraction < 0.01,  # TODO: parameters
+        fraction < part_minimale,
         0,
         impot_brut_reduit * fraction,
     )
     # Plafonnement du quotient familial
+
+    plafond_quotient_familial = parameters(period).prelevements_obligatoires.impot_revenu.plafond_quotient_familial
     impot_brut = max_(
         impot_brut_complet,
         impot_brut_reduit
-        - ((parts_fiscales - parts_fiscales_reduites) * 2 * 300000),
-    )  # TODO: parameters
+        - ((parts_fiscales - parts_fiscales_reduites) * 2 * plafond_quotient_familial),
+    )
 
     # L'impôt brut est plafonné à 50% des revenus
     taux_plafond = parameters(
