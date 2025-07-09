@@ -1,6 +1,6 @@
-description: Taux plafond de l'impôt sur le revenu
+description: Montant plafond de la réduction d'impôt pour quotient familial.
 values:
   2020-01-01:
-    value: 0.5
+    value: 300_000
 metadata:
-  unit: /1
+  unit: currency
