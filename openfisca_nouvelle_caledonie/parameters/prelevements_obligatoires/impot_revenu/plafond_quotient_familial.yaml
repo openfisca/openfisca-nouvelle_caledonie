@@ -1,4 +1,4 @@
-description: Montant plafond de la réduction d'impôt pour quotient familial.
+description: Montant plafond de la réduction d'impôt pour quotient familial (par demi-part)
 values:
   2020-01-01:
     value: 300_000
