@@ -356,7 +356,6 @@ def calcul_impot_brut_resident_2016(foyer_fiscal, period, parameters, rngi = Non
 
     impot_brut_complet = where(impot_brut_complet > 0, impot_brut_complet, 0)
 
-
     part_minimale = parameters(
         period
     ).prelevements_obligatoires.impot_revenu.part_min_revenu_total_imposable
@@ -414,14 +413,19 @@ def calcul_impot_brut_resident_2008_2015(foyer_fiscal, period, parameters, rngi)
         revenu_net_global_imposable + revenu_non_imposable,
         1,
     )
+
     fraction = where(
         revenu_net_global_imposable > 0,
         revenu_net_global_imposable / revenu_total,
         1,
     )
     impot_brut = where(impot_brut > 0, impot_brut, 0)
+
+    part_minimale = parameters(
+        period
+    ).prelevements_obligatoires.impot_revenu.part_min_revenu_total_imposable
     impot_brut = where(
-        fraction < 0.01,  # TODO: parameters
+        fraction < part_minimale,
         0,
         impot_brut * fraction,
     )
