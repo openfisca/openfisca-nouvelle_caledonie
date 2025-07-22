@@ -84,34 +84,6 @@ class revenu_net_global_imposable(Variable):
         return floor(rngi / 1000) * 1000  # Arrondi à la baisse par tranche de 1000
 
 
-# class revenu_net_global_imposable_revise_salaires_differes(Variable):
-#     value_type = int
-#     entity = Individu
-#     label = "Revenu net global imposable révisé avec les revenu différés"
-#     definition_period = YEAR
-
-#     def formula(foyer_fiscal, period):
-#         revenu_net_global_imposable = foyer_fiscal("revenu_net_global_imposable", period)
-#         salaire_differe_apres_deduction = foyer_fiscal.sum(
-#             foyer_fiscal.members("salaire_differe_apres_deduction", period)
-#         )
-#         rngi = revenu_net_global_imposable + salaire_differe_apres_deduction
-#         return floor(rngi / 1000) * 1000  # Arrondi à la baisse par tranche de 1000
-
-
-# class revenu_net_global_imposable_revise_pensions_differes(Variable):
-#     value_type = int
-#     entity = FoyerFiscal
-#     label = "Revenu net global imposable révisé avec les revenu différés"
-#     definition_period = YEAR
-
-#     def formula(foyer_fiscal, period):
-#         revenu_net_global_imposable = foyer_fiscal("revenu_net_global_imposable", period)
-#         pensions_differes_apres_deduction = foyer_fiscal("pensions_differes_apres_deduction", period)
-#         rngi = revenu_net_global_imposable + pensions_differes_apres_deduction
-#         return floor(rngi / 1000) * 1000  # Arrondi à la baisse par tranche de 1000
-
-
 class impot_brut(Variable):
     value_type = int
     entity = FoyerFiscal
@@ -121,46 +93,54 @@ class impot_brut(Variable):
     def formula_2016(foyer_fiscal, period, parameters):
         revenu_net_global_imposable = foyer_fiscal("revenu_net_global_imposable", period)
         impot_brut_avant_quotient = foyer_fiscal("impot_brut_avant_quotient", period)
-        role = FoyerFiscal.DECLARANT_PRINCIPAL
-        rngi = floor(
-            (
-                revenu_net_global_imposable
-                + foyer_fiscal.sum(
-                    foyer_fiscal.members("salaire_differe_apres_deduction", period),
-                    role=role
-                    )
-                ) / 1000) * 1000  # Arrondi à la baisse par tranche de 1000
-        annees_de_rappel_salaires = foyer_fiscal.sum(
-            foyer_fiscal.members("annees_de_rappel_salaires", period),
-            role=role
-        )
-        impot_brut_apres_salaires_differes = calcul_impot_brut_2016(
-            foyer_fiscal, period, parameters, rngi = rngi
+        total = impot_brut_avant_quotient * 1.0
+        roles = [FoyerFiscal.DECLARANT_PRINCIPAL, FoyerFiscal.CONJOINT]
+
+        for role in roles:
+            rngi = floor(
+                (
+                    revenu_net_global_imposable
+                    + foyer_fiscal.sum(
+                        foyer_fiscal.members("salaire_differe_apres_deduction", period),
+                        role=role
+                        )
+                    ) / 1000) * 1000  # Arrondi à la baisse par tranche de 1000
+            annees_de_rappel_salaires = foyer_fiscal.sum(
+                foyer_fiscal.members("annees_de_rappel_salaires", period),
+                role=role
             )
-        impot_supplementaire_salaires_differes = (
-            impot_brut_apres_salaires_differes - impot_brut_avant_quotient
-        ) * annees_de_rappel_salaires
+            impot_brut_apres_salaires_differes = calcul_impot_brut_2016(
+                foyer_fiscal, period, parameters, rngi = rngi
+                )
+            impot_supplementaire_salaires_differes = (
+                impot_brut_apres_salaires_differes - impot_brut_avant_quotient
+            ) * annees_de_rappel_salaires
 
-        rngi = floor(
-            (
-                revenu_net_global_imposable
-                + foyer_fiscal.sum(
-                    foyer_fiscal.members("pensions_differes_apres_deduction", period),
-                    role=role
-                    )
-                ) / 1000) * 1000  # Arrondi à la baisse par tranche de 1000
-        annees_de_rappel_pensions = foyer_fiscal.sum(
-            foyer_fiscal.members("annees_de_rappel_pensions", period),
-            role=role
-        )
-        impot_brut_apres_pensions_differes = calcul_impot_brut_2016(
-            foyer_fiscal, period, parameters, rngi = rngi
-        )
-        impot_supplementaire_pensions_differes = (
-            impot_brut_apres_pensions_differes - impot_brut_avant_quotient
-        ) * annees_de_rappel_pensions
+            rngi = floor(
+                (
+                    revenu_net_global_imposable
+                    + foyer_fiscal.sum(
+                        foyer_fiscal.members("pensions_differes_apres_deduction", period),
+                        role=role
+                        )
+                    ) / 1000) * 1000  # Arrondi à la baisse par tranche de 1000
+            annees_de_rappel_pensions = foyer_fiscal.sum(
+                foyer_fiscal.members("annees_de_rappel_pensions", period),
+                role=role
+            )
+            impot_brut_apres_pensions_differes = calcul_impot_brut_2016(
+                foyer_fiscal, period, parameters, rngi = rngi
+            )
+            impot_supplementaire_pensions_differes = (
+                impot_brut_apres_pensions_differes - impot_brut_avant_quotient
+            ) * annees_de_rappel_pensions
 
-        return impot_brut_avant_quotient + impot_supplementaire_salaires_differes + impot_supplementaire_pensions_differes
+            total += (
+                impot_supplementaire_salaires_differes
+                + impot_supplementaire_pensions_differes
+                )
+
+        return total
 
 class impot_brut_avant_quotient(Variable):
     value_type = int
