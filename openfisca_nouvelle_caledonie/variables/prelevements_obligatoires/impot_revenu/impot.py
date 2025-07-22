@@ -3,7 +3,7 @@
 from numpy import floor
 
 from openfisca_core.model_api import *
-from openfisca_nouvelle_caledonie.entities import FoyerFiscal, Individu
+from openfisca_nouvelle_caledonie.entities import FoyerFiscal
 
 
 class revenu_brut_global(Variable):
