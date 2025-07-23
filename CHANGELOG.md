@@ -1,5 +1,13 @@
 # Changelog
 
+## 13.2.0 [#52](https://github.com/openfisca/openfisca-nouvelle_caledonie/pull/52)
+
+* Évolution du système socio-fiscal.
+* Périodes concernées : toutes.
+* Zones impactées : `variables/prelevements_obligatoires/impot_revenu/`.
+* Détails :
+  - Améliore le calcul de l'impôt sur le revenu
+
 ### 13.1.3 [#49](https://github.com/openfisca/openfisca-nouvelle_caledonie/pull/49)
 
 * Amélioration technique.
