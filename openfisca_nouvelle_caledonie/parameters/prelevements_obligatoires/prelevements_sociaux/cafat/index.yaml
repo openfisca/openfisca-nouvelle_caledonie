@@ -6,9 +6,6 @@ metadata:
   order:
     - maladie_retraite
     - autres_regimes
-    - fsh
-    - formation_professionnelle
-    - formation_professionnelle_continue
     - fiaf
     - fds
 documentation: |
