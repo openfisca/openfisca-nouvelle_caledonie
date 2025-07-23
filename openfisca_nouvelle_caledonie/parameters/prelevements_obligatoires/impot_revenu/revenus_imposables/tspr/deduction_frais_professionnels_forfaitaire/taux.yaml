@@ -3,9 +3,8 @@ values:
   2001-09-25:
     value: 0.1
 metadata:
-  short_label: Maxime BOLLENGIER
+  short_label: Taux
   label_en: Rate of the flat-rate deduction for professional expenses
-  short_label_en: Maxime BOLLENGIER
   unit: /1
   reference:
     2001-09-25:
