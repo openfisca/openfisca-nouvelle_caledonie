@@ -1,0 +1,52 @@
+description: Plafond mensuel de la cotisation retraite et tranche 1 du RUAMM
+values:
+  2006-01-01:
+    value: 399_100
+  2006-04-01:
+    value: 430_650
+  2007-01-01:
+    value: 438_800
+  2008-01-01:
+    value: 446_300
+  2009-01-01:
+    value: 460_500
+  2010-01-01:
+    value: 460_500
+  2011-01-01:
+    value: 473_600
+  2012-01-01:
+    value: 483_600
+  2013-01-01:
+    value: 490_700
+  2014-01-01:
+    value: 494_300
+  2015-01-01:
+    value: 498_300
+  2016-01-01:
+    value: 498_300
+  2017-01-01:
+    value: 498_300
+  2018-01-01:
+    value: 505_100
+  2019-01-01:
+    value: 510_500
+  2020-01-01:
+    value: 510_500
+  2021-01-01:
+    value: 510_500
+  2022-01-01:
+    value: 513_900
+  2023-01-01:
+    value: 539_500
+  2024-01-01:
+    value: 539_500
+  2025-01-01:
+    value: 548_600
+metadata:
+  short_label: Plafond retraite et tranche 1 RUAMM
+  label_en: Ceiling for retirement and first tranche of RUAMM
+  unit: currency
+  reference:
+    2025-01-01:
+      title: TODO (et corriger date)
+      href: https://www.cafat.nc/employeurs-changement-debut-annee/

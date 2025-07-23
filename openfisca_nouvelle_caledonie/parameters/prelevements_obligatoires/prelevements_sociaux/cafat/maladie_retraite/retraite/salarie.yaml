@@ -1,0 +1,19 @@
+description: Cotisation retraite payée par le salarié
+brackets:
+- threshold:
+    2017-01-01:
+      value: 0
+  rate:
+    2017-01-01:
+      value: 0.042
+- threshold:
+    2017-01-01:
+      value: 1
+  rate:
+    2017-01-01:
+      value: 0
+metadata:
+  short_label: Cotisation retraite salarié
+  label_en: Employee's retirement contribution
+  rate_unit: /1
+  threshold_unit: plafond_CAFAT_retraite

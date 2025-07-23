@@ -1,0 +1,20 @@
+description: Cotisation  employeur pour le fonds interprofessionnel d’assurance formation (FIAF)
+brackets:
+- threshold:
+    2015-01-01:
+      value: 0
+  rate:
+    2015-01-01:
+      value: 0.002
+- threshold:
+    2015-01-01:
+      value: 1
+  rate:
+    2015-01-01:
+      value: 0
+metadata:
+  short_label: Cotisation employeur
+  short_label_en: Employer's contribution
+  label_en: Employer's contribution to the interprofessional training insurance fund (FIAF)
+  rate_unit: /1
+  threshold_unit: plafond_CAFAT_retraite

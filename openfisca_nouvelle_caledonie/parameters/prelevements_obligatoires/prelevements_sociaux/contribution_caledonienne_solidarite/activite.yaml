@@ -1,0 +1,23 @@
+description: Contribution calédonienne de solidarité (CCS) sur les revenus d'activité
+brackets:
+- threshold:
+    2015-01-01:
+      value: 0
+  rate:
+    2015-01-01:
+      value: 0.01
+    2021-10-01:
+      value: 0.013
+    2022-07-01:
+      value: 0.02
+    2025-04-01:
+      value: 0.03
+metadata:
+  short_label: CCS activité
+  label_en: Caledonian solidarity contribution on activity income
+  reference:
+    2015-01-01:
+      - title: Loi du pays 2014-20 du 31/12/2014
+      - title: Délibération 38 du 31/12/2014 (Art.2 et 3)
+  rate_unit: /1
+  threshold_unit: currency
