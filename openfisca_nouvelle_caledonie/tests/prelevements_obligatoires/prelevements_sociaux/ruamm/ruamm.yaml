@@ -1,0 +1,20 @@
+- name: Test tranche 1 RUAMM
+  period: 2025-01
+  absolute_error_margin: 1
+  input:
+    salaire_de_base: 548_600
+    categorie_salarie: prive_non_cadre
+  output:
+    ruamm_employeur: 548_600 * .1167
+    ruamm_salarie: 548_600 * .0385
+
+- name: Test tranches 1 et 2 RUAMM
+  period: 2025-01
+  absolute_error_margin: 1
+  input:
+    salaire_de_base: 548_600 + 100_000
+    categorie_salarie: prive_non_cadre
+  output:
+    salaire_de_base: 548_600 + 100_000
+    ruamm_employeur: 548_600 * .1167 + 100_000 * .0375
+    ruamm_salarie: 548_600 * .0385 + 100_000 * .0125
