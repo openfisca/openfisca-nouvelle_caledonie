@@ -22,7 +22,7 @@ class bic_vente_fabrication_transformation_achats(Variable):
     value_type = float
     cerfa_field = {
         0: "ED",
-        1: "ED",
+        1: "EE",
         2: "EF",
     }
     entity = Individu
@@ -61,7 +61,7 @@ class bic_services_achats(Variable):
     value_type = float
     cerfa_field = {
         0: "FD",
-        1: "FD",
+        1: "FE",
         2: "FF",
     }
     entity = Individu
@@ -94,8 +94,8 @@ class bic_forfait(Variable):
         abattement = parameters(
             period
         ).prelevements_obligatoires.impot_revenu.revenus_imposables.non_salarie.bic.abattement
-        return max_(
-            0,
+
+        bic_vente = max_(
             (
                 individu("bic_vente_fabrication_transformation_ca_ht", period)
                 - individu("bic_vente_fabrication_transformation_achats", period)
@@ -103,11 +103,20 @@ class bic_forfait(Variable):
                     "bic_vente_fabrication_transformation_salaires_et_sous_traitance",
                     period,
                 )
-                + individu("bic_services_ca_ht", period)
+            ),
+            0,
+        )
+        bic_services = max_(
+            (
+                individu("bic_services_ca_ht", period)
                 - individu("bic_services_achats", period)
                 - individu("bic_services_salaires_et_sous_traitance", period)
-            )
-            * abattement
+            ),
+            0,
+        )
+        return max_(
+            0,
+            (bic_vente + bic_services) * abattement
             - individu("cotisations_non_salarie", period),
         )
 

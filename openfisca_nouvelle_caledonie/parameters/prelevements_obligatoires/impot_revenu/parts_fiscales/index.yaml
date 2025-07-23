@@ -1,0 +1,13 @@
+description: Parts fiscales
+metadata:
+  short_label: Parts fiscales
+  label_en: Tax parts
+  order:
+  - celibataire_divorce_ou_veuf_sans_pac
+  - marie_ou_pacse
+  - enfant_demi_part
+  - enfant_part_entiere
+  - veuf_avec_pac
+  - ascendant_a_charge
+  - ancien_combattant
+  - invalide

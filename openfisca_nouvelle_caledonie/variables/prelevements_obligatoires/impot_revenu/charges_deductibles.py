@@ -14,13 +14,16 @@ class charges_deductibles(Variable):
     def formula(foyer_fiscal, period):
         # TODO: vérifier si la formule est correcte
         return (
-            foyer_fiscal("csg_deductible", period)
+            foyer_fiscal("ccs_deductible", period)
             + foyer_fiscal("deduction_depenses_internat_transport_interurbain", period)
+            + foyer_fiscal("deduction_frais_garde_enfants", period)
+            + foyer_fiscal("deduction_immeubles_historiques", period)
             + foyer_fiscal("deduction_interets_emprunt", period)
+            + foyer_fiscal("deduction_primes_assurance_vie", period)
             + foyer_fiscal("deduction_services_a_la_personne", period)
             + foyer_fiscal("deduction_travaux_immobiliers_equipements_verts", period)
             + foyer_fiscal("deduction_travaux_immobiliers", period)
-            + foyer_fiscal("pensions_alimentaires", period)
+            + foyer_fiscal("deduction_pensions_alimentaires", period)
             + foyer_fiscal("retenue_cotisations_sociales", period)
         )
 
@@ -72,7 +75,6 @@ class interets_emprunt_date_du_pret(Variable):
     entity = FoyerFiscal
     label = "Date du prêt souscrit pour votre résidence principale"
     definition_period = YEAR
-    cerfa_field = "XP"
     # TODO: VEFA ? Condiiton XI
 
 
@@ -91,6 +93,24 @@ class interets_emprunt_date_du_pret(Variable):
 # sur Nouméa, Dumbéa, Païta et Mont-Dore avec un prêt contracté en 2019, 2020
 # et 2021, la déduction est plafonnée à 1 000 000 F CFP pour les 20 premières
 # annuités.
+
+
+class interets_emprunt_noumea_etc_anciens(Variable):
+    unit = "currency"
+    value_type = float
+    entity = FoyerFiscal
+    label = "Intérêts d’emprunt pour une résidence à Nouméa (souscrit en 1997 ou 1998) quelle que soit l'objet' du prêt"
+    definition_period = YEAR
+    cerfa_field = "XV"
+
+
+class interets_emprunt_residence_secondaire_anciens(Variable):
+    unit = "currency"
+    value_type = float
+    entity = FoyerFiscal
+    label = "Intérêts d’emprunt pour votre résidence secondaire (souscrit en 1997 ou 1998)"
+    definition_period = YEAR
+    cerfa_field = "XW"
 
 
 class deduction_interets_emprunt(Variable):
@@ -122,10 +142,16 @@ class deduction_interets_emprunt(Variable):
         interets_emprunt_hors_noumea_etc_et_anciens = foyer_fiscal(
             "interets_emprunt_hors_noumea_etc_et_anciens", period
         )
+
+        autres = (
+            foyer_fiscal("interets_emprunt_noumea_etc_anciens", period)
+            + foyer_fiscal("interets_emprunt_residence_secondaire_anciens", period)
+        )
         return (
             interets_emprunt_noumea_etc_recents
             + interets_emprunt_noumea_etc_moins_recents
             + interets_emprunt_hors_noumea_etc_et_anciens
+            + autres
         )
 
 
@@ -188,6 +214,21 @@ class pensions_alimentaires(Variable):
     label = "Pensions alimentaires versées"
     definition_period = YEAR
     cerfa_field = "XD"
+
+
+class deduction_pensions_alimentaires(Variable):
+    unit = "currency"
+    value_type = float
+    entity = FoyerFiscal
+    label = "Pensions alimentaires retenues"
+    definition_period = YEAR
+
+    def formula(foyer_fiscal, period):
+        return where(
+            foyer_fiscal("resident", period),
+            foyer_fiscal("pensions_alimentaires", period),
+            0,
+        )
 
 
 class frais_garde_enfants(Variable):
@@ -322,7 +363,7 @@ class retenue_cotisations_sociales(Variable):
         period_plafond = period.start.offset("first-of", "month").offset(11, "month")
         plafond_cafat_retraite = parameters(
             period_plafond
-        ).prelevements_obligatoires.prelevements_sociaux.cafat.maladie_retraite.plafond
+        ).prelevements_obligatoires.prelevements_sociaux.cafat.maladie_retraite.plafond_retraite_mensuel
         return where(
             resident,
             (
@@ -367,10 +408,14 @@ class deduction_primes_assurance_vie(Variable):
         plafond = parameters(
             period
         ).prelevements_obligatoires.impot_revenu.charges_deductibles.assurance_vie
-        return max_(min_(foyer_fiscal("primes_assurance_vie", period), plafond), 0)
+        return where(
+            foyer_fiscal("resident", period),
+            max_(min_(foyer_fiscal("primes_assurance_vie", period), plafond), 0),
+            0,
+        )
 
 
-class csg_deductible(Variable):
+class ccs_deductible(Variable):
     unit = "currency"
     value_type = float
     entity = FoyerFiscal
@@ -399,7 +444,7 @@ class deduction_immeubles_historiques(Variable):
         plafond = parameters(
             period
         ).prelevements_obligatoires.impot_revenu.charges_deductibles.immeubles_historiques
-        return max_(min_(foyer_fiscal("immeubles_hitoriques", period), plafond), 0)
+        return max_(min_(foyer_fiscal("immeubles_historiques", period), plafond), 0)
 
 
 class deductions_reintegrees(Variable):

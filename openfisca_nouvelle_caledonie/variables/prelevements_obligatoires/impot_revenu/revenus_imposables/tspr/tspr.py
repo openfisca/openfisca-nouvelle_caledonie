@@ -11,8 +11,10 @@ class revenus_categoriels_tspr(Variable):
     definition_period = YEAR
 
     def formula(foyer_fiscal, period):
-        salaire_imposable_apres_deduction_et_abattement = foyer_fiscal(
-            "salaire_imposable_apres_deduction_et_abattement", period
+        salaire_imposable_apres_deduction_et_abattement = foyer_fiscal.sum(
+            foyer_fiscal.members(
+                "salaire_imposable_apres_deduction_et_abattement", period
+            )
         )
         indemnites = foyer_fiscal("indemnites", period)
         pension_imposable_apres_deduction_et_abattement = foyer_fiscal(
@@ -29,7 +31,7 @@ class revenus_categoriels_tspr(Variable):
         )
 
 
-class revenus_bruts_salaires_epnsions(Variable):
+class revenus_bruts_salaires_pensions(Variable):
     value_type = float
     entity = FoyerFiscal
     label = "Revenus bruts salaires et pensions"
@@ -39,7 +41,6 @@ class revenus_bruts_salaires_epnsions(Variable):
         return foyer_fiscal.sum(
             foyer_fiscal.members("salaire_percu", period)
             + foyer_fiscal.members("pension_retraite_rente_imposables", period)
-            + foyer_fiscal.members("indemnites", period)
             + foyer_fiscal.members(
                 "rentes_viageres_a_titre_onereux_moins_de_50_ans", period
             )

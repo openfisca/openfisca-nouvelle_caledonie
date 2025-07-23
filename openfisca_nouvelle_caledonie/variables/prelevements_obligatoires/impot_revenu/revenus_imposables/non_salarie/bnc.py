@@ -61,16 +61,17 @@ class bnc(Variable):
         multiple, plafond_cafat = get_multiple_and_plafond_cafat_cotisation(
             period, parameters
         )
-        return (
-            max_(
-                0,
-                individu("bnc_recettes_ht", period)
-                - min_(
-                    individu("reste_cotisations_apres_bic_ba_avant_bnc", period),
-                    multiple * plafond_cafat,
-                ),
-            )
-            / diviseur  # Forfait
-            + individu("benefices_non_commerciaux_reel_simplifie", period)  # Réel
-            - individu("deficits_non_commerciaux_reel_simplifie", period)
+        return max_(
+            0,
+            individu("bnc_recettes_ht", period) / diviseur  # Forfait
+            - min_(
+                individu("reste_cotisations_apres_bic_ba_avant_bnc", period),
+                multiple * plafond_cafat,
+            ),
+        ) + max_(
+            (
+                individu("benefices_non_commerciaux_reel_simplifie", period)
+                - individu("deficits_non_commerciaux_reel_simplifie", period)
+            ),
+            0,  # Réel
         )

@@ -41,3 +41,24 @@ class deficits_fonciers(Variable):
     entity = FoyerFiscal
     label = "Déficits fonciers"
     definition_period = YEAR
+
+
+class revenu_categoriel_foncier(Variable):
+    """Revenu catégoriel foncier.
+
+    Il s'agit du revenu catégoriel foncier net, c'est-à-dire le revenu brut moins les
+    déficits.
+    """
+
+    value_type = float
+    unit = "currency"
+    entity = FoyerFiscal
+    label = "Revenu catégoriel foncier"
+    definition_period = YEAR
+
+    def formula(foyer_fiscal, period):
+        return max_(
+            foyer_fiscal("revenus_fonciers_soumis_ir", period)
+            - foyer_fiscal("deficits_fonciers", period),
+            0,
+        )
