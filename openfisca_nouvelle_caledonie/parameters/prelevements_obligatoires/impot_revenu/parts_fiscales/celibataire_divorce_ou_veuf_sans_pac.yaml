@@ -1,0 +1,8 @@
+description: Nombre de parts fiscales pour un célibataire, un divorcé ou un veuf sans personne à charge
+values:
+  2017-01-01:
+    value: 1
+metadata:
+  short_label: Parts fiscales célibataire ou divorcé ou veuf sans personne à charge
+  label_en: Tax parts for single or divorced person or widower without dependents
+  unit: part_fiscale

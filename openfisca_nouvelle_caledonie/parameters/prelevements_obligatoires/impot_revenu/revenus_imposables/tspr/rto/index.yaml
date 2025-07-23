@@ -1,0 +1,9 @@
+description: Rente à titre onéreux
+metadata:
+  short_label: Rente à titre onéreux
+  label_en: Life annuities
+  order:
+  - taux_moins_de_50
+  - taux_50_59
+  - taux_60_69
+  - taux_plus_de_69

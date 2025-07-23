@@ -1,0 +1,8 @@
+description: nombre de parts fiscales pour un ascendant à charge
+values:
+  2017-01-01:
+    value: 0.5
+metadata:
+  short_label: Parts fiscales pour un ascendant à charge
+  label_en: Tax parts for a dependent ascendant
+  unit: part_fiscale

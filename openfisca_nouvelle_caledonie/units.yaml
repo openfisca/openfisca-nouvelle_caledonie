@@ -25,6 +25,18 @@
         other: Euros
       name: currency-EUR
       short_label: €
+- name: part_fiscale
+  label:
+    one: Part fiscale
+    other: Parts fiscales
+  short_label:
+    one: Part
+    other: Parts
+- name: plafond_CAFAT_RUAMM
+  label:
+    one: Plafond de la CAFAT relatif au régime unifié de l'assurance maladie et de la maternoté (RUAMM)
+    other: Plafonds de la CAFAT relatif au régime unifié de l'assurance maladie et de la maternité (RUAMM)
+  parameter: prelevements_obligatoires.prelevements_sociaux.cafat.maladie_retraite.plafond
 - name: plafond_CAFAT_retraite
   label:
     one: Plafond de la CAFAT relatif à la retraite

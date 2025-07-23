@@ -1,0 +1,12 @@
+description: Nombre de parts fiscales additionnelles pour un ancien combattant ou veuf ancien combattant
+values:
+  2017-01-01:
+    value: 0.5
+metadata:
+  short_label: Parts fiscales pour une personne remplissant les conditions d'ancien combattant
+  label_en: Tax parts for a person meeting the conditions of a former combatant
+  unit: part_fiscale
+  documentation: |
+    Nombre de parts fiscales pour une personne remplissant les conditions d'ancien combattant.
+    Conditions: être âgé de + de 70 ans et titulaire de la carte du combattant ou
+    veuf/veuve agé.e de + de 70 ans dont le conjoint remplissait les conditions.

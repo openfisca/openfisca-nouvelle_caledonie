@@ -1,0 +1,8 @@
+description: nombre de parts fiscales pour un enfant part entière
+values:
+  2017-01-01:
+    value: 1
+metadata:
+  short_label: Parts fiscales pour un enfant part entière
+  label_en: Tax parts for a full child
+  unit: part_fiscale

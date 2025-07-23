@@ -1,0 +1,33 @@
+- name: Retraité 10_000_000
+  period: 2024
+  absolute_error_margin: 1
+  input:
+    foyer_fiscal:
+      declarants:
+      - individu_0
+    individus:
+      individu_0:
+        pension_retraite_rente_imposables: 10_000_000
+  output:
+    impot_brut: 1_811_000
+    impot_net: 1_811_000
+
+
+- name: Retraité marié 10_000_000
+  period: 2024
+  absolute_error_margin: 1
+  input:
+    foyer_fiscal:
+      declarants:
+      - individu_0
+      - individu_1
+    individus:
+      individu_0:
+        pension_retraite_rente_imposables: 10_000_000
+        statut_marital: marie
+      individu_1:
+        salaire_imposable: 0
+        statut_marital: marie
+  output:
+    parts_fiscales: 2
+    impot_net: 724_500

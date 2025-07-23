@@ -1,6 +1,108 @@
 # Changelog
 
-# 9.0.1 [#4](https://github.com/openfisca/openfisca-nouvelle_caledonie/pull/6)
+## 13.2.1 [#22](https://github.com/openfisca/openfisca-nouvelle_caledonie/pull/22)
+
+* Évolution du système socio-fiscal.
+* Périodes concernées : toutes.
+* Zones impactées : `parameters`.
+* Détails :
+  - Ajoute référence
+
+
+## 13.2.0 [#52](https://github.com/openfisca/openfisca-nouvelle_caledonie/pull/52)
+
+* Évolution du système socio-fiscal.
+* Périodes concernées : toutes.
+* Zones impactées : `variables/prelevements_obligatoires/impot_revenu/`.
+* Détails :
+  - Améliore le calcul de l'impôt sur le revenu
+
+### 13.1.3 [#49](https://github.com/openfisca/openfisca-nouvelle_caledonie/pull/49)
+
+* Amélioration technique.
+* Périodes concernées : toutes.
+* Zones impactées : `entities.py`.
+* Détails :
+  - Renomme Household en Menage
+  - Renomme Person en Individu
+  - Quelques corrections de paramètres
+
+### 13.1.2 [#46](https://github.com/openfisca/openfisca-nouvelle_caledonie/pull/46)
+
+* Changement mineur.
+* Périodes concernées : toutes.
+* Zones impactées : `parameters`.
+* Détails :
+  - Corrige entrée erronée dans les metadata
+
+### 13.1.1 [#45](https://github.com/openfisca/openfisca-nouvelle_caledonie/pull/45)
+
+* Changement mineur.
+* Périodes concernées : toutes.
+* Zones impactées : `parameters`.
+* Détails :
+  - Ajoute l'unité `part_fiscale`
+
+## 13.1.0 [#43](https://github.com/openfisca/openfisca-nouvelle_caledonie/pull/43)
+
+* Évolution du système socio-fiscal.
+* Périodes concernées : toutes.
+* Zones impactées : `prelevements_obligatoires/impot_revenu/situation_de_famille.py`.
+* Détails :
+  - Ajout de la nouvelle variable ancien_combattant avec sa configuration de paramètres associée.
+  - Modification de la formule de calcul des éléments fiscaux afin de tenir compte de conditions telles que l'invalidité et le statut d'ancien combattant.
+  - Ajout du plafonnement du quotient familial intervenu en 2016.
+  - Extension de la couverture des tests avec de nombreux scénarios YAML et correction de fautes de frappe mineures.
+
+### 13.0.2 [#40](https://github.com/openfisca/openfisca-nouvelle_caledonie/pull/40)
+* Amélioration technique.
+* Périodes concernées : toutes.
+* Zones impactées : `openfisca_nouvelle_caledonie/variables/prelevements_obligatoires/impot_revenu/charges_deductibles.py`.
+* Détails :
+  - Add the underscore to max for scalar calculation
+
+### 13.0.1 [#39](https://github.com/openfisca/openfisca-nouvelle_caledonie/pull/39)
+
+* Amélioration technique.
+* Périodes concernées : toutes.
+* Zones impactées : `openfisca-nouvelle_caledonie/openfisca_nouvelle_caledonie/variables/revenu_imposable`.
+* Détails :
+  - Change le nom du folder et corrige une faute
+
+
+# 13.0.0 [#38](https://github.com/openfisca/openfisca-nouvelle_caledonie/pull/38)
+
+* Amélioration technique.
+* Périodes concernées : toutes.
+* Zones impactées : `parameters/prelevements_obligatoires/impot_revenu/parts_fiscales`
+* Détails :
+  - Ajoute les paramètres de parts fiscales
+
+# 12.0.0 [#37](https://github.com/openfisca/openfisca-nouvelle_caledonie/pull/37)
+
+* Évolution du système socio-fiscal.
+* Périodes concernées : toutes.
+* Zones impactées : `impot_revenu``.
+* Détails :
+  - Complétion bénéfices, imputations, réductions et crédits d'impôts.
+
+# 11.0.0 [#32](https://github.com/openfisca/openfisca-nouvelle_caledonie/pull/32)
+
+* Évolution du système socio-fiscal.
+* Périodes concernées : toutes.
+* Zones impactées : `prelevements_obligatoires/impot_revenu/revenus_imposbales/non_salarie/bnc.py`.
+* Détails :
+  - Ajout et fiabilisation des BIC, BA, BNC
+
+# 10.0.0 [#21](https://github.com/openfisca/openfisca-nouvelle_caledonie/pull/21)
+
+* Correction d'un crash.
+* Périodes concernées : toutes.
+* Zones impactées : `prelevements_obligatoires/impot_revenu`.
+* Détails :
+  - Calcul de l'impot brut pour les salariés et les retraités.
+
+### 9.0.1 [#6](https://github.com/openfisca/openfisca-nouvelle_caledonie/pull/6)
 
 * Correction d'un crash.
 * Périodes concernées : toutes.

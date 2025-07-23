@@ -1,0 +1,8 @@
+description: Taux normal applicable aux plus-values professionelles
+values:
+  2008-01-01:
+    value: 0.25
+metadata:
+  short_label: Taux normal
+  label_en: Normal rate
+  unit: /1

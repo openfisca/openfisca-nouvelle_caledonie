@@ -5,10 +5,8 @@
     foyer_fiscal:
       declarants:
       - individu_0
-    persons:
+    individus:
       individu_0:
         chiffre_d_daffaires_agricole_ht_imposable: 100_000
-    menage:
-      personne_de_reference: individu_0
   output:
-    ba: 100000 / 6
+    ba: 100_000 / 6

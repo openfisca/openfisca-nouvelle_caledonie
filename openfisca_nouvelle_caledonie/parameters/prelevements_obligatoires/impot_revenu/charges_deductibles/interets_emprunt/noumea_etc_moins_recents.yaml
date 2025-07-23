@@ -1,0 +1,8 @@
+description: Plafond de la déduction pour intérêts d'emprunt
+values:
+  2023-01-01:
+    value: 500_000
+metadata:
+  short_label: Plafond déduction intérêts d'emprunt
+  label_en: Ceiling of the deduction for loan interest
+  unit: currency
