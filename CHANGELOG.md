@@ -1,5 +1,14 @@
 # Changelog
 
+## 13.2.1 [#22](https://github.com/openfisca/openfisca-nouvelle_caledonie/pull/22)
+
+* Évolution du système socio-fiscal.
+* Périodes concernées : toutes.
+* Zones impactées : `parameters`.
+* Détails :
+  - Ajoute référence
+
+
 ## 13.2.0 [#52](https://github.com/openfisca/openfisca-nouvelle_caledonie/pull/52)
 
 * Évolution du système socio-fiscal.
