@@ -1,13 +1,13 @@
 description: Plafond de l'abattement sur les pensions
 values:
-  2021-09-25:
+  2021-01-01:
     value: 500000
-  2023-11-21:
+  2023-01-01:
     value: 550000
 metadata:
-  short_label: Maxime BOLLENGIER
+  short_label: Plafond
   label_en: Ceiling of the pension allowance
-  short_label_en: Maxime BOLLENGIER
+  short_label_en: Ceiling
   unit: currency
   reference:
     2021-09-25:
