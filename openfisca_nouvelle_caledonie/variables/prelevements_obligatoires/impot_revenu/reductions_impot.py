@@ -91,11 +91,17 @@ class reduction_prestation_compensatoire(Variable):
     label = "Réduction d'impôt pour prestation compensatoire"
     definition_period = YEAR
 
-    def formula(foyer_fiscal, period):
+    def formula(foyer_fiscal, period, parameters):
         resident = foyer_fiscal("resident", period)
+        taux = parameters(
+            period
+        ).prelevements_obligatoires.impot_revenu.reductions.prestation_compensatoire.taux
+        plafond = parameters(
+            period
+        ).prelevements_obligatoires.impot_revenu.reductions.prestation_compensatoire.plafond
         reduction = min_(
-            ceil(foyer_fiscal("prestation_compensatoire", period) * 0.25), 1_000_000
-        )  # TODO: parameters
+            ceil(foyer_fiscal("prestation_compensatoire", period) * taux), plafond
+        )
         return where(resident, reduction, 0)
 
 
@@ -320,5 +326,3 @@ class reduction_dons_organismes_aide_pme(Variable):
 
 
 # TODO: cases YE YF nontrouvées dans déclarations
-
-
