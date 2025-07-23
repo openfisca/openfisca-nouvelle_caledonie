@@ -1,0 +1,8 @@
+description: Plafond de la déduction pour frais de garde d'enfants
+values:
+  2023-01-01:
+    value: 1_000_000
+metadata:
+  short_label: Plafond frais de garde
+  label_en: Ceiling of the deduction for childcare expenses
+  unit: currency

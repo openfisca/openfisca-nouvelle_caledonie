@@ -1,0 +1,6 @@
+description: Part minimale du revenu total pour être soumis à l'impôt sur le revenu
+values:
+  2020-01-01:
+    value: 0.01
+metadata:
+  unit: /1

@@ -1,0 +1,127 @@
+- name: Salarié 10_000_000
+  period: 2024
+  absolute_error_margin: 1
+  input:
+    foyer_fiscal:
+      declarants:
+      - individu_0
+    individus:
+      individu_0:
+        salaire_imposable: 10_000_000
+  output:
+    revenus_categoriels_tspr: 10_000_000 - 800_000 - 1_800_000
+    impot_brut: 1_711_000
+
+- name: Salarié marié 10_000_000
+  period: 2024
+  absolute_error_margin: 1
+  input:
+    foyer_fiscal:
+      declarants:
+      - individu_0
+      - individu_1
+    individus:
+      individu_0:
+        salaire_imposable: 10_000_000
+        statut_marital: marie
+      individu_1:
+        salaire_imposable: 0
+        statut_marital: marie
+  output:
+    revenus_categoriels_tspr: 10_000_000 - 800_000 - 1_800_000
+    parts_fiscales: 2
+    impot_net: 662_000
+
+- name: Salarié marié avec 1 enfant 10_000_000
+  period: 2024
+  absolute_error_margin: 1
+  input:
+    foyer_fiscal:
+      declarants:
+      - individu_0
+      - individu_1
+      enfants_a_charge:
+      - enfant_0
+    individus:
+      individu_0:
+        salaire_imposable: 10_000_000
+        statut_marital: marie
+      individu_1:
+        salaire_imposable: 0
+        statut_marital: marie
+      enfant_0:
+        statut_marital: celibataire
+  output:
+    parts_fiscales: 2.5
+    impot_net: 383_000
+
+
+- name: Salarié marié avec 1 enfant accueilli 10_000_000
+  period: 2024
+  absolute_error_margin: 1
+  input:
+    foyer_fiscal:
+      declarants:
+      - individu_0
+      - individu_1
+      enfants_accueillis:
+      - enfant_0
+    individus:
+      individu_0:
+        salaire_imposable: 10_000_000
+        statut_marital: marie
+      individu_1:
+        salaire_imposable: 0
+        statut_marital: marie
+      enfant_0:
+        statut_marital: celibataire
+  output:
+    parts_fiscales: 2
+    impot_net: 560_500
+
+- name: Salarié marié avec 2 revenus 10_000_000 et 5_000_000
+  period: 2024
+  absolute_error_margin: 1
+  input:
+    foyer_fiscal:
+      declarants:
+      - individu_0
+      - individu_1
+    individus:
+      individu_0:
+        salaire_imposable: 10_000_000
+        statut_marital: marie
+      individu_1:
+        salaire_imposable: 5_000_000
+        statut_marital: marie
+  output:
+    parts_fiscales: 2
+    impot_net: 1_862_000
+
+- name: Salarié marié avec 3 revenus 10_000_000, 5_000_000 et 5_000_000
+  period: 2024
+  absolute_error_margin: 1
+  input:
+    foyer_fiscal:
+      declarants:
+      - individu_0
+      - individu_1
+      enfants_a_charge:
+      - enfant_0
+    individus:
+      individu_0:
+        salaire_imposable: 10_000_000
+        statut_marital: marie
+      individu_1:
+        salaire_imposable: 5_000_000
+        statut_marital: marie
+      enfant_0:
+        statut_marital: celibataire
+        salaire_imposable: 5_000_000
+  output:
+    parts_fiscales: 2.5
+    salaire_imposable_apres_deduction_et_abattement: [7400000, 3600000, 3600000]
+    revenus_categoriels_tspr: 14_600_000
+    revenu_brut_global: 14_600_000
+    revenu_net_global_imposable: 14_600_000
+    impot_net: 3_042_000

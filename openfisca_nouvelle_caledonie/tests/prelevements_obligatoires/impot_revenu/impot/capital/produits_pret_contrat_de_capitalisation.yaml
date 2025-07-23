@@ -1,0 +1,107 @@
+- name: produits_pret_contrat_de_capitalisation 10_000_000
+  period: 2023
+  absolute_error_margin:
+    parts_fiscales_reduites: 0.01
+    default: 1
+  input:
+    foyer_fiscal:
+      declarants:
+      - individu_0
+      produits_pret_contrat_de_capitalisation: 10_000_000
+    individus:
+      individu_0:
+        birth: 1973-01-01
+  output:
+    parts_fiscales_reduites: 1
+    impot_net: 2_751_000
+
+
+- name: actions 10_000_000
+  period: 2023
+  absolute_error_margin:
+    parts_fiscales_reduites: 0.01
+    default: 1
+  input:
+    foyer_fiscal:
+      declarants:
+      - individu_0
+      revenus_obligations_actions_jetons_de_presence: 10_000_000
+    individus:
+      individu_0:
+        birth: 1973-01-01
+  output:
+    parts_fiscales_reduites: 1
+    impot_net: 2_751_000
+
+
+- name: actions 10_000_000
+  period: 2023
+  absolute_error_margin:
+    parts_fiscales_reduites: 0.01
+    default: 1
+  input:
+    foyer_fiscal:
+      declarants:
+      - individu_0
+      revenus_obligations_actions_jetons_de_presence: 10_000_000
+    individus:
+      individu_0:
+        birth: 1973-01-01
+  output:
+    parts_fiscales_reduites: 1
+    impot_net: 2_751_000
+
+- name: revenus_actions_metropolitaines 10_000_000
+  period: 2023
+  absolute_error_margin:
+    parts_fiscales_reduites: 0.01
+    default: 1
+  input:
+    foyer_fiscal:
+      declarants:
+      - individu_0
+      revenus_actions_metropolitaines: 10_000_000
+    individus:
+      individu_0:
+        birth: 1973-01-01
+  output:
+    parts_fiscales_reduites: 1
+    impot_net: 2_751_000
+
+
+- name: revenus_actions_metropolitaines 10_000_000
+  period: 2023
+  absolute_error_margin:
+    parts_fiscales_reduites: 0.01
+    default: 1
+  input:
+    foyer_fiscal:
+      declarants:
+      - individu_0
+      revenus_actions_metropolitaines: 10_000_000
+      retenue_a_la_source_metropole: 1_000_000
+    individus:
+      individu_0:
+        birth: 1973-01-01
+  output:
+    parts_fiscales_reduites: 1
+    impot_net: 1_751_000
+
+
+- name: produits_pret 10_000_000 +  actions 10_000_000
+  period: 2023
+  absolute_error_margin:
+    parts_fiscales_reduites: 0.01
+    default: 1
+  input:
+    foyer_fiscal:
+      declarants:
+      - individu_0
+      produits_pret_contrat_de_capitalisation: 10_000_000
+      revenus_obligations_actions_jetons_de_presence: 10_000_000
+    individus:
+      individu_0:
+        birth: 1973-01-01
+  output:
+    parts_fiscales_reduites: 1
+    impot_net: 6_751_000

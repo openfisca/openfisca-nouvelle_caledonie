@@ -1,0 +1,8 @@
+description: Part de la prestation compensatoire donnant lieu à une réduction d'impôt sur le revenu (sous réserve de respect du plafond).
+values:
+  2008-12-01:
+    value: 0.25
+metadata:
+  short_label: Taux
+  label_en: Tax reduction rate for compensatory payment
+  unit: /1

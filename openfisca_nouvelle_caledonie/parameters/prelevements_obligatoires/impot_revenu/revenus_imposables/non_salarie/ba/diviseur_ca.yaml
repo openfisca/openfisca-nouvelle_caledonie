@@ -1,0 +1,7 @@
+description: Entier par lequel est divisé le chiffre d'affaires pour le calcul du bénéfice imposable des exploitants agricoles.
+values:
+  2007-01-01:
+    value: 6
+metadata:
+  short_label: Diviseur du chiffre d'affaires
+  label_en: Divisor of the consolidated turnover

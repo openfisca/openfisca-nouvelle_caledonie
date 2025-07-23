@@ -4,3 +4,10 @@ metadata:
   label_en: Deductible charges from the global net income²
   order:
   - travaux
+  - travaux_immobiliers
+  - pensions_alimentaires
+  - immeubles_historiques
+  - frais_garde_enfants
+  - depenses_internat_transport_interurbain
+  - services_a_la_personne
+  - assurance_vie

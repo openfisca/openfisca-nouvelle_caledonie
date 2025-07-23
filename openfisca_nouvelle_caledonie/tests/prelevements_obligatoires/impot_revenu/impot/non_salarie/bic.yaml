@@ -1,0 +1,57 @@
+- name: BIC 10_000_000
+  period: 2024
+  absolute_error_margin: 1
+  input:
+    foyer_fiscal:
+      declarants:
+      - individu_0
+    individus:
+      individu_0:
+        bic_vente_fabrication_transformation_ca_ht: 10_000_000
+  output:
+    impot_net: 731_000
+
+
+- name: BIC 10_000_000 cotisation 5_000_000
+  period: 2024
+  absolute_error_margin: 1
+  input:
+    foyer_fiscal:
+      declarants:
+      - individu_0
+    individus:
+      individu_0:
+        bic_vente_fabrication_transformation_ca_ht: 10_000_000
+        cotisations_retraite_exploitant: 5_000_000
+  output:
+    impot_net: 5_000
+
+
+- name: BIC 10_000_000 cotisation 500_000
+  period: 2024
+  absolute_error_margin: 1
+  input:
+    foyer_fiscal:
+      declarants:
+      - individu_0
+    individus:
+      individu_0:
+        bic_vente_fabrication_transformation_ca_ht: 10_000_000
+        cotisations_retraite_exploitant: 500_000
+  output:
+    impot_net: 531_000
+
+
+- name: BIC 10_000_000 cotisation 50_000
+  period: 2024
+  absolute_error_margin: 1
+  input:
+    foyer_fiscal:
+      declarants:
+      - individu_0
+    individus:
+      individu_0:
+        bic_vente_fabrication_transformation_ca_ht: 10_000_000
+        cotisations_retraite_exploitant: 50_000
+  output:
+    impot_net: 711_000

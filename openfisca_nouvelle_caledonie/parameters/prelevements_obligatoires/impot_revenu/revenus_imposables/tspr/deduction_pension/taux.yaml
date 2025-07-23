@@ -1,0 +1,11 @@
+description: Taux de la déduction sur les pensions
+values:
+  2008-01-01:
+    value: .1
+metadata:
+  short_label: Taux
+  label_en: Rate of the pension allowance
+  unit: /1
+  reference:
+    2008-01-01:
+      title: TODO (et corriger date)

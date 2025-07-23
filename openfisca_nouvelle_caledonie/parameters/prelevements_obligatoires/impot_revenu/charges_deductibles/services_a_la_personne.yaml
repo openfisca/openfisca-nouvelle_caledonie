@@ -1,0 +1,10 @@
+description: Plafond de la déduction pour services à la personne
+values:
+  2023-01-01:
+    value: 1_980_384
+metadata:
+  short_label: Plafond frais de garde
+  label_en: Ceiling of the deduction for childcare expenses
+  unit: currency
+documentation: |
+  TODO: trouver la formule de ce plafond si elle existe

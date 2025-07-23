@@ -1,0 +1,7 @@
+description: Facteur par lequel sont divisés les recettes pour le calcul des bénéfice non commerciaux
+values:
+  2007-01-01:
+    value: 1.5
+metadata:
+  short_label: Diviseur des recettes
+  label_en: Divisor of the receipts

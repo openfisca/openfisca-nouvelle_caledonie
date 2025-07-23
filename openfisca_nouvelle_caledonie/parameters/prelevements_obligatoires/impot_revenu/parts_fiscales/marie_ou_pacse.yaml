@@ -1,0 +1,8 @@
+description: nombre de parts fiscales pour un couple marié ou pacsé
+values:
+  2017-01-01:
+    value: 2
+metadata:
+  short_label: Parts fiscales pour un couple marié ou pacsé
+  label_en: Tax parts for married or PACS couple
+  unit: part_fiscale

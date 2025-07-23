@@ -4,5 +4,5 @@ metadata:
   short_label_en: Retirement
   label_en: Contributions for basic old-age pension
   order:
-  - cotisation_employeur
-  - cotisation_salarie
+  - employeur
+  - salarie

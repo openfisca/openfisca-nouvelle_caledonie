@@ -1,0 +1,8 @@
+description: Abattement sur les bénéfices industriels et commerciaux.
+values:
+  2008-01-01:
+    value: .5
+metadata:
+  short_label: Abattement BIC
+  label_en: Deduction on industrial and commercial profits
+  unit: /1

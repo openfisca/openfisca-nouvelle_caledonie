@@ -1,0 +1,12 @@
+- name: BNC 100_000
+  period: 2024
+  absolute_error_margin: 1
+  input:
+    foyer_fiscal:
+      declarants:
+      - individu_0
+    individus:
+      individu_0:
+        bnc_recettes_ht: 100_000
+  output:
+    bnc: 100_000 / 1.5

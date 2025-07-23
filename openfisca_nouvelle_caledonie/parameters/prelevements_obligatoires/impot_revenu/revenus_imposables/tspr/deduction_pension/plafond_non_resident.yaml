@@ -1,0 +1,8 @@
+description: Plafond de l'abattement sur les pensions de retraite pour les non-résidents.
+values:
+  2008-01-01:
+    value: 1_000_000
+metadata:
+  short_label: Plafond
+  label_en: Ceiling of the pension allowance
+  unit: currency

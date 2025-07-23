@@ -1,0 +1,8 @@
+description: Plafond de la réduction d'impôt sur le revenu pour versement de prestation compensatoire.
+values:
+  2008-12-01:
+    value: 1_000_000
+metadata:
+  short_label: Plafond
+  label_en: Tax reduction ceiling for compensatory payment
+  unit: /1

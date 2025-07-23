@@ -1,0 +1,6 @@
+description: Taux forfaitaire de l'impôt sur le revenu pour les non-résidents
+values:
+  2020-01-01:
+    value: 0.25
+metadata:
+  unit: /1
