@@ -1,0 +1,7 @@
+description: Plafond des cotisations déductibles du revenu imposable des non-salariés
+metadata:
+  short_label: Plafond des cotisations déductibles
+  label_en: Ceiling of deductible contributions
+  order:
+    - plafond_avant_ir_2024
+    - plafond_depuis_ir_2024

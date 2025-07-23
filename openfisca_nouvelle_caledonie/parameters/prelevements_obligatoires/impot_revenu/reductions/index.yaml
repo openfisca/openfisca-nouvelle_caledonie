@@ -1,0 +1,7 @@
+description: Réductions d'impôt
+metadata:
+  short_label: Réductions d'impôt
+  label_en: Tax reductions
+  income_tax_year: true
+  order:
+  - prestation_compensatoire

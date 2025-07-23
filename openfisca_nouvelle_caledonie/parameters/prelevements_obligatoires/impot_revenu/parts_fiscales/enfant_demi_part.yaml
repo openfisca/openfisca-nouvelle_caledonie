@@ -1,0 +1,8 @@
+description: nombre de parts fiscales pour un enfant demi-part
+values:
+  2017-01-01:
+    value: 0.5
+metadata:
+  short_label: Parts fiscales pour un enfant demi-part
+  label_en: Tax parts for a half-part child
+  unit: part_fiscale

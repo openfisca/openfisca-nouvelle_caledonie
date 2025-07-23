@@ -1,0 +1,8 @@
+description: Taux réduit applicable aux plus-values professionelles
+values:
+  2008-01-01:
+    value: 0.15
+metadata:
+  short_label: Taux réduit
+  label_en: Reduced rate
+  unit: /1

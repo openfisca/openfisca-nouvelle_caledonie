@@ -1,0 +1,6 @@
+description: Crédits d'impôt
+metadata:
+  short_label: Crédits d'impôt
+  label_en: Tax credits
+  order:
+  - mecenat_entreprise

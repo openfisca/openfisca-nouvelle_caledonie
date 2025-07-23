@@ -1,0 +1,7 @@
+description: Abattement sur les salaires et les pensions
+metadata:
+  short_label: Abattement sur salaires et pensions
+  label_en: Salary and pension allowance
+  order:
+  - taux
+  - plafond

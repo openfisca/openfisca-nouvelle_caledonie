@@ -1,0 +1,8 @@
+description: Rentes viagères à titre onéreux poun âge d'entrée en jouissance de moins de 50 ans
+values:
+  2008-01-01:
+    value: .7
+metadata:
+  unit: /1
+  label_en: Life annuities for the age of enjoyment under 50 years
+  short_label: Age de jouissance moins de 50 ans

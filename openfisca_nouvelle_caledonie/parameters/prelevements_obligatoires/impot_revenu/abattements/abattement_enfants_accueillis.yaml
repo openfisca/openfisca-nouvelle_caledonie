@@ -1,0 +1,8 @@
+description: Abattement d'impôt pour les enfants accueillis
+values:
+  2023-01-01:
+    value: 406_000
+metadata:
+  short_label: Abattement enfants accueillis
+  label_en: Allowance for hosted children
+  unit: currency
