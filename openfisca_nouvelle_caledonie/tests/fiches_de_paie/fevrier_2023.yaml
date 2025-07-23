@@ -1,0 +1,23 @@
+name: Salarié fevrier 2023
+# Semble fausse vu les taux CE appliqués
+period: 2023-03
+absolute_error_margin: 1
+input:
+  salaire_de_base: 300_000
+  taux_accident_du_travail: .0216
+  categorie_salarie: prive_non_cadre
+output:
+  agirc_arrco_employeur: 14_160
+  agirc_arrco_salarie: 9_450
+  # contribution_equilibre_general_salarie: 2_250
+  # contribution_equilibre_general_employeur: 3_390
+  fiaf: 600
+  fsh: 6_000
+  retraite_employeur: 29_400
+  retraite_salarie: 12_600
+  ruamm_employeur: 65010 - 29400 - 600
+  ruamm_salarie: 24_150 - 12_600
+  accident_du_travail: 6_480
+  ccs: 6_000
+  # cotisations_salariales: 42_870 - 6_000
+  # cotisations_employeur: 118_065

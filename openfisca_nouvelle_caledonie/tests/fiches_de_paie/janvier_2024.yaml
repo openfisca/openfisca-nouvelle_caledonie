@@ -1,0 +1,21 @@
+name: Salarié janvier 2024
+period: 2024-01
+absolute_error_margin: 1
+input:
+  salaire_de_base: 553_048
+  categorie_salarie: prive_cadre
+output:
+  agirc_arrco_employeur: 21_764 + 11_908
+  agirc_arrco_salarie: 14_525 + 7_944
+  contribution_equilibre_general_employeur: 5_948 + 1_490
+  contribution_equilibre_general_salarie: 3_965 + 993
+  # fiaf:
+  fsh: 6_486
+  retraite_employeur: 52_871
+  retraite_salarie: 22_659
+  # ruamm_employeur: 64_039 + 508  #  Le taux sur la feuilel de paie est de 11,87% pour la tranche 1 au lieu de 11,67 peut-être que cela inclut le fiaf ?
+  ruamm_salarie: 20_771 + 169
+  # accident_du_travail:
+  ccs: 11_061
+  cotisations_salariales: 86_368 - 11_061 - 2200  # Retrait CCS et mutuelle
+  # cotisations_employeur: 214_197 - 3300  # Retrait mutuelle
