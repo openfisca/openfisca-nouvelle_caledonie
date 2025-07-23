@@ -5,6 +5,3 @@ values:
 metadata:
   short_label: Diviseur du chiffre d'affaires
   label_en: Divisor of the consolidated turnover
-  reference:
-    2007-01-01:
-      title: TODO (et corriger date)

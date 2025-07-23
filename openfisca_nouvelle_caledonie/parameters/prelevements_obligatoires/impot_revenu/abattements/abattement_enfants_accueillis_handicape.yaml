@@ -1,0 +1,8 @@
+description: Abattement d'impôt pour les enfants accueillis handicapés
+values:
+  2023-01-01:
+    value: 540_000
+metadata:
+  short_label: Abattement enfants accueillis handicapés
+  label_en: Allowance for hosted disabled children
+  unit: currency

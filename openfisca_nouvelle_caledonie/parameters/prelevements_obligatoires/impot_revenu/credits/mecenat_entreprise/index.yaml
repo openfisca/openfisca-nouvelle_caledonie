@@ -1,0 +1,6 @@
+description: Crédits d'impôt pour le mécénat d'entreprise
+metadata:
+  short_label: Mécénat d'entreprise
+  label_en: Tax credits for corporate sponsorship
+  order:
+  - taux

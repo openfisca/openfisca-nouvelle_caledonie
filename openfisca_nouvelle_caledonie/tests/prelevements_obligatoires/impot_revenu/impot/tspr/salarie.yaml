@@ -120,7 +120,7 @@
         salaire_imposable: 5_000_000
   output:
     parts_fiscales: 2.5
-    salaire_imposable_apres_deduction_et_abattement: 14_600_000
+    salaire_imposable_apres_deduction_et_abattement: [7400000, 3600000, 3600000]
     revenus_categoriels_tspr: 14_600_000
     revenu_brut_global: 14_600_000
     revenu_net_global_imposable: 14_600_000

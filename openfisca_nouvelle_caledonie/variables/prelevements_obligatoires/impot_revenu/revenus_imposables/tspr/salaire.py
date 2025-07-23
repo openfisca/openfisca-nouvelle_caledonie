@@ -48,6 +48,19 @@ class salaire_imposable(Variable):
     definition_period = YEAR
 
 
+class salaire_imposable_rectifie(Variable):
+    value_type = float
+    unit = "currency"
+    cerfa_field = {
+        0: "NM",
+        1: "NN",
+        2: "NO",
+    }
+    entity = Individu
+    label = "Salaires imposables rectifiés"
+    definition_period = YEAR
+
+
 class salaire_percu(Variable):
     value_type = float
     unit = "currency"
@@ -56,7 +69,11 @@ class salaire_percu(Variable):
     definition_period = YEAR
 
     def formula(individu, period):
-        return max_(individu("salaire_imposable", period), 0)  # TODO: add NM, NN, NO
+        return max_(
+            individu("salaire_imposable", period)
+            + individu("salaire_imposable_rectifie", period),
+            0,
+        )
 
 
 class frais_reels(Variable):
@@ -139,32 +156,42 @@ class cotisations(Variable):
         period_plafond = period.start.offset("first-of", "month").offset(11, "month")
         plafond_cafat_retraite = parameters(
             period_plafond
-        ).prelevements_obligatoires.prelevements_sociaux.cafat.maladie_retraite.plafond
+        ).prelevements_obligatoires.prelevements_sociaux.cafat.maladie_retraite.plafond_retraite_mensuel
         return (
             min_(cotisations_retraite_gerant_cotisant_ruamm, 7 * plafond_cafat_retraite)
             + autres_cotisations_gerant_cotisant_ruamm
         )
 
 
-class salaire_imposable_apres_deduction_et_abattement(Variable):
-    value_type = float
-    entity = FoyerFiscal
-    label = "Salaire imposable après déduction et abattement"
+class salaire_percu_net_de_cotisation(Variable):
+    unit = "currency"
+    value_type = int
+    entity = Individu
+    label = "Salaire perçu net de cotisation"
     definition_period = YEAR
 
-    def formula(foyer_fiscal, period, parameters):
-        # salaires_percus - retenue_cotisations - deduction_salaires - abattement_salaires
+    def formula(individu, period):
+        return max_(
+            individu("salaire_percu", period) - individu("cotisations", period),
+            0,
+        )
 
+
+class deduction_frais_professionnels(Variable):
+    unit = "currency"
+    value_type = float
+    entity = Individu
+    label = "Déduction des frais professionnels des salaires"
+    definition_period = YEAR
+
+    def formula(individu, period, parameters):
         tspr = parameters(
             period
         ).prelevements_obligatoires.impot_revenu.revenus_imposables.tspr
 
-        salaire_percu_net_de_cotisation = max_(
-            foyer_fiscal.members("salaire_percu", period)
-            - foyer_fiscal.members("cotisations", period),
-            0,
+        salaire_percu_net_de_cotisation = individu(
+            "salaire_percu_net_de_cotisation", period
         )
-
         frais_professionnels_forfaitaire = (
             tspr.deduction_frais_professionnels_forfaitaire
         )  # 10%
@@ -175,22 +202,115 @@ class salaire_imposable_apres_deduction_et_abattement(Variable):
             ),
             frais_professionnels_forfaitaire.plafond,
         )
-        salaire_apres_deduction = max_(
-            salaire_percu_net_de_cotisation - deduction_forfaitaire, 0
+        return max_(
+            individu("frais_reels", period),
+            deduction_forfaitaire,
         )
 
-        return foyer_fiscal.sum(
-            max_(
-                (
-                    salaire_apres_deduction
-                    - min_(
-                        salaire_apres_deduction * tspr.abattement.taux,
-                        tspr.abattement.plafond,
-                    )
-                ),
-                0,
-            )
+
+class deduction_frais_professionnels_salaire_differe(Variable):
+    unit = "currency"
+    value_type = float
+    entity = Individu
+    label = "Déduction des frais professionnels des salaires différés"
+    definition_period = YEAR
+
+    def formula(individu, period, parameters):
+        deduction_frais_professionnels = parameters(
+            period
+        ).prelevements_obligatoires.impot_revenu.revenus_imposables.tspr.deduction_frais_professionnels_forfaitaire
+
+        salaires_imposes_selon_le_quotient = individu(
+            "salaires_imposes_selon_le_quotient", period
         )
+        return min_(
+                salaires_imposes_selon_le_quotient * deduction_frais_professionnels.taux,
+                deduction_frais_professionnels.plafond,
+            )
+
+class abattement_sur_salaire_differe(Variable):
+    unit = "currency"
+    value_type = float
+    entity = Individu
+    label = "Abattement sur les salaires"
+    definition_period = YEAR
+
+    def formula(individu, period, parameters):
+        tspr = parameters(
+            period
+        ).prelevements_obligatoires.impot_revenu.revenus_imposables.tspr
+
+        deduction = individu("deduction_frais_professionnels_salaire_differe", period)
+        salaires_imposes_selon_le_quotient = individu(
+            "salaires_imposes_selon_le_quotient", period
+        )
+
+        salaire_apres_deduction = max_(salaires_imposes_selon_le_quotient - deduction, 0)
+        return min_(
+            salaire_apres_deduction * tspr.abattement.taux, tspr.abattement.plafond
+            )
+
+
+class abattement_sur_salaire(Variable):
+    unit = "currency"
+    value_type = float
+    entity = Individu
+    label = "Abattement sur les salaires"
+    definition_period = YEAR
+
+    def formula(individu, period, parameters):
+        tspr = parameters(
+            period
+        ).prelevements_obligatoires.impot_revenu.revenus_imposables.tspr
+
+        deduction = individu("deduction_frais_professionnels", period)
+        salaire_percu_net_de_cotisation = individu(
+            "salaire_percu_net_de_cotisation", period
+        )
+        salaire_apres_deduction = max_(salaire_percu_net_de_cotisation - deduction, 0)
+        return where(
+            individu("salaire_imposable_rectifie", period) > 0,
+            0,
+            min_(
+                salaire_apres_deduction * tspr.abattement.taux, tspr.abattement.plafond
+            ),
+        )
+
+
+class reliquat_abattement_sur_salaire(Variable):
+    unit = "currency"
+    value_type = float
+    entity = Individu
+    label = "Abattement sur les salaires"
+    definition_period = YEAR
+
+    def formula(individu, period, parameters):
+        tspr = parameters(
+            period
+        ).prelevements_obligatoires.impot_revenu.revenus_imposables.tspr
+        abattement_sur_salaire = individu("abattement_sur_salaire", period)
+        return where(
+            individu("salaire_imposable_rectifie", period) > 0,
+            0,
+            max_(tspr.abattement.plafond - abattement_sur_salaire, 0),
+        )
+
+
+class salaire_imposable_apres_deduction_et_abattement(Variable):
+    value_type = float
+    entity = Individu
+    label = "Salaire imposable après déduction et abattement"
+    definition_period = YEAR
+
+    def formula(individu, period):
+        # salaires_percus - retenue_cotisations - deduction_salaires - abattement_salaires
+        salaire_percu_net_de_cotisation = individu(
+            "salaire_percu_net_de_cotisation", period
+        )
+        deduction = individu("deduction_frais_professionnels", period)
+        abattement = individu("abattement_sur_salaire", period)
+
+        return max_(salaire_percu_net_de_cotisation - deduction - abattement, 0)
 
 
 # Revenus de la déclaration complémentaire
@@ -204,6 +324,7 @@ class salaires_imposes_selon_le_quotient(Variable):
     cerfa_field = {
         0: "ND",
         1: "NE",
+        2: "NF",
     }
     entity = Individu
     label = "Salaires imposés selon le quotient"
@@ -215,10 +336,41 @@ class annees_de_rappel_salaires(Variable):
     cerfa_field = {
         0: "NG",
         1: "NH",
+        2: "NI",
     }
     entity = Individu
     label = "Années de rappel pour les salaires imposés selon le quotient"
     definition_period = YEAR
+
+
+class salaire_differe_apres_deduction(Variable):
+    unit = "currency"
+    value_type = float
+    entity = Individu
+    label = "Salaire différé après déduction"
+    definition_period = YEAR
+
+    def formula(individu, period):
+        deduction_frais_professionnels_salaire_differe = individu(
+            "deduction_frais_professionnels_salaire_differe", period
+        )
+        abattement_sur_salaire_differe = individu(
+            "abattement_sur_salaire_differe", period
+        )
+        salaires_imposes_selon_le_quotient = individu(
+            "salaires_imposes_selon_le_quotient", period
+        )
+        annees_de_rappel_salaires = individu(
+            "annees_de_rappel_salaires", period
+        )
+        return where(
+            annees_de_rappel_salaires > 0,
+            max_(
+            (salaires_imposes_selon_le_quotient - deduction_frais_professionnels_salaire_differe - abattement_sur_salaire_differe) / (annees_de_rappel_salaires + 1 * (annees_de_rappel_salaires == 0)),
+                0,
+                ),
+            0,
+        )
 
 
 class indemnites_elus_municipaux(Variable):
@@ -242,8 +394,15 @@ class indemnites(Variable):
     definition_period = YEAR
 
     def formula(foyer_fiscal, period):
-        # TODO: Calculer l'abattement sur les indemnités des élus municipaux
         # 20 % de l'indemnité brute dans la limote du reste de l'abattement sur salaire
         return foyer_fiscal.sum(
-            foyer_fiscal.members("indemnites_elus_municipaux", period)
+            max_(
+                foyer_fiscal.members("indemnites_elus_municipaux", period)
+                - min_(
+                    foyer_fiscal.members("indemnites_elus_municipaux", period)
+                    * 0.2,  # TODO: parameters
+                    foyer_fiscal.members("reliquat_abattement_sur_salaire", period),
+                ),
+                0,
+            )
         )

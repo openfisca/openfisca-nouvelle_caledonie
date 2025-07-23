@@ -37,7 +37,7 @@ class cotisations_ruamm_mutuelle_ccs_exploitant(Variable):
         2: "QF",
     }
     entity = Individu
-    label = "Cotisations RUAMM, mutuelle et CSS personnelles de l'exploitant"
+    label = "Cotisations RUAMM, mutuelle et CCS personnelles de l'exploitant"
     definition_period = YEAR
 
 

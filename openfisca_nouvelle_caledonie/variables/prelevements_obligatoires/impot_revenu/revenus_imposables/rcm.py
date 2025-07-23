@@ -195,7 +195,7 @@ class revenu_categoriel_capital(Variable):
         resident = foyer_fiscal("resident", period)
         rcm_resident = max_(
             (
-                foyer_fiscal("revenus_obligations_actions_jetons_de_presence", period)
+                +foyer_fiscal("revenus_obligations_actions_jetons_de_presence", period)
                 + foyer_fiscal("revenus_actions_metropolitaines", period)
                 - foyer_fiscal("droits_de_garde", period)
             ),
@@ -204,10 +204,13 @@ class revenu_categoriel_capital(Variable):
 
         rcm_non_resident = max_(
             (
-                foyer_fiscal("revenus_obligations_actions_jetons_de_presence", period)
+                +foyer_fiscal("revenus_obligations_actions_jetons_de_presence", period)
                 - foyer_fiscal("droits_de_garde", period)
             ),
             0,
-        ) + foyer_fiscal("produits_pret_contrat_de_capitalisation", period)
+        ) + (
+            foyer_fiscal("produits_pret_contrat_de_capitalisation", period)
+            + foyer_fiscal("interets_de_depots", period)
+        )
 
         return where(resident, rcm_resident, rcm_non_resident)
