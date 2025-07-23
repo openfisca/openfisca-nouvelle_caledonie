@@ -3,6 +3,9 @@ values:
   2023-01-01:
     value: 50_000
 metadata:
-  short_label: Minimum
   label_en: Minimum amount of the flat-rate deduction for professional expenses
   unit: currency
+  reference:
+    2024-01-01:
+      title: Loi du pays 2001-010 du 25/09/2001
+      href: https://juridoc.gouv.nc/juridoc/jdtextes.nsf/(web-All)/6D6AA0EB181FE21B4B2574CE00780D65/$File/Loi_du_pays_2001-010_du_25-09-2001_ChG.pdf?OpenElement#search=%22Loi%20du%20pays%20n%C2%B0%202001-010%20du%2025%20septembre%202001%20portant%20diverses%20dispositions%20d
