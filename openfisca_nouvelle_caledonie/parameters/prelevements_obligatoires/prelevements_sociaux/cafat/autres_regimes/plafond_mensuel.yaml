@@ -1,0 +1,25 @@
+description: Plafond applicable pour les cotisations aux régimes vieillesse, accidents du travail, prestations familiales et chômage.
+values:
+  2024-01-01: 384_400
+  2023-01-01: 384_400
+  2022-01-01: 366_100
+  2021-01-01: 363_700
+  2020-01-01: 363_700
+  2019-01-01: 363_700
+  2018-01-01: 359_800
+  2017-01-01: 354_900
+  2016-01-01: 354_900
+  2015-01-01: 354_900
+  2014-01-01: 352_000
+  2013-01-01: 349_400
+  2012-01-01: 344_300
+  2011-01-01: 337_100
+  2010-01-01: 327_700
+  2009-01-01: 327_700
+  2008-01-01: 317_600
+  2007-01-01: 312_300
+  2006-01-01: 306_500
+metadata:
+  unit: currency
+documentation: |
+    Chiffres tirés de https://www.medef.nc/chiffres-cles/plafond-mensuels-de-cotisations-sociales

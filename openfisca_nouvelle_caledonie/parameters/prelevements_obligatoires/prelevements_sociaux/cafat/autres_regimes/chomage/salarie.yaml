@@ -1,0 +1,19 @@
+description: Cotisation chômage payée par le salarié
+brackets:
+- threshold:
+    2017-01-01:
+      value: 0
+  rate:
+    2017-01-01:
+      value: 0.0034
+- threshold:
+    2017-01-01:
+      value: 1
+  rate:
+    2017-01-01:
+      value: 0
+metadata:
+  short_label: Cotisation chômage salarié
+  label_en: Unemployment contribution paid by the employee
+  rate_unit: /1
+  threshold_unit: plafond_CAFAT_autres_regimes
