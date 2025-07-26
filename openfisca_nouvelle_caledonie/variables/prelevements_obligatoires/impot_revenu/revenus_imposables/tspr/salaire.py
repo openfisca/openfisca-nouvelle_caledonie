@@ -393,14 +393,17 @@ class indemnites(Variable):
     label = "Indemnités"
     definition_period = YEAR
 
-    def formula(foyer_fiscal, period):
+    def formula(foyer_fiscal, period, parameters):
         # 20 % de l'indemnité brute dans la limote du reste de l'abattement sur salaire
+        taux = parameters(
+            period
+        ).prelevements_obligatoires.impot_revenu.revenus_imposables.tspr.abattement.taux
         return foyer_fiscal.sum(
             max_(
                 foyer_fiscal.members("indemnites_elus_municipaux", period)
                 - min_(
                     foyer_fiscal.members("indemnites_elus_municipaux", period)
-                    * 0.2,  # TODO: parameters
+                    * taux,  # TODO: parameters
                     foyer_fiscal.members("reliquat_abattement_sur_salaire", period),
                 ),
                 0,
