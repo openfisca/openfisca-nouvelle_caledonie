@@ -252,7 +252,7 @@ def calcul_impot_brut_2016(foyer_fiscal, period, parameters, rngi = None):
         where(
             foyer_fiscal("resident", period),
             calcul_impot_brut_resident_2016(foyer_fiscal, period, parameters, rngi),
-            calcul_impot_brut_non_resident(foyer_fiscal, period),
+            calcul_impot_brut_non_resident(foyer_fiscal, period, parameters),
         )
     )
 
@@ -263,11 +263,11 @@ def calcul_impot_brut_2008_2015(foyer_fiscal, period, parameters, rngi_variable_
         where(
             foyer_fiscal("resident", period),
             calcul_impot_brut_resident_2008_2015(foyer_fiscal, period, parameters, rngi_variable_name),
-            calcul_impot_brut_non_resident(foyer_fiscal, period),
+            calcul_impot_brut_non_resident(foyer_fiscal, period, parameters),
         )
     )
 
-def calcul_impot_brut_non_resident(foyer_fiscal, period):
+def calcul_impot_brut_non_resident(foyer_fiscal, period, parameters):
     """Calcul de l'impôt brut pour les non-résidents."""
     taux_moyen_imposition_non_resident = foyer_fiscal(
         "taux_moyen_imposition_non_resident", period
