@@ -278,11 +278,14 @@ def calcul_impot_brut_non_resident(foyer_fiscal, period):
     )
     interets_de_depots = foyer_fiscal("interets_de_depots", period)
     pourcentage = interets_de_depots / (revenu_brut_global + 1 * (revenu_brut_global == 0))
-        # //  TxNI= 25 % si case 46 = 1 et case 47 =vide
+        # //  TxNI= 25 % si case 46
+    impot_non_residents = parameters(
+        period
+    ).prelevements_obligatoires.impot_revenu.impot_non_residents
     txNI = where(
         taux_moyen_imposition_non_resident > 0,
         taux_moyen_imposition_non_resident,
-        0.25, # TODO: parameters
+        impot_non_residents.taux_forfaitaire,
     )
     tauxPart1 = 8 / 100  # TODO: parameters
     # // 8% x RNGI x pourcentage
@@ -316,7 +319,7 @@ def calcul_impot_brut_resident_2016(foyer_fiscal, period, parameters, rngi = Non
         / (parts_fiscales_reduites + (parts_fiscales_reduites == 0))
     )
 
-    bareme = parameters(period).prelevements_obligatoires.impot_revenu.bareme
+    bareme = parameters(period).prelevements_obligatoires.impot_revenu.impot_residents.bareme
     impot_brut_complet = bareme.calc(revenu_par_part) * parts_fiscales
     impot_brut_reduit = (
         bareme.calc(revenu_par_part_reduite) * parts_fiscales_reduites
@@ -338,7 +341,7 @@ def calcul_impot_brut_resident_2016(foyer_fiscal, period, parameters, rngi = Non
 
     part_minimale = parameters(
         period
-    ).prelevements_obligatoires.impot_revenu.part_min_revenu_total_imposable
+    ).prelevements_obligatoires.impot_revenu.impot_residents.part_min_revenu_total_imposable
     impot_brut_complet = where(
         fraction < part_minimale,
         0,
@@ -352,7 +355,7 @@ def calcul_impot_brut_resident_2016(foyer_fiscal, period, parameters, rngi = Non
     )
     # Plafonnement du quotient familial
 
-    plafond_quotient_familial = parameters(period).prelevements_obligatoires.impot_revenu.plafond_quotient_familial
+    plafond_quotient_familial = parameters(period).prelevements_obligatoires.impot_revenu.impot_residents.plafond_quotient_familial
     impot_brut = max_(
         impot_brut_complet,
         impot_brut_reduit
@@ -362,7 +365,7 @@ def calcul_impot_brut_resident_2016(foyer_fiscal, period, parameters, rngi = Non
     # L'impôt brut est plafonné à 50% des revenus
     taux_plafond = parameters(
         period
-    ).prelevements_obligatoires.impot_revenu.taux_plafond
+    ).prelevements_obligatoires.impot_revenu.impot_residents.taux_plafond
     return min_(
         taux_plafond * revenu_net_global_imposable, impot_brut
     )
@@ -403,7 +406,7 @@ def calcul_impot_brut_resident_2008_2015(foyer_fiscal, period, parameters, rngi)
 
     part_minimale = parameters(
         period
-    ).prelevements_obligatoires.impot_revenu.part_min_revenu_total_imposable
+    ).prelevements_obligatoires.impot_revenu.impot_residents.part_min_revenu_total_imposable
     impot_brut = where(
         fraction < part_minimale,
         0,
@@ -413,7 +416,7 @@ def calcul_impot_brut_resident_2008_2015(foyer_fiscal, period, parameters, rngi)
     # L'impôt brut est plafonné à 50% des revenus
     taux_plafond = parameters(
         period
-    ).prelevements_obligatoires.impot_revenu.taux_plafond
+    ).prelevements_obligatoires.impot_revenu.impot_residents.taux_plafond
     return min_(
         taux_plafond * revenu_net_global_imposable, impot_brut
     )
