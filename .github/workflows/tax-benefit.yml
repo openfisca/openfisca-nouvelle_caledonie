@@ -28,7 +28,7 @@ jobs:
           CUSTOMIZATION="openfisca"
 
           DBNOMICS_DATASET_CODE="parameters"
-          DBNOMICS_PROVIDER_CODE="openfisca-nouvelle_caledonie"
+          DBNOMICS_PROVIDER_CODE="openfisca-nouvelle-caledonie"
           DBNOMICS_URL="https://db.nomics.world/"
 
           EDITOR_URL="https://editor.parameters.nc.tax-benefit.org/"
@@ -47,7 +47,7 @@ jobs:
           PARAMETERS_FORGE_DOMAIN_NAME="github.com"
           PARAMETERS_FORGE_TYPE="GitHub"
           PARAMETERS_GROUP="openfisca"
-          PARAMETERS_PROJECT="openfisca-nouvelle_caledonie"
+          PARAMETERS_PROJECT="openfisca-nouvelle-caledonie"
           PARAMETERS_PROJECT_DIR="openfisca_nouvelle_caledonie/parameters"
 
           SHOW_LAST_BREADCRUMB_ITEM = false
@@ -79,7 +79,7 @@ jobs:
         run: rsync -az --delete -e "ssh -J ssh-proxy@parameters.nc.tax-benefit.org:2222" build/ parameters.nc.tax-benefit.org@10.131.0.2:public_html/
         working-directory: legislation-parameters-explorer/packages/viewer
       - name: Update editor parameters data
-        run: ssh -J ssh-proxy@editor.parameters.nc.tax-benefit.org:2222 debian@10.130.3.2 "cd openfisca-nouvelle_caledonie && git pull && sudo systemctl restart nc-parameters-edit.service"
+        run: ssh -J ssh-proxy@editor.parameters.nc.tax-benefit.org:2222 debian@10.130.3.2 "cd openfisca-nouvelle-caledonie && git pull && sudo systemctl restart nc-parameters-edit.service"
 
   deploy_simulator:
     uses: tax-benefit/actions/.github/workflows/deploy.yml@v2.1.0

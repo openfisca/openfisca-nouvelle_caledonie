@@ -13,7 +13,7 @@ deps:
 
 install: deps
 	@# Install OpenFisca-Nouvelle-Caledonie for development.
-	@# `make install` installs the editable version of openfisca-nouvelle_caledonie.
+	@# `make install` installs the editable version of openfisca-nouvelle-caledonie.
 	@# This allows contributors to test as they code.
 	pip install --editable .[dev] --upgrade
 
@@ -22,7 +22,7 @@ build: clean deps
 	@# `make build` allows us to be be sure tests are run against the packaged version
 	@# of OpenFisca-Extension-Template, the same we put in the hands of users and reusers.
 	python -m build
-	pip uninstall --yes openfisca-nouvelle_caledonie
+	pip uninstall --yes openfisca-nouvelle-caledonie
 	find dist -name "*.whl" -exec pip install --force-reinstall {}[dev] \;
 
 format:

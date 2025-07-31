@@ -163,7 +163,7 @@ class credits_impot(Variable):
             souscription_fcp > 0,
             np.ceil(0.60 * impot_apres_reductions),  # TODO: parameters
             0,
-        )  # TOD0: manque case WW https://github.com/openfisca/openfisca-nouvelle_caledonie/issues/34
+        )  # TOD0: manque case WW https://github.com/openfisca/openfisca-nouvelle-caledonie/issues/34
 
         mecenat_creche = foyer_fiscal("mecenat_entreprise", period) + foyer_fiscal(
             "creche_entreprise", period

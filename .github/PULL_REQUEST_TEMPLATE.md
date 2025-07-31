@@ -20,12 +20,12 @@ Ces changements (effacez les lignes ne correspondant pas à votre cas) :
 
 Quelques conseils à prendre en compte :
 
-- [ ] Jetez un coup d'œil au [guide de contribution](https://github.com/openfisca/openfisca-nouvelle_caledonie/blob/master/CONTRIBUTING.md).
-- [ ] Regardez s'il n'y a pas une [proposition introduisant ces mêmes changements](https://github.com/openfisca/openfisca-nouvelle_caledonie/pulls).
+- [ ] Jetez un coup d'œil au [guide de contribution](https://github.com/openfisca/openfisca-nouvelle-caledonie/blob/master/CONTRIBUTING.md).
+- [ ] Regardez s'il n'y a pas une [proposition introduisant ces mêmes changements](https://github.com/openfisca/openfisca-nouvelle-caledonie/pulls).
 - [ ] Documentez votre contribution avec des références législatives.
 - [ ] Mettez à jour ou ajoutez des tests correspondant à votre contribution.
-- [ ] Augmentez le [numéro de version](https://speakerdeck.com/mattisg/git-session-2-strategies?slide=81) dans [`pyproject.toml`](https://github.com/openfisca/openfisca-nouvelle_caledonie/blob/master/pyproject.toml).
-- [ ] Mettez à jour le [`CHANGELOG.md`](https://github.com/openfisca/openfisca-nouvelle_caledonie/blob/master/CHANGELOG.md).
+- [ ] Augmentez le [numéro de version](https://speakerdeck.com/mattisg/git-session-2-strategies?slide=81) dans [`pyproject.toml`](https://github.com/openfisca/openfisca-nouvelle-caledonie/blob/master/pyproject.toml).
+- [ ] Mettez à jour le [`CHANGELOG.md`](https://github.com/openfisca/openfisca-nouvelle-caledonie/blob/master/CHANGELOG.md).
 - [ ] Assurez-vous de bien décrire votre contribution, comme indiqué ci-dessus
 
 Et surtout, n'hésitez pas à demander de l'aide ! :)

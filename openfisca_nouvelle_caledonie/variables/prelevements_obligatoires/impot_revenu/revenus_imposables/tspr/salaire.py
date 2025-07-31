@@ -138,7 +138,7 @@ class cotisations(Variable):
     label = "Cotisations"
 
     def formula_2022(individu, period, parameters):
-        # TODO: voir https://github.com/openfisca/openfisca-nouvelle_caledonie/issues/7
+        # TODO: voir https://github.com/openfisca/openfisca-nouvelle-caledonie/issues/7
         # Lp.123 du code des impôts de la NC :
 
         # II - Le total des versements aux organismes de retraites au titre des cotisations d’assurance vieillesse
