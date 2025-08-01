@@ -1,0 +1,8 @@
+description: Plafond du crédit d'impôt pour les investissements agréés
+values:
+  2008-01-29:
+    value: 0.7
+metadata:
+  short_label: Investissements agréés
+  label_en: Ceiling of the tax credit for approved investments
+  unit: /1

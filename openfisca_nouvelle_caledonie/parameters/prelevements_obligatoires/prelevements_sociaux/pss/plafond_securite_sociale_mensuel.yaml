@@ -41,6 +41,6 @@ values:
   2006-01-01:
     value: 308_950
 metadata:
-  unit: currency-XPF
+  unit: currency
 documentation: |
     Source : https://www.medef.nc/chiffres-cles/plafond-mensuels-de-cotisations-sociales

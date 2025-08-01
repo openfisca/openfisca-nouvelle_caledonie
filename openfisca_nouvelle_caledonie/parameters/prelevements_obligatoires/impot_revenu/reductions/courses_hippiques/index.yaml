@@ -1,0 +1,8 @@
+description: Réduction d'impôt pour les dons aux courses hippiques
+metadata:
+  short_label: Réduction d'impôt courses hippiques
+  label_en: Tax reduction for horse race
+  income_tax_year: true
+  order:
+  - taux
+  - plafond

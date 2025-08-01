@@ -4,11 +4,10 @@ metadata:
   label_en: Income tax
   income_tax_year: true
   order:
+  - parts_fiscales
   - revenus_imposables
   - charges_deductibles
-  - parts_fiscales
-  - bareme
+  - impot_residents
+  - impot_non_residents
   - reductions
   - credits
-  - taux_forfaitaire_non_resident
-  - taux_plafond

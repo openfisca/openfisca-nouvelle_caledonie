@@ -1,0 +1,8 @@
+description: Réduction d'impôt cotisations syndicales
+metadata:
+  short_label: Cotisations syndicales
+  label_en: Tax reduction for union contributions
+  income_tax_year: true
+  order:
+  - taux
+  - plafond

@@ -1,0 +1,11 @@
+description: Taux du crédit d'impôt pour les crèches d'entreprise
+values:
+  2010-12-31:
+    value: 0.5
+metadata:
+  short_label: Taux
+  label_en: Rate of the tax credit for company childcare centers
+  unit: /1
+  documentation: |
+    Définit à l'article [Lp 37-12 du Code des impôts de la Nouvelle-Calédonie](https://mobi-juridoc.gouv.nc/JuriDoc/JdMobi.nsf/mobile.codes.article.jqm?openagent&CI&n=0&6C689E4C24CCE6394B25780D00232533)
+    Alinéa I "Les entreprises imposées d’après leur bénéfice réel peuvent bénéficier d’un crédit d’impôt égal à 50% des dépenses ayant pour objet de financer la création et le fonctionnement d’établissement mentionnés au deuxième alinéa de l’article 1er de la loi du pays n°2019-9 du 2 avril 2019 relative à la réglementation des établissements d’acceuil petite enfance et périscolaire et assurant l’accueil des enfants de leurs salariés."

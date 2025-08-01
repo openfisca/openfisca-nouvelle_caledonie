@@ -1,0 +1,12 @@
+description: Taux du crédit d'impôt pour l'investissement productif industriel
+values:
+  2008-01-01:
+    value: 0.15
+metadata:
+  short_label: Taux du crédit d'impôt pour l'investissement productif industriel
+  label_en: Rate of the tax credit for industrial productive investment
+  unit: /1
+  documentation: |
+    Lorsque le montant du programme d’investissement est compris entre 10 et 50 millions de francs (par programme et par exercice), un agrément préalable n’est pas nécessaire.
+    Le crédit d’impôt est imputé au taux de 15 % et limité à 50 % de l’impôt dû. Le solde est reportable sur les deux exercices suivants dans les mêmes limites.
+    Voir [guide de la DSF à l'aide fiscale à l'investissement](https://dsf.gouv.nc/la-dsf/laide-fiscale-linvestissement).

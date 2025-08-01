@@ -1,0 +1,10 @@
+description: Réduction d'impôt redistributive
+metadata:
+  short_label: Réduction d'impôt redistributive
+  label_en: Tax reduction for redistributive allowance
+  income_tax_year: true
+  order:
+  - taux
+  - plafond
+  - plafond_revenu
+  - plafond_revenu_derogatoire

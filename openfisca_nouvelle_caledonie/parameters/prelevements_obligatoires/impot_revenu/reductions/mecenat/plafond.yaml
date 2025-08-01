@@ -1,0 +1,11 @@
+description: Plafond de la réduction d'impôt sur le revenu pour les dépenses de mécénat
+values:
+  2008-01-01:
+    value: 0.15
+metadata:
+  short_label: Plafond
+  label_en: Tax reduction ceiling for donations
+  unit: /1
+  documentation: |
+    Plafond de la réduction d'impôt applicable pour les versements effectués au titre de mécénat.
+    Le plafond est fixé à 15% du revenu net global annuel imposable du foyer fiscal. Les catégories sont définies par l'article [LP. 136-3 du CINC](https://juridoc.gouv.nc/juridoc/jdcodes.nsf/CIPlan/0E0AFF50433149094B2575670074B8A6?OpenDocument).

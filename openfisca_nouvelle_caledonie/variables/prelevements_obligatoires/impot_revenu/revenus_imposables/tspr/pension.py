@@ -165,7 +165,7 @@ class pensions_differes_apres_deduction(Variable):
         pension_apres_deduction = max_(pension_imposable - montant_deduction_pension, 0)
         abatemment = min_(
             pension_apres_deduction * tspr.abattement.taux, tspr.abattement.plafond
-            )
+        )
         annees_de_rappel_pensions = individu("annees_de_rappel_pensions", period)
 
         pension_apres_abattement = max_(pension_apres_deduction - abatemment, 0)
@@ -173,15 +173,15 @@ class pensions_differes_apres_deduction(Variable):
         # Abattement spécial sur les pensions pour les non-résidents
 
         pension_apres_abattements_non_resident = max_(
-                (
-                    pension_apres_deduction
-                    - abatemment
-                    - min_(
-                        pension_imposable, deduction_pension.plafond_non_resident
-                    )  # Abattement spécial non résident
-                ),
-                0,
-            )
+            (
+                pension_apres_deduction
+                - abatemment
+                - min_(
+                    pension_imposable, deduction_pension.plafond_non_resident
+                )  # Abattement spécial non résident
+            ),
+            0,
+        )
 
         return where(
             annees_de_rappel_pensions > 0,
@@ -189,6 +189,7 @@ class pensions_differes_apres_deduction(Variable):
                 individu.foyer_fiscal("resident", period),
                 pension_apres_abattement,
                 pension_apres_abattements_non_resident,
-            ) / (annees_de_rappel_pensions + (annees_de_rappel_pensions == 0)),
-            0
+            )
+            / (annees_de_rappel_pensions + (annees_de_rappel_pensions == 0)),
+            0,
         )

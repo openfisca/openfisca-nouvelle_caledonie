@@ -7,6 +7,7 @@ from openfisca_nouvelle_caledonie.entities import FoyerFiscal
 
 # Cadre 14 Autres réductions et crédits d'impôt
 
+
 class amortissements_excedentaires(Variable):
     unit = "currency"
     value_type = float
@@ -143,10 +144,14 @@ class credits_impot(Variable):
         )
 
         # Calcul des plafonds
+        plafond = parameters(
+            period
+        ).prelevements_obligatoires.impot_revenu.credits.plafonds
+
         plaf_70 = where(
             credits_investissement > 0,
-            np.ceil(0.70 * impot_apres_reductions),
-            0,  # TODO: parameters
+            np.ceil(plafond.plafond_70 * impot_apres_reductions),
+            0,
         )
 
         investissement_productif_industriel = foyer_fiscal(
@@ -154,14 +159,14 @@ class credits_impot(Variable):
         ) + foyer_fiscal("amortissements_excedentaires", period)
         plaf_50 = where(
             investissement_productif_industriel > 0,
-            np.ceil(0.50 * impot_apres_reductions),  # TODO: parameters
+            np.ceil(plafond.plafond_50 * impot_apres_reductions),
             0,
         )
 
         souscription_fcp = foyer_fiscal("souscription_fcp", period)
         plaf_60 = where(
             souscription_fcp > 0,
-            np.ceil(0.60 * impot_apres_reductions),  # TODO: parameters
+            np.ceil(plafond.plafond_60 * impot_apres_reductions),
             0,
         )  # TOD0: manque case WW https://github.com/openfisca/openfisca-nouvelle-caledonie/issues/34
 
@@ -367,7 +372,7 @@ class credits_impot(Variable):
             min_(
                 foyer_fiscal("amortissements_excedentaires", period),
                 plaf_50,
-                ),
+            ),
             reliquat_plafond_credits,
         )
 
@@ -382,12 +387,13 @@ class credits_impot(Variable):
         # REPORT_YW = max(yw) - RETENUE_YW, 0
 
         # YQ
+        investissement_productif_industriel = parameters(
+            period
+        ).prelevements_obligatoires.impot_revenu.credits.investissement_productif_industriel
         credit_investissement_productif_industriel = min_(
             min_(
-                0.15
-                * foyer_fiscal(
-                    "investissement_productif_industriel", period
-                ),  # TODO: parameters
+                investissement_productif_industriel.taux
+                * foyer_fiscal("investissement_productif_industriel", period),
                 plaf_50,
             ),
             reliquat_plafond_credits,
@@ -427,13 +433,16 @@ class credits_impot(Variable):
         )
 
         # YG
+        creche_entreprise = parameters(
+            period
+        ).prelevements_obligatoires.impot_revenu.credits.creche_entreprise
         credit_creche_entreprise = min_(
-            0.50
-            * min_(  # TODO: parameters
+            creche_entreprise.taux
+            * min_(
                 foyer_fiscal("creche_entreprise", period),
                 120_000_000,  # TODO: parameters
             ),
-            60_000_000,  # TODO: parameters
+            creche_entreprise.plafond,
         )
         credit_creche_entreprise = min_(
             credit_creche_entreprise,
@@ -452,7 +461,9 @@ class credits_impot(Variable):
         credit_mecenat_entreprise = where(
             foyer_fiscal("resident", period),
             min_(
-                np.ceil(mecenat_entreprise.taux * foyer_fiscal("mecenat_entreprise", period)),
+                np.ceil(
+                    mecenat_entreprise.taux * foyer_fiscal("mecenat_entreprise", period)
+                ),
                 impot_apres_reductions - credits_totaux,
             ),
             0,

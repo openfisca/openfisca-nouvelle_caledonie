@@ -1,0 +1,10 @@
+description: Impôt sur le revenu des résidents de la Nouvelle-Calédonie
+metadata:
+  short_label: Impôt des résidents
+  label_en: Income tax for residents
+  income_tax_year: true
+  order:
+  - bareme
+  - plafond_quotient_familial
+  - part_min_revenu_total_imposable
+  - taux_plafond

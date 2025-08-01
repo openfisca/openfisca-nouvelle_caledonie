@@ -108,7 +108,9 @@ class interets_emprunt_residence_secondaire_anciens(Variable):
     unit = "currency"
     value_type = float
     entity = FoyerFiscal
-    label = "Intérêts d’emprunt pour votre résidence secondaire (souscrit en 1997 ou 1998)"
+    label = (
+        "Intérêts d’emprunt pour votre résidence secondaire (souscrit en 1997 ou 1998)"
+    )
     definition_period = YEAR
     cerfa_field = "XW"
 
@@ -143,10 +145,9 @@ class deduction_interets_emprunt(Variable):
             "interets_emprunt_hors_noumea_etc_et_anciens", period
         )
 
-        autres = (
-            foyer_fiscal("interets_emprunt_noumea_etc_anciens", period)
-            + foyer_fiscal("interets_emprunt_residence_secondaire_anciens", period)
-        )
+        autres = foyer_fiscal(
+            "interets_emprunt_noumea_etc_anciens", period
+        ) + foyer_fiscal("interets_emprunt_residence_secondaire_anciens", period)
         return (
             interets_emprunt_noumea_etc_recents
             + interets_emprunt_noumea_etc_moins_recents
