@@ -1,10 +1,10 @@
-description: Taux du crédit d'impôt pour les crèches d'entreprise
+description: Plafond du crédit d'impôt pour les crèches d'entreprise
 values:
   2010-12-31:
     value: 60_000_000
 metadata:
-  short_label: Taux du crédit d'impôt pour les crèches d'entreprise
-  label_en: Rate of the tax credit for company childcare centers
+  short_label: Plafond
+  label_en: Ceiling of the tax credit for company childcare centers
   unit: currency
   documentation: |
     Définit à l'article [Lp 37-12 du Code des impôts de la Nouvelle-Calédonie](https://mobi-juridoc.gouv.nc/JuriDoc/JdMobi.nsf/mobile.codes.article.jqm?openagent&CI&n=0&6C689E4C24CCE6394B25780D00232533)
