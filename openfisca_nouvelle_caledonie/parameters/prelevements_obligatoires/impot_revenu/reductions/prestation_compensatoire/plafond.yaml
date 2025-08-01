@@ -5,4 +5,4 @@ values:
 metadata:
   short_label: Plafond
   label_en: Tax reduction ceiling for compensatory payment
-  unit: /1
+  unit: currency

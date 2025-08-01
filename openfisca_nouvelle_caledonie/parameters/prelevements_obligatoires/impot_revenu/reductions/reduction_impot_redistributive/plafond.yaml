@@ -5,7 +5,7 @@ values:
 metadata:
   short_label: Plafond
   label_en: Tax reduction ceiling for redistributive allowance
-  unit: /1
+  unit: currency
   documentation: |
     [Article 136 du CINC](https://mobi-juridoc.gouv.nc/JuriDoc/JdMobi.nsf/mobile.codes.article.jqm?openagent&CI&n=0&AB35C754685352A74B2575670074B88E)
     Le montant de la réduction d’impôt est égal à 1 % du revenu brut global défini à l’article 46, plafonné à 20 000 francs pour les personnes célibataires,
