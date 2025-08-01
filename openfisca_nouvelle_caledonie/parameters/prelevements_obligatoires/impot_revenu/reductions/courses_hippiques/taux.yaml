@@ -6,8 +6,8 @@ metadata:
   short_label: Taux
   label_en: Tax reduction rate for donations
   unit: /1
-  description: |
+  documentation: |
     Article [LP. 136-7 du Code des Impôts de Nouvelle-Calédonie](https://juridoc.gouv.nc/juridoc/jdcodes.nsf/CIPlan/2AED2BB32A0D7A704B2580BA00108336?OpenDocument)
-    Ouvrent droit à une réduction d’impôt égale à 50 % de leur montant les sommes prises dans la limite de 15% du revenu net global annuel imposable au 
-    sens de l’article 128 du présent code, qui correspondent à des versements effectués par des contribuables domiciliés en Nouvelle-Calédonie 
+    Ouvrent droit à une réduction d’impôt égale à 50 % de leur montant les sommes prises dans la limite de 15% du revenu net global annuel imposable au
+    sens de l’article 128 du présent code, qui correspondent à des versements effectués par des contribuables domiciliés en Nouvelle-Calédonie
     au sens de l’article 48 du code des impôts, au profit des comités de courses hippique.

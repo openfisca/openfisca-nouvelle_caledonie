@@ -10,9 +10,9 @@ metadata:
   short_label: Taux
   label_en: Tax reduction rate for donations
   unit: /1
-  description: |
+  documentation: |
     Taux de la réduction d'impôt applicable pour les versements effectués au titre du mécénat.
     Applicable en vertu de l'article [LP. 136-3 du CINC](https://juridoc.gouv.nc/juridoc/jdcodes.nsf/CIPlan/0E0AFF50433149094B2575670074B8A6?OpenDocument)
-    Taux fixé à 60% par la [loi du pays n° 2008-5 du 21 octobre 2008 – Art. 8](https://mobi-juridoc.gouv.nc/juridoc/jdtextes.nsf/DF8BBB807D9E5F424B2575040079A2A6/$file/Loi-du-pays_2008-5_du_21-10-2008_ChG.pdf?openelement) 
+    Taux fixé à 60% par la [loi du pays n° 2008-5 du 21 octobre 2008 – Art. 8](https://mobi-juridoc.gouv.nc/juridoc/jdtextes.nsf/DF8BBB807D9E5F424B2575040079A2A6/$file/Loi-du-pays_2008-5_du_21-10-2008_ChG.pdf?openelement)
     Modifié à 75% par la [Loi du pays n° 2017-1 du 17 janvier 2017 - Art. 24](https://mobi-juridoc.gouv.nc/juridoc/jdtextes.nsf/666EB385DFCF49284B2580AB0017DCC4/%24file/Loi-du-pays_2017-1_du_17-01-2017_ChG.pdf?openelement)
     Augmenté à 80% par la Loi du pays n°2025-2 du 20 janvier 2025 - Art. 22
