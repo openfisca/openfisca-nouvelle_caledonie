@@ -7,6 +7,7 @@ from openfisca_nouvelle_caledonie.entities import FoyerFiscal
 
 # Cadre 14 Autres réductions et crédits d'impôt
 
+
 class amortissements_excedentaires(Variable):
     unit = "currency"
     value_type = float
@@ -143,7 +144,9 @@ class credits_impot(Variable):
         )
 
         # Calcul des plafonds
-        plafond = parameters(period).prelevements_obligatoires.impot_revenu.credits.plafonds
+        plafond = parameters(
+            period
+        ).prelevements_obligatoires.impot_revenu.credits.plafonds
 
         plaf_70 = where(
             credits_investissement > 0,
@@ -156,7 +159,7 @@ class credits_impot(Variable):
         ) + foyer_fiscal("amortissements_excedentaires", period)
         plaf_50 = where(
             investissement_productif_industriel > 0,
-            np.ceil(plafond.plafond_50 * impot_apres_reductions),  
+            np.ceil(plafond.plafond_50 * impot_apres_reductions),
             0,
         )
 
@@ -369,7 +372,7 @@ class credits_impot(Variable):
             min_(
                 foyer_fiscal("amortissements_excedentaires", period),
                 plaf_50,
-                ),
+            ),
             reliquat_plafond_credits,
         )
 
@@ -390,9 +393,7 @@ class credits_impot(Variable):
         credit_investissement_productif_industriel = min_(
             min_(
                 investissement_productif_industriel.taux
-                * foyer_fiscal(
-                    "investissement_productif_industriel", period
-                ), 
+                * foyer_fiscal("investissement_productif_industriel", period),
                 plaf_50,
             ),
             reliquat_plafond_credits,
@@ -460,7 +461,9 @@ class credits_impot(Variable):
         credit_mecenat_entreprise = where(
             foyer_fiscal("resident", period),
             min_(
-                np.ceil(mecenat_entreprise.taux * foyer_fiscal("mecenat_entreprise", period)),
+                np.ceil(
+                    mecenat_entreprise.taux * foyer_fiscal("mecenat_entreprise", period)
+                ),
                 impot_apres_reductions - credits_totaux,
             ),
             0,
