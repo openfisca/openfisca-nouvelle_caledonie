@@ -3,7 +3,7 @@ values:
   2015-12-01:
     value: 40000
 metadata:
-  unit: currency-XPF
+  unit: currency
   reference:
     2010-08-01:
       title: Article 8 de la délibération n° 286 du 18 avril 2007
