@@ -1,0 +1,14 @@
+description: Plafond de la réduction d'impôt sur le revenu pour la promotion de l'exportation
+values:
+  2017-01-17:
+    value: 0.15
+metadata:
+  short_label: Plafond
+  label_en: Tax reduction ceiling for export promotion
+  unit: /1
+  description: |
+    Article [LP. 136-5 du Code des Impôts de Nouvelle-Calédonie](https://juridoc.gouv.nc/juridoc/jdcodes.nsf/CIPlan/6052752D3E47B5104B2580BA00102899?OpenDocument)
+    Ouvrent droit à une réduction d’impôt égale à 50 % de leur montant les sommes prises dans la limite de 15 % du revenu net global annuel imposable au 
+    sens de l’article 128 du présent code, qui correspondent à des versements effectués par des contribuables domiciliés en Nouvelle-Calédonie 
+    au sens de l’article 48, au profit de personnes morales ayant pour objet l’organisation de manifestations en Nouvelle-Calédonie visant à développer 
+    les débouchés commerciaux à l’export des entreprises calédoniennes.

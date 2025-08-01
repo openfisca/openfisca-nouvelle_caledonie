@@ -1,0 +1,15 @@
+description: Plafond de revenu pour bénéficier de la réduction d'impôt redistributive
+values:
+  2016-12-05:
+    value: 6_080_000
+metadata:
+  short_label: Plafond de revenu pour éligibilité
+  label_en: Income ceiling for eligibility to redistributive tax reduction
+  unit: /1
+  description: |
+    [Article 136 du CINC](https://mobi-juridoc.gouv.nc/JuriDoc/JdMobi.nsf/mobile.codes.article.jqm?openagent&CI&n=0&AB35C754685352A74B2575670074B88E)
+    Par dérogation, pour les contribuables mentionnés au a) dont le montant du revenu brut global du foyer fiscal défini au deuxième alinéa de l’article 46 
+    excède 6 080 000 francs pour la première part de quotient familial des contribuables célibataires, veufs ou divorcés et 12 160 000 francs pour les deux 
+    premières parts de quotient familial des contribuables soumis à imposition commune, ces limites étant majorées de 1 520 000 francs pour chacune des 
+    demi-parts suivantes et de la moitié de cette somme pour chacun des quarts de part suivants, le montant de cette réduction d'impôt est limité à la 
+    différence entre la limite de revenu applicable mentionnée au a) du présent article et le montant de ces revenus.

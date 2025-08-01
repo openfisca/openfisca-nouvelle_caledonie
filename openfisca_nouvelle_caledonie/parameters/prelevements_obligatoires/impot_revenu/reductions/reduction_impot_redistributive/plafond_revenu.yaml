@@ -1,0 +1,13 @@
+description: Plafond de revenu pour bénéficier de la réduction d'impôt redistributive
+values:
+  2016-12-05:
+    value: 6_100_000
+metadata:
+  short_label: Plafond de revenu pour éligibilité
+  label_en: Income ceiling for eligibility to redistributive tax reduction
+  unit: /1
+  description: |
+    [Article 136 du CINC](https://mobi-juridoc.gouv.nc/JuriDoc/JdMobi.nsf/mobile.codes.article.jqm?openagent&CI&n=0&AB35C754685352A74B2575670074B88E)
+    Les contribuables domiciliés en Nouvelle-Calédonie au sens de l’article 48 bénéficient d’une réduction d’impôt sur le revenu lorsque le montant du 
+    revenu brut global du foyer fiscal défini au deuxième alinéa de l'article 46 est inférieur ou égal à 6 100 000 francs pour la première part de 
+    quotient familial des personnes célibataires...

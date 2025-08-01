@@ -1,0 +1,12 @@
+description: Plafond de la réduction d'impôt redistributive
+values:
+  2016-12-05:
+    value: 20_000
+metadata:
+  short_label: Plafond
+  label_en: Tax reduction ceiling for redistributive allowance
+  unit: /1
+  description: |
+    [Article 136 du CINC](https://mobi-juridoc.gouv.nc/JuriDoc/JdMobi.nsf/mobile.codes.article.jqm?openagent&CI&n=0&AB35C754685352A74B2575670074B88E)
+    Le montant de la réduction d’impôt est égal à 1 % du revenu brut global défini à l’article 46, plafonné à 20 000 francs pour les personnes célibataires, 
+    veuves ou divorcées et à 2 % du revenu brut global plafonné à 40 000 francs pour les personnes soumises à imposition commune. 

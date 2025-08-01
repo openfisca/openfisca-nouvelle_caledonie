@@ -1,0 +1,8 @@
+description: Réduction d'impôt pour la prestation compensatoire
+metadata:
+  short_label: Réduction d'impôt pour la prestation compensatoire
+  label_en: Tax reduction for compensatory allowance
+  income_tax_year: true
+  order:
+  - taux
+  - plafond

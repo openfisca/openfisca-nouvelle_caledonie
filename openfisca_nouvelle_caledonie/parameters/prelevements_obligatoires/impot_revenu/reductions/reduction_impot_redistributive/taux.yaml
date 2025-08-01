@@ -1,0 +1,12 @@
+description: Taux applicable pour la réduction d'impôt redistributive
+values:
+  2016-12-05:
+    value: 0.01
+metadata:
+  short_label: Taux réduction redistributive
+  label_en: Tax reduction rate for compensatory payment
+  unit: /1
+  description: |
+    [Article 136 du CINC](https://mobi-juridoc.gouv.nc/JuriDoc/JdMobi.nsf/mobile.codes.article.jqm?openagent&CI&n=0&AB35C754685352A74B2575670074B88E)
+    Le montant de la réduction d’impôt est égal à 1 % du revenu brut global défini à l’article 46, plafonné à 20 000 francs pour les personnes célibataires, 
+    veuves ou divorcées et à 2 % du revenu brut global plafonné à 40 000 francs pour les personnes soumises à imposition commune. 

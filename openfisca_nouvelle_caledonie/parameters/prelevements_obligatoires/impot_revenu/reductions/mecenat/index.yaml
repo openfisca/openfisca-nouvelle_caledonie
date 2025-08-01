@@ -1,0 +1,8 @@
+description: Réduction d'impôt mécénat
+metadata:
+  short_label: Réduction d'impôt mécénat
+  label_en: Tax reduction for donations
+  income_tax_year: true
+  order:
+  - taux
+  - plafond

@@ -1,0 +1,8 @@
+description: Réduction d'impôt pour la promotion de l'exportation
+metadata:
+  short_label: Réduction d'impôt promotion exportation
+  label_en: Tax reduction for export promotion
+  income_tax_year: true
+  order:
+  - taux
+  - plafond
