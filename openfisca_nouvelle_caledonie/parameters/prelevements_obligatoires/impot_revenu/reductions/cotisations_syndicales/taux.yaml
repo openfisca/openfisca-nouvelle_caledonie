@@ -1,0 +1,14 @@
+description: Taux applicable pour la réduction d'impôt pour les dépenses de mécénat
+values:
+  2017-01-17:
+    value: 0.66
+metadata:
+  short_label: Taux
+  label_en: Tax reduction rate for donations
+  unit: /1
+  documentation: |
+    Article [LP. 136-6 du Code des Impôts de Nouvelle-Calédonie](https://juridoc.gouv.nc/juridoc/jdcodes.nsf/CIPlan/1184C88F0147D4914B2580BA001058B3?OpenDocument)
+    Les cotisations versées aux organisations syndicales représentatives de salariés et fonctionnaires au sens des articles Lp 322-1 à Lp 322-3
+    du code du travail  ouvrent droit à une réduction d'impôt sur le revenu, rubrique YJ, égale à 66 % des cotisations versées dans la limite de
+    1 % du revenu brut relevant de la catégorie des traitements et salaires, pensions et rentes viagères à titre gratuit, déduction faite des
+    cotisations sociales.

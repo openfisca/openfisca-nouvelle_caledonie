@@ -1,0 +1,14 @@
+description: Taux applicable pour la réduction d'impôt pour les dépenses de mécénat
+values:
+  2020-01-20:
+    value: 0.50
+metadata:
+  short_label: Taux
+  label_en: Tax reduction rate for donations
+  unit: /1
+  documentation: |
+    Article [LP. 136-9 du Code des Impôts de Nouvelle-Calédonie](https://juridoc.gouv.nc/juridoc/jdcodes.nsf/CIPlan/ABF1385201ACFC824B258505007A8FAD?OpenDocument)
+    Les contribuables domiciliés en Nouvelle-Calédonie, au sens de l’article 48, peuvent bénéficier d’une réduction d’impôt égale à 50 % du montant des
+    versements effectués au cours d’une année civile, dans la limite annuelle de 3 000 000 F CFP, au titre de souscriptions en numéraire au capital initial
+    de sociétés ou aux augmentations de capital de sociétés dont ils ne sont ni associés ni actionnaires, domiciliées en Nouvelle-Calédonie, par le biais
+    d’une plateforme de financement participatif.

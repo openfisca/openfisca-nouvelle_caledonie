@@ -224,9 +224,10 @@ class deduction_frais_professionnels_salaire_differe(Variable):
             "salaires_imposes_selon_le_quotient", period
         )
         return min_(
-                salaires_imposes_selon_le_quotient * deduction_frais_professionnels.taux,
-                deduction_frais_professionnels.plafond,
-            )
+            salaires_imposes_selon_le_quotient * deduction_frais_professionnels.taux,
+            deduction_frais_professionnels.plafond,
+        )
+
 
 class abattement_sur_salaire_differe(Variable):
     unit = "currency"
@@ -245,10 +246,12 @@ class abattement_sur_salaire_differe(Variable):
             "salaires_imposes_selon_le_quotient", period
         )
 
-        salaire_apres_deduction = max_(salaires_imposes_selon_le_quotient - deduction, 0)
+        salaire_apres_deduction = max_(
+            salaires_imposes_selon_le_quotient - deduction, 0
+        )
         return min_(
             salaire_apres_deduction * tspr.abattement.taux, tspr.abattement.plafond
-            )
+        )
 
 
 class abattement_sur_salaire(Variable):
@@ -360,15 +363,18 @@ class salaire_differe_apres_deduction(Variable):
         salaires_imposes_selon_le_quotient = individu(
             "salaires_imposes_selon_le_quotient", period
         )
-        annees_de_rappel_salaires = individu(
-            "annees_de_rappel_salaires", period
-        )
+        annees_de_rappel_salaires = individu("annees_de_rappel_salaires", period)
         return where(
             annees_de_rappel_salaires > 0,
             max_(
-            (salaires_imposes_selon_le_quotient - deduction_frais_professionnels_salaire_differe - abattement_sur_salaire_differe) / (annees_de_rappel_salaires + 1 * (annees_de_rappel_salaires == 0)),
+                (
+                    salaires_imposes_selon_le_quotient
+                    - deduction_frais_professionnels_salaire_differe
+                    - abattement_sur_salaire_differe
+                )
+                / (annees_de_rappel_salaires + 1 * (annees_de_rappel_salaires == 0)),
                 0,
-                ),
+            ),
             0,
         )
 
@@ -402,8 +408,7 @@ class indemnites(Variable):
             max_(
                 foyer_fiscal.members("indemnites_elus_municipaux", period)
                 - min_(
-                    foyer_fiscal.members("indemnites_elus_municipaux", period)
-                    * taux,  # TODO: parameters
+                    foyer_fiscal.members("indemnites_elus_municipaux", period) * taux,
                     foyer_fiscal.members("reliquat_abattement_sur_salaire", period),
                 ),
                 0,

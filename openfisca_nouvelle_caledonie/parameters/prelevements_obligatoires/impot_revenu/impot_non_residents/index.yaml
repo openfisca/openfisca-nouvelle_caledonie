@@ -1,0 +1,7 @@
+description: Impôt sur le revenu des non-résidents en Nouvelle-Calédonie
+metadata:
+  short_label: Impôt des non-résidents
+  label_en: Income tax for non-residents
+  income_tax_year: true
+  order:
+  - taux_forfaitaire

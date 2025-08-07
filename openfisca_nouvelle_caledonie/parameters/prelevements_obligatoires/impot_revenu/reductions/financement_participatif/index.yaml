@@ -1,0 +1,8 @@
+description: Réduction d'impôt pour la participation au financement participatif
+metadata:
+  short_label: Financement participatif
+  label_en: Tax reduction for participatory financing
+  income_tax_year: true
+  order:
+  - taux
+  - plafond

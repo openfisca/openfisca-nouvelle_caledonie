@@ -1,4 +1,4 @@
-description: Barème progressif (marginal) de l'impôt sur le revenu applicable aux revenus des années indiquées
+description: Barème progressif (marginal) de l'impôt sur le revenu applicable aux résidents de la Nouvelle-Calédonie.
 brackets:
 - threshold:
     1945-01-01:
@@ -32,6 +32,4 @@ brackets:
       value: 0.40
 metadata:
   rate_unit: /1
-  threshold_unit: currency-XPF
-documentation: |-
-  TODO: étendre
+  threshold_unit: currency
