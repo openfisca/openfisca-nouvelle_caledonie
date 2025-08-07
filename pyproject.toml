@@ -24,8 +24,13 @@ classifiers = [
     "Topic :: Scientific/Engineering :: Information Analysis",
 ]
 
-dependencies = ["openfisca-core[web-api]>=43"]
+dependencies = [
+    "openfisca-core[web-api]>=43",
+]
 optional-dependencies.dev = [
+    "ipython>=8.18.1",
+    "pdbpp>=0.11.7",
+    "pytest>=8.3.2",
     "isort>=5.13.2,<6",
     "ruff>=0.6.9,<1",
     "ruff-lsp>=0.0.57,<1",
@@ -149,3 +154,11 @@ basepython = ["py39"]
 commands = [["twine", "check", "dist/*"]]
 commands_pre = [["python", "-m", "build"]]
 deps = ["build", "twine"]
+
+[tool.uv.sources]
+openfisca-nouvelle-caledonie = { workspace = true }
+
+[dependency-groups]
+dev = [
+    "openfisca-nouvelle-caledonie",
+]
